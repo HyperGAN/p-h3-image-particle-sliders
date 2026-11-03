@@ -7,7 +7,7 @@ import torch
 from particle_sliders.lifecycle import CheckpointError, SessionConfig, UnsupportedOperation, backend
 from particle_sliders.pg09 import ConditionalPG09
 
-from ph3_sliders.gan_fixture import BACKEND, FIXTURE, NAME, validate
+from ph3_sliders.gan_fixture import BACKEND, FIXTURE, NAME, check, validate
 
 
 def config(**options):
@@ -132,3 +132,20 @@ def test_deterministic_creation_and_training_preserve_cpu_rng():
         session.train()
         assert torch.equal(state, torch.get_rng_state())
     assert torch.equal(state, torch.get_rng_state())
+
+
+def test_gan_check_leaves_no_artifact_files(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    before = {path.relative_to(tmp_path) for path in tmp_path.rglob("*")}
+    report = check(steps=2)
+    after = {path.relative_to(tmp_path) for path in tmp_path.rglob("*")}
+    assert before == after
+    assert report["status"] == "passed"
+    assert report["engine"] == "particle_sliders.pg09.ConditionalPG09"
+    assert report["completed_steps"] == report["last_metrics"]["step"] == 2
+    assert report["objective"] == "g_adv+public_prior;d_adv+public_penalty"
+    assert report["particle_shape"] == [128, 4]
+    assert report["auxiliary_losses"] == []
+    assert not report["artifacts_written"]
+    assert not report["model_weights_loaded"]
+    assert not report["native_h3_qualified"]

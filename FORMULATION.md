@@ -45,6 +45,11 @@ update/optimizer loop. The shared lifecycle owns stepping, optional EMA, strict
 resume and synthetic export. EMA here is shared lifecycle behavior; it is not a
 claim that Anima's older standalone PG09Trainer computed EMA.
 
+The validation receipt records the complete public recipe, including dormant
+preset fields that are not terms in this executed step. The source-bound engine
+signature and tests against real D/G metrics establish the executed loss
+decomposition; the presence of a recipe field is not evidence that it is used.
+
 Qualification evidence belongs to this exact generation and source cohort. If
 native generation selection later chooses the released gmix stamp, none of the
 new PG0.9.4 CPU-law, critic, admission, resume or export evidence transfers; rerun

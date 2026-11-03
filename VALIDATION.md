@@ -18,6 +18,8 @@ The fixture accepts no H3 runtime, model paths, teacher cache or Hub options.
 The installed `gan-check` command performs bounded synthetic optimizer updates
 and returns detached scalar metrics. It writes no checkpoint, adapter or media.
 Tests use in-memory synthetic packets and do not publish synthetic weights.
+The dedicated `check()` regression also snapshots its temporary working directory
+before and after execution and verifies that no artifact files appear.
 
 ## Historical initial source cohort: 870f9d3
 

@@ -12,7 +12,7 @@
     "setuptools": "84.2.1"
   },
   "tests": {
-    "passed": 58,
+    "passed": 59,
     "failed": 0,
     "source_free": true,
     "command": "python -m pytest -q -c /dev/null -o cache_dir=/tmp/ph3-anima-pytest-cache /tmp/ph3-anima-source-free-tests",
@@ -24,10 +24,11 @@
       "CUDA_VISIBLE_DEVICES empty",
       "OMP_NUM_THREADS=1",
       "MKL_NUM_THREADS=1"
-    ]
+    ],
+    "artifact_absence_regression": true
   },
   "source_sha256": {
-    "FORMULATION.md": "893916f331b20430512c71ea46d4f0bb62cb36a66feee6069fd12c63ccc9ef57",
+    "FORMULATION.md": "e397e402dccf19778c07b28394661d79a7d152cbbf396a9b5f5225c7722846d7",
     "README.md": "9e70750b38f20d2294e4658021714a8f4a59d7c6ceb9950947f802afacd9c55c",
     "backend.lock.json": "4a1e913919537a5f432de119a75a79619e42621528721bc4f5b1dceeb8dd538c",
     "pyproject.toml": "ee77b3c1b9739d2a3906a3a33f6cfcde953b82628458e1e88760543f4501a738",
@@ -39,7 +40,7 @@
     "src/ph3_sliders/synthetic.py": "f19a0a1b7d72f52ac4b55feafe7e288bd07358c3d30e3fd22a99624453dc2f32",
     "tests/conftest.py": "e590f8d222896f897f97c7f47522231677b00858e7f32f8258dc0d4de6a5dcb8",
     "tests/test_contract.py": "2c8c28001cf10dafe520b3dae25a32d43f002c4b7e713cc2a160bf1458ff6d79",
-    "tests/test_gan_fixture.py": "f1101f6992b96d88bc7e38750d43fd080a2fd0a4754bb0dd8ef0fb0de57bd7ab",
+    "tests/test_gan_fixture.py": "6b5b69de6e201b0bfc54e1a60db09ae4cdfe76098458691a02c8dac6c684892d",
     "tests/test_lifecycle.py": "48aba4b0470709c4bff756cc4243a8011086bff95c66f1326b422b19f73962fe",
     "tests/test_synthetic.py": "c8d0c33bd1cc94c2813f897e556c5716035e93d19566b61313c36ce7d935cec0"
   },
