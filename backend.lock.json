@@ -66,11 +66,12 @@
     "package": "particle-sliders-anima-gmix",
     "version": "0.1.0a1",
     "repository": "https://github.com/HyperGAN/particle-sliders",
-    "revision": "426fc9297e407a890c88163b9e21075efa78bde3",
+    "revision": "18ff6c18565263a693b4a85ba6680beb8d577a65",
     "subdirectory": "packages/particle-sliders-anima-gmix",
     "publication": "LOCAL_ONLY_OWNER_REVIEW_PENDING; no public source push allowed yet",
     "anima_source_revision": "c018f32759f49a05c2360a04b4a83924a6851913",
-    "game_sha256": "802ba0706a465aaa3d269064f3deb494e275cc89d4d793eb207856c937ac3ab5"
+    "game_sha256": "802ba0706a465aaa3d269064f3deb494e275cc89d4d793eb207856c937ac3ab5",
+    "metadata_followup": "Explicit NumPy runtime dependency; Game/Sampler/normalization/EMA source unchanged from426fc92"
   },
   "historical_modern_proposal": {
     "product_head": "fef61c13bc3c0324c54f1efb7f07be889473d76d",

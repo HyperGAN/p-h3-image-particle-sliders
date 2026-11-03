@@ -18,7 +18,7 @@ from .synthetic import SyntheticProjection
 
 FIXTURE = "unrelated-classic-gmix-v1"
 CORE_REVISION = "a119ca1ecd3d5d6c437065839d22739b04f2f4d8"
-RUNNER_REVISION = "426fc9297e407a890c88163b9e21075efa78bde3"
+RUNNER_REVISION = "18ff6c18565263a693b4a85ba6680beb8d577a65"
 
 
 @dataclass(frozen=True)

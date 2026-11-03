@@ -11,7 +11,8 @@ readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES/*.txt"]
 dependencies = [
-  "particle-sliders-anima-gmix @ git+https://github.com/HyperGAN/particle-sliders.git@426fc9297e407a890c88163b9e21075efa78bde3#subdirectory=packages/particle-sliders-anima-gmix",
+  "numpy>=1.26,<3",
+  "particle-sliders-anima-gmix @ git+https://github.com/HyperGAN/particle-sliders.git@18ff6c18565263a693b4a85ba6680beb8d577a65#subdirectory=packages/particle-sliders-anima-gmix",
 ]
 
 [project.optional-dependencies]

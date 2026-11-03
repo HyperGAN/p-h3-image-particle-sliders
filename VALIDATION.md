@@ -4,7 +4,7 @@
 
 The current source candidate selects classic shared core0.3.0 at a119ca1e and its
 ParticleGAN0.6.0 dependency at82b72661. It imports the isolated shared extraction
-proposal426fc92. The complete new evidence is recorded in
+proposal18ff6c1. The complete new evidence is recorded in
 [validation/anima-gmix-cpu.json](validation/anima-gmix-cpu.json); publication remains
 held for shared-package owner review.
 

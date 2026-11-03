@@ -12,7 +12,7 @@ and its exact ParticleGAN `82b72661` dependency (0.6.0). The complete Anima
 The modern PG0.9.4 draft is historical and is not the default generation.
 
 **Shared-package publication is held for owner review.** The product pins local
-shared proposal `426fc9297e407a890c88163b9e21075efa78bde3`. That source is not yet
+shared proposal `18ff6c18565263a693b4a85ba6680beb8d577a65`. That source is not yet
 publicly pushed, so a normal Git dependency install is unavailable until the owner
 clears the source proposal. CPU checks use verified local wheels in isolated
 paths. Existing core/Anima sources and active environments have not been changed.

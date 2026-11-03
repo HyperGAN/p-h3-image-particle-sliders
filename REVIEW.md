@@ -11,7 +11,7 @@ additive shared extraction rather than copying Game/Sampler into the product.
 
 Ada requires shared-package owner review before any public source push of that
 extraction, then explicit confirmation before opening its source-only draft PR.
-Shared proposal426fc92 is local only. P-H3's dependent classic changes likewise
+Shared proposal18ff6c1 is local only. P-H3's dependent classic changes likewise
 remain local until that dependency is cleared; public PR2 is still a draft and
 its currently published modern head must not be mistaken for the new reference.
 No merge, registry release, native/GPU work or model publication is authorized.
