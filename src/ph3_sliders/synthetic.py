@@ -15,7 +15,7 @@ from particle_sliders.routed_projection import TinyParticleProjection
 class SyntheticProjection(nn.Module):
     """Owned, reversible fixture attachment using the actual shared branch."""
 
-    def __init__(self, seed: int = 7):
+    def __init__(self, seed: int = 7, *, rank: int = 4):
         super().__init__()
         self.closed = False
         # Local fixture construction must not consume the caller's CPU RNG.
@@ -25,7 +25,8 @@ class SyntheticProjection(nn.Module):
             self.particles = nn.Parameter(torch.randn(128, 4, device="cpu", dtype=torch.float32))
             self._forward_was_local = "forward" in self.host.__dict__
             self._original_forward = self.host.forward
-            self.branch = TinyParticleProjection("synthetic_linear", self.host, self.particles, 4, 4.0).float()
+            self.branch = TinyParticleProjection("synthetic_linear", self.host, self.particles,
+                                                 rank, float(rank)).float()
 
     @contextmanager
     def scaled(self, strength):

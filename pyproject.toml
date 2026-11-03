@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "p-h3-image-particle-sliders"
-version = "0.1.0"
+version = "0.2.0a1"
 description = "Source-only P-H3-Image integration planning and synthetic Particle Sliders checks"
 requires-python = ">=3.11"
 readme = "README.md"
@@ -22,6 +22,7 @@ ph3-slider = "ph3_sliders.cli:main"
 
 [project.entry-points."particle_sliders.image_backends"]
 ph3-image = "ph3_sliders.lifecycle:BACKEND"
+ph3-synthetic = "ph3_sliders.gan_fixture:BACKEND"
 
 [project.urls]
 Repository = "https://github.com/HyperGAN/p-h3-image-particle-sliders"

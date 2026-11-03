@@ -17,6 +17,8 @@ def main(argv=None):
     plan.add_argument("--seed", type=int, default=7)
     plan.add_argument("--strength", type=float, default=1)
     commands.add_parser("cpu-check", help="probe the shared routed projection on an unrelated CPU fixture")
+    gan = commands.add_parser("gan-check", help="exercise the shared ParticleGAN law on an unrelated CPU field")
+    gan.add_argument("--steps", type=int, default=2)
     for op in ("train", "render", "download", "publish"):
         commands.add_parser(op, help="unavailable in this source-only revision")
     args = parser.parse_args(argv)
@@ -27,6 +29,9 @@ def main(argv=None):
         elif args.command == "cpu-check":
             from .synthetic import check
             result = check()
+        elif args.command == "gan-check":
+            from .gan_fixture import check
+            result = check(args.steps)
         else:
             refuse_live(args.command)
     except (ValueError, LiveOperationUnavailable) as exc:

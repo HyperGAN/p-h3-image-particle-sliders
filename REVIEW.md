@@ -15,6 +15,9 @@ Review scope:
   attachment state restored.
 - Exact dependency pin and a source-free installed-wheel test where feasible.
 
-No merge or model publication is included in this initial proposal. The new
-repository is private while its source review is pending. Existing public
-products, their environments and active workloads remain untouched.
+The initial source proposal was independently reviewed and merged at `c0734d4`;
+the owner subsequently explicitly authorized public repository visibility. The
+Anima/PG0.9.4 follow-up is a separate source proposal requiring its own review.
+No model or package publication is included. Existing products, environments and
+active workloads remain untouched. Do not interpret the new synthetic backend as
+activation or qualification of the native H3 backend.
