@@ -1,87 +1,91 @@
-# Pure ParticleGAN source preparation and the Anima distinction
+# Selected reference: released Anima gmix
 
-The proposed CPU law check uses the repository's existing immutable dependency:
-core `5adca87d32a159d529a89592fe35d3476dca7da3` (0.12.0), official ParticleGAN
-0.9.4 and the public `bispf_optimized` preset. No recipe loss/penalty/prior
-coefficients are overridden. **This is a source proposal, not a decision that
-the released Anima gmix experiment has migrated to this generation.** Native
-P-H3 adoption and the intended generation remain separately qualified work.
+The selected generation is the released Anima gmix formulation, not the newer
+ConditionalPG09/BISPF proposal. Nova identified the distinction; Mikkel explicitly
+selected the released reference. The prior PG0.9.4 fixture and its59-test receipt
+are historical and provide no qualification for this selected generation.
 
-Nova's source review identified three different Anima paths. We inspected the
-Anima repository at `c018f32759f49a05c2360a04b4a83924a6851913` and its locks:
+## Exact source reuse
 
-| Path | Source evidence | Meaning for this proposal |
-| --- | --- | --- |
-| Released gmix routed sliders | [game.py](https://github.com/HyperGAN/anima-particle-sliders/blob/c018f32759f49a05c2360a04b4a83924a6851913/lumen_studio/game.py), [particles.py](https://github.com/HyperGAN/anima-particle-sliders/blob/c018f32759f49a05c2360a04b4a83924a6851913/lumen_studio/particles.py), [core.lock.json](https://github.com/HyperGAN/anima-particle-sliders/blob/c018f32759f49a05c2360a04b4a83924a6851913/core.lock.json) | Shared winning-formulation stamp, older Adam/cap/VIC game, bounded global-mix critic, per-position normalization and noise schedule. This is the released reference, not ConditionalPG09. |
-| Anima PG0.9 source proposal | [pg09_training.py](https://github.com/HyperGAN/anima-particle-sliders/blob/c018f32759f49a05c2360a04b4a83924a6851913/lumen_studio/pg09_training.py), [PG09_TRAINING.md](https://github.com/HyperGAN/anima-particle-sliders/blob/c018f32759f49a05c2360a04b4a83924a6851913/PG09_TRAINING.md), [lifecycle.py](https://github.com/HyperGAN/anima-particle-sliders/blob/c018f32759f49a05c2360a04b4a83924a6851913/lumen_studio/lifecycle.py) | Paired frozen positive velocity, neutral student, actual routed bank, native fields and shared public GAN updates; distinct adoption/history gates. |
-| Historical textsliders MSE experiments | The separate historical namespace in the core | Not selected, imported or used for this proposal. |
+- [Anima source](https://github.com/HyperGAN/anima-particle-sliders/tree/c018f32759f49a05c2360a04b4a83924a6851913): `lumen_studio/game.py`, `cache.py`, `particles.py`.
+- [Classic shared core](https://github.com/HyperGAN/particle-sliders/tree/a119ca1ecd3d5d6c437065839d22739b04f2f4d8/packages/particle-sliders-core): `winning_formulation()`, routed MLP, global-mix critic, paired losses, cap, VIC and noise curve.
+- [ParticleGAN source](https://github.com/255BITS/ParticleGAN/tree/82b72661c03377f348ccb76de37cd4ca02d45a8d): exact0.6.0 dependency supplying the adversarial and regularizer primitives.
 
-Anima's released lock names core `a119ca1ecd3d5d6c437065839d22739b04f2f4d8`.
-We compared its `formulation.py` and `reference.py` with the P-H3 pin. They are
-not byte-identical: legacy PG builders and the loss constructor have changed,
-and modern recipe access adds an explicit optimizer-profile policy. These
-comparisons do not establish cross-generation numerical, optimizer, checkpoint
-or media-result parity. Do not silently swap Anima's historical checkpoints,
-normalization, calibrated alpha values or noise-hold behavior onto this stack.
+The additive shared package proposal reuses the entire Anima Game/Sampler module
+byte for byte, SHA256 `802ba0706a465aaa3d269064f3deb494e275cc89d4d793eb207856c937ac3ab5`.
+It also reuses the original EMA helpers. Normalization changes only the fixed ten
+positions to an explicit host position count; Welford/sample-standard-deviation
+and median-RMS arithmetic are unchanged. The default ten-position helper matches
+the original function exactly in CPU qualification. Eight extracted/reference
+updates match adapter/critic weights, optimizer/sampler states, EMA and metrics
+exactly on the same synthetic inputs. These are source-extraction checks, not
+pretrained-run or image-quality parity.
 
-## Implemented shared law in the unrelated fixture
+No existing core or Anima file was edited. The new shared package has its own
+namespace/environment and exact source-tree admission checks. It is held locally
+for package-owner review, then explicit source-only publication clearance. This
+product imports that runner; it does not vendor a local Game, loss or optimizer.
 
-The factory calls the pinned [ConditionalPG09](https://github.com/HyperGAN/particle-sliders/blob/5adca87d32a159d529a89592fe35d3476dca7da3/packages/particle-sliders-core/src/particle_sliders/pg09.py).
-For the fixture's actual field response `v`, frozen positive target `v+`, scalar
-response scale `s=1`, and independently sampled Gaussian reference noise `n`:
+The old shared `FormulationGame` is not substituted: its rank8 feature game and
+single noise draw differ from Anima's full residual, independent D/G streams and
+per-position/microbatch mechanics.
+
+## Objective and training mechanics
+
+The target and student edits share the same frozen neutral response, so the full
+normalized paired residual is:
 
 ```text
-real = n
-fake = n + (v_adapted(neutral, x, t) - v_frozen(positive, x, t)) / s
-D total = public adversarial D loss + public critic penalty
-G total = public adversarial G loss + public particle-prior regularization
+e_t = (v_adapted(neutral, x, t) - v_frozen(positive, x, t)) / S_t
+real = sigma_t(k) * epsilon
+fake = real + e_t
+D loss = relativistic paired D loss + autograd gradient cap
+G loss = relativistic paired G loss + particle VIC
 ```
 
-The shared game constructs the public recipe, optimizers, learning-rate policy,
-independent D/G row and noise streams, source-bound state and all update math.
-The product adds no reconstruction, pixel/velocity MSE, perceptual, contrastive,
-identity, distillation or other auxiliary training loss. It has no local GAN
-update/optimizer loop. The shared lifecycle owns stepping, optional EMA, strict
-resume and synthetic export. EMA here is shared lifecycle behavior; it is not a
-claim that Anima's older standalone PG09Trainer computed EMA.
+Only training targets fit S_t: per-coordinate sample standard deviation of the
+positive-minus-neutral edit, floor1e-4, then per-position median-RMS gain. No
+spatial pooling, bottleneck or random sketch is introduced. The critic mixes the
+full residual into eight width48 tokens, one four-head attention layer and an
+8*tanh-bounded score. The original cap is applied lazily every fourth update;
+VIC uses64 of the actual128 particles. There is no reconstruction, perceptual,
+identity, feature-matching or other auxiliary training objective.
 
-The validation receipt records the complete public recipe, including dormant
-preset fields that are not terms in this executed step. The source-bound engine
-signature and tests against real D/G metrics establish the executed loss
-decomposition; the presence of a recipe field is not evidence that it is used.
+The separate `cpu-check` squared-norm backward is only a gradient diagnostic with
+zero optimizer updates. It is not executed by `gan-check` and is not a term in
+the Anima training objective.
 
-Qualification evidence belongs to this exact generation and source cohort. If
-native generation selection later chooses the released gmix stamp, none of the
-new PG0.9.4 CPU-law, critic, admission, resume or export evidence transfers; rerun
-the wiring qualification under the selected generation. The shared lifecycle's
-optional EMA does not establish either historical Anima export contract.
+The actual bank is128×4, with rank8 additive branches, width16 router and width48
+branch MLP. All adapter/base ownership is preserved: the base is frozen, only
+adapter and critic leaves enter Adam, zero up initialization preserves the base,
+training strength is+1, and inference strength is separate. Source learning rates
+are g2e-5, d9e-4 and particles6e-3; betas(0,.999), no weight decay, effective batch8,
+microbatch1, horizon1600 and EMA decay.995. A shortened CPU budget does not shorten
+that source noise horizon. Calibrated alpha values and ordinary-LoRA distillation
+from released Anima are not copied onto H3.
 
-The unrelated fixture follows the reusable structural mechanics: a frozen base,
-zero-initialized additive up projection, shared rank-8 routed branch and one
-actual 128×4 particle bank, frozen paired teachers at identical state/time,
-neutral student and scale +1 training. Conditions contain neutral context and
-synthetic time/scale, not row IDs. Only FP32 adapter leaves and critic enter
-optimizers; base weights remain frozen. The shared `FieldCritic` consumes the
-actual `[1,8,2,2]` synthetic field and emits raw logits. This differs from both
-released Anima's bounded global-mix critic and its proposed local-patch critic;
-no exact Anima critic or result parity is claimed.
+**Historical noise discrepancy remains explicit:** Anima FORMULATION.md reports
+absolute noise hold1.0 for the published weights. Its pinned source Game calls
+the shared stamp's hold `edit_rms * 1.3`. We preserve that source exactly. This is
+not a P-H3-specific modification and is not evidence of bit-identical reproduction
+of the published run. The source or original run evidence must resolve that
+historical difference before any such claim.
 
-The fixture's field dimensions, two rows, sigma, short budget and random Linear
-are software-test choices. They are not H3's packed geometry, native attention,
-conditioning, image quality or sampling schedule. No external runtime, files,
-teacher cache or model can be supplied to the factory.
+## Necessary P-H3 differences and unverified parts
 
-## Native P-H3 boundaries remain closed
+| Boundary | Anima reference | P-H3 status |
+| --- | --- | --- |
+| Attention attachment | Cosmos Q/K/V/output names,224 projections | Actual H3 projection/fusion/packed-token boundaries unverified; explicit targets required, no suffix guess |
+| Sampling positions | Ten native positions on both same-noise frozen paths | Public image adaptation reports eight steps; actual native grid/time and velocity direction still require source/CPU parity |
+| Normalization | Per-position full-velocity training statistics | Same arithmetic, explicit actual position count; native H3 cache has not been collected |
+| Conditioning | Text conditioner and paired prompts | Qwen3-VL, frozen expanded prompts, edit target and ordered references need a native pair contract; no reference-conditioned factory exists |
+| Critic geometry | Entire native residual flattened for gmix | Same full-residual rule; actual packed H3 response width/memory fit unmeasured, no rank8 approximation is substituted |
+| Scale/checkpoint replay | Scale held through update and recomputation | Owned CPU hooks tested; native activation-checkpoint/offload/scale replay remains unqualified |
+| Artifacts/rendering | Selected EMA routed adapter and native Anima sampler | Only synthetic in-memory continuation/export exists; H3 provenance/schema/decoder/sampler/Comfy compatibility unimplemented |
 
-The real `ph3-image` backend still refuses every native operation before model
-allocation. The synthetic backend cannot be used to admit a staged H3 model.
-The applicable model rights, exact native Diffusers implementation/projections,
-reference-conditioned pair definition, frozen expanded prompts, native velocity
-sign/time convention, checkpoint sigma grid, actual response shape and native
-sampler parity remain unresolved. H3's eight-step schedule must not be replaced
-with Anima's ten-position cache or an invented Euler trajectory.
-
-The modern core refuses flat native continuous vectors of width >=170. The
-fixture's genuine 4D field is not an exemption for H3: do not flatten, project,
-spatially reshape or relabel native H3 outputs to bypass admission. No weights,
-model derivatives, H3 responses or media outputs were produced by this work.
+The fixture is an unrelated random Linear, not a tiny H3 architecture or native
+pipeline. Its two-to-ten position contract, four examples and width32 response
+prove software wiring only. No external model or records can enter its run factory.
+Model rights, immutable Diffusers implementation, native host/teacher validation,
+actual checkpoint replay and held-out image quality remain separate gates. The
+real H3 native command/interface refuses before runtime allocation.

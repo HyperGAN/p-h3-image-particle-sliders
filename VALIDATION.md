@@ -1,57 +1,44 @@
-# CPU validation and immutable cohorts
+# CPU qualification by source cohort
 
-## Modern ParticleGAN follow-up
+## Selected classic Anima gmix candidate
 
-The `0.2.0a1` source candidate adds a separately registered unrelated synthetic
-field factory for the actual shared `ConditionalPG09` law. Its current evidence
-is recorded in [validation/anima-pg094-cpu.json](validation/anima-pg094-cpu.json).
-It does not activate the native H3 backend or establish released-Anima parity.
+The current source candidate selects classic shared core0.3.0 at a119ca1e and its
+ParticleGAN0.6.0 dependency at82b72661. It imports the isolated shared extraction
+proposal426fc92. The complete new evidence is recorded in
+[validation/anima-gmix-cpu.json](validation/anima-gmix-cpu.json); publication remains
+held for shared-package owner review.
 
-The expanded suite additionally verifies the real shared adversarial/prior and
-critic/penalty loss decomposition, actual participating rank-8/128×4 bank,
-frozen base/teachers, positive-teacher sensitivity with neutral-student holding,
-zero/fractional strengths, exact full-versus-split resume including EMA, inference
-export versus training packet refusal, cleanup after observer failure, CPU RNG
-preservation, and refusal of external models, auxiliary-loss knobs and media.
-The fixture accepts no H3 runtime, model paths, teacher cache or Hub options.
+Shared qualification: seven installed-wheel/source-free tests passed. Eight
+updates of the extracted Game and pinned original Game match exactly for adapter,
+critic, optimizers, saved row/noise streams, EMA and metrics. The generalized
+normalizer with its default ten positions exactly matches the pinned original
+function. Whole-module SHA proves byte-identical Game/Sampler extraction.
 
-The installed `gan-check` command performs bounded synthetic optimizer updates
-and returns detached scalar metrics. It writes no checkpoint, adapter or media.
-Tests use in-memory synthetic packets and do not publish synthetic weights.
-The dedicated `check()` regression also snapshots its temporary working directory
-before and after execution and verifies that no artifact files appear.
+Product tests exercise full width32 responses independently of rank8, actual
+128×4 bank/optimizer identity, source learning rates and bound8 critic, frozen
+base/teachers, exact continuation with original Game state and EMA, selected EMA
+export, source/cohort rejection, cache copy/order/train-only invariants, owned
+hook cleanup including partial registration failure, zero/fractional strengths,
+CPU/RNG/thread preservation, no artifact files, bounded work and native refusal.
+The classic gate is standard-library-only and never imports a model runtime.
 
-## Historical initial source cohort: 870f9d3
+The source fixtures use only unrelated random CPU tensors. They do not establish
+native H3 geometry, conditioning, architecture, pretrained convergence, image
+quality, memory fit, secure native checkpoint IO or sampling compatibility. No
+pretrained weights are loaded and no H3 outputs are produced. Synthetic snapshots/exports
+are in memory only and are not native H3 artifacts.
 
-**40 tests passed**, including a fresh-process, source-free installed-wheel run.
-The product and exact shared-core wheels were built locally and installed under
-an isolated `/tmp/ph3-installed` target. Exact ParticleGAN 0.9.4 was installed under
-`/tmp/ph3-python-deps`; its exhaustive official Python source manifest passed the
-core's `_released_sources()` check. Existing CPU Torch and test dependencies were
-read from the Iris task's Python environment; that environment was not modified.
+## Historical modern PG0.9.4 proposal
 
-Runtime: Python 3.12.15, Torch 2.14.1+cpu, core 0.12.0, ParticleGAN 0.9.4,
-pytest 9.1.1, setuptools 84.2.1. No native model libraries were required.
+[validation/anima-pg094-cpu.json](validation/anima-pg094-cpu.json) records59 passing
+checks at the superseded modern proposal fef61c1. Nova reviewed runtime45c9078 and
+identified the released-versus-proposed Anima distinction. Its critic, objective,
+optimizer, admission and export evidence does not transfer to classic gmix. The
+historical receipt is retained unchanged; that generation is not selected.
 
-The test directory was copied outside the source tree, the checkout was absent
-from `PYTHONPATH`, and every installed product Python file was byte-compared to
-the proposed source before execution. The installed product CLI's `plan` and
-`cpu-check` commands and the installed common `particle-slider capabilities`
-command also passed. The latter reports no native operations or base precisions.
+## Historical initial scaffold
 
-Checks used empty `CUDA_VISIBLE_DEVICES`, offline Hugging Face/Transformers modes,
-and one OpenMP/MKL thread. Tests additionally reject socket connection creation
-and CUDA initialization. No optimizer updates or adapter files were produced.
-
-Coverage includes request validation and ordered references, standard-library-only
-planning, installed backend discovery, all six shared lifecycle refusals before
-preparation, actual shared projection forward/backward, unique particle-bank
-ownership, fractional strength, exact fresh-base preservation, cleanup after
-exceptions, CPU RNG/thread restoration, and CPU/FP32 behavior under different
-caller defaults.
-
-[validation.json](validation.json) records this historical cohort's exact source hashes, wheel hashes,
-package versions, installed module locations and the CPU probe result. Wheels
-remain local validation artifacts; no package registry or model Hub was used for
-publication. This does not qualify an H3 architecture, model license, pretrained
-convergence, memory fit, native media sampling or a general runtime matrix.
+[validation.json](validation.json) records40 installed-wheel CPU checks at870f9d3,
+which checked a shared projection and guarded modern lifecycle registration.
+Those source hashes belong to that immutable cohort and are not current code
+identities. No initial or later software receipt claims native H3 qualification.

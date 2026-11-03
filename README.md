@@ -1,24 +1,26 @@
 # P-H3-Image Particle Sliders
 
-Source-only integration planning for [PrunaAI/P-H3-Image](https://huggingface.co/PrunaAI/P-H3-Image),
-using [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders).
-This source proposal has a request planner, an installed shared-lifecycle
-registration that refuses native operations, and unrelated synthetic CPU
-fixtures for the shared routed projection and actual ParticleGAN updates. It contains no
-model loader, trained slider, pretrained-model results, or model outputs.
+Source-only preparation for [PrunaAI/P-H3-Image](https://huggingface.co/PrunaAI/P-H3-Image),
+using **the released Anima gmix formulation as the reference**, as requested.
+No model loader, H3 attention-target discovery, trained slider, image sampler or
+pretrained-model result is implemented. Native operations remain disabled.
 
-**Native download, loading, training, rendering and model publication are disabled.**
-The official MiniMax H3 license excludes the US, EU, UK and Republic of Korea
-from its community grant. Separate authorization and native qualification remain
-unresolved. See [the license review](docs/LICENSE-REVIEW.md).
+The selected source is Anima `c018f327`, classic shared core `a119ca1e` (0.3.0)
+and its exact ParticleGAN `82b72661` dependency (0.6.0). The complete Anima
+`Game`/`Sampler` module is reused byte for byte through the additive shared
+`particle-sliders-anima-gmix` proposal; it is not copied into this product.
+The modern PG0.9.4 draft is historical and is not the default generation.
 
-## Install and check
+**Shared-package publication is held for owner review.** The product pins local
+shared proposal `426fc9297e407a890c88163b9e21075efa78bde3`. That source is not yet
+publicly pushed, so a normal Git dependency install is unavailable until the owner
+clears the source proposal. CPU checks use verified local wheels in isolated
+paths. Existing core/Anima sources and active environments have not been changed.
 
-Use a new Python >=3.11 environment. Install your selected CPU PyTorch >=2.6,<3
-build first, then install this project. This installs the shared core at a full
-Git commit; ParticleGAN 0.9.4 is its transitive dependency. This product adds no
-Diffusers/Transformers native runtime or model weights. The shared package retains
-its own historical backend namespaces; none is invoked by this product.
+## Software checks
+
+After the shared source proposal is reviewed and reachable, use a new compatible
+CPU PyTorch environment and install this product with its exact dependencies:
 
 ```bash
 python -m pip install '.[dev]'
@@ -26,100 +28,68 @@ ph3-slider plan --prompt 'A documentary photograph of a ceramic cup beside a win
 CUDA_VISIBLE_DEVICES='' HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
   OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 ph3-slider cpu-check
 CUDA_VISIBLE_DEVICES='' HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
-  OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 ph3-slider gan-check --steps 2
-CUDA_VISIBLE_DEVICES='' HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
-  OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest -q
+  OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 ph3-slider gan-check --steps 4
+python -m pytest -q
 ```
 
-The planner can also run directly from source using only Python's standard library:
+Planning and native refusal need only Python's standard library:
 
 ```bash
 PYTHONPATH=src python -m ph3_sliders.cli plan --prompt 'Make the cup red.' \
-  --reference cup.png --width 2048 --height 2048 --strength 0.5
+  --reference cup.png --width 2048 --height 2048
 ```
 
-Reference paths are ordered labels; planning does not read images. The first is
-the proposed edit target, followed by up to seven references. Plans validate
-32-pixel canvas alignment, an approximately 4–8 MP canvas, seed and proposed
-unipolar strength. No native request is executed, and strengths have no image
-quality qualification. Native prompt expansion must be frozen for paired teacher
-collection in a future implementation.
+The planner reads no images and allocates no runtime. `train`, `render`,
+`download` and `publish` refuse. All six native operations also refuse through
+`ph3_sliders.lifecycle.BACKEND`; the gate is independent of the modern core
+session API, which does not exist in classic core0.3. There is no acknowledgment
+flag, staged-model argument or Hub option that unlocks native H3 use.
 
-The native common interface is registered as `ph3-image`:
+## What the gmix fixture executes
+
+The unrelated synthetic host is one frozen random 8×8 Linear. Product glue
+attaches a rank-8 branch using the pinned shared `RoutedMLP`, with the actual
+shared 128×4 bank, width48 branch MLP and width16 router. The up projection starts
+at zero. Strength0 bypasses the branch exactly; strengths between0 and1 interpolate
+its contribution. Target names are explicit; no Anima/Cosmos names are guessed
+for H3. Only owned hooks are removed, preserving other hooks and frozen weights.
+
+Four synthetic examples supply paired positive/neutral frozen velocities at each
+of eight ordered synthetic positions. Both teachers use the same latent/time;
+the student uses neutral conditioning. Eight is a geometry test, not a native H3
+collector or schedule. Shared normalization retains the original training-only
+per-position Welford sample deviation and median-RMS gain. Full responses are
+flattened into the gmix critic without spatial pooling, sketches or rank8 residual
+projection. The toy residual width is32, separately from adapter rank8.
+
+The imported Anima Game owns independent D/G row and noise streams, microbatch1,
+Adam updates, relativistic paired losses, lazy autograd cap and particle VIC.
+Learning rates are generator2e-5, critic9e-4 and particles6e-3. Every auxiliary
+training weight is zero: no reconstruction, perceptual or distillation loss.
+The imported Anima EMA helper uses decay0.995. `gan-check` performs bounded CPU
+updates, writes no artifacts and returns detached scalar metrics.
 
 ```python
-from particle_sliders.lifecycle import SessionConfig, backend
+from ph3_sliders.gmix_fixture import Config, SyntheticGmixRun
 
-config = SessionConfig('ph3-image', 'new-source-cohort')
-print(backend('ph3-image').describe(config))  # operations=(), no native allocation
-```
-
-All six shared operations refuse before validation, PG admission, factory
-preparation, CUDA selection or weight allocation. There is no environment flag,
-`allow_hub`, acknowledgment switch or CLI option to unlock them in this revision.
-
-The separate `ph3-synthetic` backend runs only a fixed, unrelated random field:
-
-```python
-from particle_sliders.lifecycle import SessionConfig, open_session
-
-config = SessionConfig('ph3-synthetic', 'new-synthetic-cohort',
-    fixture='unrelated-random-field-v1', steps=4, ema_decay=.9)
-with open_session(config) as run:
-    run.train(stop_after=2)
-    packet = run.checkpoint()  # synthetic in-memory packet; not an H3 adapter
-with open_session(config) as run:
+config = Config(steps=8)
+with SyntheticGmixRun(config) as run:
+    run.train(stop_after=4)
+    packet = run.snapshot()  # in-memory synthetic continuation only
+with SyntheticGmixRun(config) as run:
     run.restore(packet)
     run.train()
-    response = run.evaluate(strength=.5)  # numerical synthetic field, not an image
+    response = run.evaluate(strength=.5, selection='ema')
+    synthetic_adapter = run.export(selection='ema')  # not an H3 artifact format
 ```
 
-This factory accepts no staged model, native request, teacher cache, Hub download
-or auxiliary-loss options. `gan-check` writes no artifacts. The shared lifecycle
-owns updates, EMA, strict checkpoint restore and export. The real H3 registration
-is unchanged and remains disabled.
+These checks establish synthetic source wiring, not an H3 architecture, useful
+concept, GPU fit, native checkpoint format, sampler parity or image quality.
+No model weights are loaded. See [the formulation and source differences](FORMULATION.md),
+[CPU evidence](VALIDATION.md), [next native steps](docs/NEXT-STEPS.md) and
+[license findings](docs/LICENSE-REVIEW.md).
 
-## What the CPU fixture establishes
-
-`cpu-check` constructs a random frozen 8×8 Linear and attaches the pinned core's
-`TinyParticleProjection`. It checks exact base preservation at initialization,
-fractional strength, finite nonzero gradients to the actual shared 128×4 particle
-bank, and reversible attachment. The up projection is filled with fixed synthetic
-values for gradient probing; no optimizer updates occur. Tests also cover nested
-strength contexts, failure cleanup, one-time bank ownership, CPU RNG preservation
-and native refusal before preparation.
-
-This is a test of shared software wiring on unrelated synthetic tensors. It does
-not execute an H3 architecture, evaluate its velocity field, train a useful
-concept, establish GPU fit, or qualify a sampler. No synthetic adapter is saved.
-
-`gan-check` additionally runs the pinned `ConditionalPG09` with public
-`bispf_optimized`, actual rank-8 routed branches and an actual 128×4 bank. Frozen
-positive and neutral teachers share the same synthetic state/time; the student
-uses neutral conditioning. Generator loss is the public adversarial loss plus
-public particle prior, and critic loss is the public adversarial loss plus public
-critic penalty. No reconstruction, perceptual or other auxiliary objective is
-added. Resume, EMA and export tests exercise the shared implementations.
-
-**This is not a claim of matching the released Anima recipe.** Anima's released
-gmix sliders and its separate PG0.9 training proposal are different generations.
-The existing P-H3 stack remains the proposed modern ParticleGAN path. See
-[FORMULATION.md](FORMULATION.md) for the source comparison and unresolved native
-generation decision, and [VALIDATION.md](VALIDATION.md) for bounded CPU evidence.
-
-## Native integration remains separate work
-
-The inspected release is the **image** adaptation, not the existing MiniMax H3
-video trainer. It uses `PH3ImageModularPipeline`, Qwen3-VL-4B conditioning,
-`MiniMaxH3Transformer3DModel`, the checkpoint's native eight-step sigma grid, and
-no CFG or negative prompt. These facts come from Pruna's public card and metadata;
-no H3 implementation is copied into this repository.
-
-The shared core owns the lifecycle, routed projection and future GAN machinery.
-This product will own native packing, frozen conditioning, teacher collection,
-attachment selection, source identities and native image sampling. Native
-dependency and projection targets are deliberately unqualified rather than
-guessed from another model's attention names. See [the implementation handoff](docs/NEXT-STEPS.md)
-and [source pins](backend.lock.json).
-
-Source: Apache-2.0. Shared core: MIT. These source licenses grant no H3 model rights.
+The official H3 community grant excludes the US, EU, UK and Republic of Korea;
+separate applicable rights remain unresolved. Original source is Apache-2.0;
+shared core, ParticleGAN and Anima source have their own MIT notices. These source
+licenses grant no model-weight or output rights.

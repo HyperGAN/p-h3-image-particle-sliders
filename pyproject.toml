@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "p-h3-image-particle-sliders"
-version = "0.2.0a1"
-description = "Source-only P-H3-Image integration planning and synthetic Particle Sliders checks"
+version = "0.3.0a1"
+description = "Source-only P-H3 preparation using the released Anima gmix reference"
 requires-python = ">=3.11"
 readme = "README.md"
 license = "Apache-2.0"
-license-files = ["LICENSE", "NOTICE"]
+license-files = ["LICENSE", "NOTICE", "THIRD_PARTY_LICENSES/*.txt"]
 dependencies = [
-  "particle-sliders-core @ git+https://github.com/HyperGAN/particle-sliders.git@5adca87d32a159d529a89592fe35d3476dca7da3#subdirectory=packages/particle-sliders-core",
+  "particle-sliders-anima-gmix @ git+https://github.com/HyperGAN/particle-sliders.git@426fc9297e407a890c88163b9e21075efa78bde3#subdirectory=packages/particle-sliders-anima-gmix",
 ]
 
 [project.optional-dependencies]
@@ -19,10 +19,6 @@ dev = ["pytest>=8,<10", "build>=1"]
 
 [project.scripts]
 ph3-slider = "ph3_sliders.cli:main"
-
-[project.entry-points."particle_sliders.image_backends"]
-ph3-image = "ph3_sliders.lifecycle:BACKEND"
-ph3-synthetic = "ph3_sliders.gan_fixture:BACKEND"
 
 [project.urls]
 Repository = "https://github.com/HyperGAN/p-h3-image-particle-sliders"

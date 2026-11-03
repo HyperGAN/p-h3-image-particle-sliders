@@ -6,7 +6,8 @@ from ph3_sliders.synthetic import SyntheticProjection, check
 
 def test_actual_shared_projection_and_backward():
     report = check()
-    assert report["shared_projection"] == "particle_sliders.routed_projection.TinyParticleProjection"
+    assert report["shared_router"] == "particle_sliders.reference.RoutedMLP"
+    assert report["rank"] == 8
     assert report["finite_particle_gradients"]
     assert report["fractional_strength"]
     assert report["optimizer_steps"] == 0
@@ -18,7 +19,7 @@ def test_rng_threads_unique_bank_and_ownership():
     threads = torch.get_num_threads()
     with SyntheticProjection() as fixture:
         assert torch.equal(state, torch.get_rng_state())
-        assert [name for name, _ in fixture.named_parameters() if name == "particles"] == ["particles"]
+        assert [name for name, _ in fixture.named_parameters() if name.endswith("particles")] == ["adapter.particles"]
         assert sum(p is fixture.particles for p in fixture.parameters()) == 1
         assert not any(p.requires_grad for p in fixture.host.parameters())
         assert all(p.dtype == torch.float32 for p in fixture.parameters() if p.requires_grad)
@@ -30,15 +31,16 @@ def test_rng_threads_unique_bank_and_ownership():
 def test_nested_scale_exception_and_cleanup():
     with SyntheticProjection() as fixture:
         host = fixture.host
-        original = fixture._original_forward
-        assert "forward" in host.__dict__
+        original = host.forward
+        assert len(host._forward_hooks) == 1
         with fixture.scaled(0.75):
             with pytest.raises(RuntimeError, match="deliberate"):
                 with fixture.scaled(0):
                     raise RuntimeError("deliberate")
-            assert fixture.branch.multiplier == 0.75
-        assert fixture.branch.multiplier == 0
+            assert fixture.adapter.multiplier == 0.75
+        assert fixture.adapter.multiplier == 0
     assert "forward" not in host.__dict__
+    assert not host._forward_hooks
     assert host.forward == original
     fixture.close()
     with pytest.raises(RuntimeError, match="closed"):
@@ -65,4 +67,4 @@ def test_bad_scale_leaves_fixture_untouched(strength):
         with pytest.raises(ValueError):
             with fixture.scaled(strength):
                 pytest.fail("invalid scale was accepted")
-        assert fixture.branch.multiplier == 0
+        assert fixture.adapter.multiplier == 0

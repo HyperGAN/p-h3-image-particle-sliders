@@ -11,3 +11,9 @@ territorial restrictions apply to any future use. See docs/LICENSE-REVIEW.md.
 
 The externally pinned particle-sliders-core is MIT licensed and has its own
 dependencies and notices. Its implementation is not vendored here.
+
+The adapter attachment structure follows the MIT-licensed Anima source at
+c018f32759f49a05c2360a04b4a83924a6851913. Its original notice is retained in
+THIRD_PARTY_LICENSES/ANIMA-SOURCE-MIT.txt (Copyright 2023 Rohit Gandikota).
+The complete Game/Sampler and normalization/EMA mechanics remain in the separately
+pinned shared extraction; they are not vendored into this product.

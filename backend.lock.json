@@ -8,10 +8,11 @@
   },
   "shared_core": {
     "repository": "https://github.com/HyperGAN/particle-sliders",
-    "revision": "5adca87d32a159d529a89592fe35d3476dca7da3",
+    "revision": "a119ca1ecd3d5d6c437065839d22739b04f2f4d8",
     "subdirectory": "packages/particle-sliders-core",
-    "version": "0.12.0",
-    "particlegan": "0.9.4"
+    "version": "0.3.0",
+    "particlegan_version": "0.6.0",
+    "particlegan_revision": "82b72661c03377f348ccb76de37cd4ca02d45a8d"
   },
   "official_metadata_sha256": {
     "LICENSE": "59b99642b95ea21630e311198ddbfffbfe05aadba0c2f5d884cbdf4efcc90f44",
@@ -31,29 +32,54 @@
     "publish_models": false
   },
   "synthetic_training_policy": {
-    "backend": "ph3-synthetic",
-    "protocol": "ph3-synthetic-paired-field-pg094-v1",
-    "recipe": "bispf_optimized",
+    "fixture": "unrelated-classic-gmix-v1",
+    "recipe": "selected released-source Anima gmix / particle-gmix-1600-v2",
     "device": "cpu",
     "steps_max": 16,
+    "positions_default": 8,
+    "positions_are_native_h3": false,
+    "full_response_width": 32,
     "actual_particle_shape": [
       128,
       4
     ],
     "adapter_rank": 8,
+    "microbatch": 1,
+    "g_lr": 2e-05,
+    "d_lr": 0.0009,
+    "particle_lr": 0.006,
+    "ema": 0.995,
     "auxiliary_losses": [],
     "native_model": false,
     "accepts_staged_models": false,
-    "native_backend_enabled": false
+    "native_backend_enabled": false,
+    "noise_hold": "source stamp edit_rms*1.3; published-weight absolute1.0 discrepancy documented"
   },
   "anima_source_comparison": {
     "repository": "https://github.com/HyperGAN/anima-particle-sliders",
     "revision": "c018f32759f49a05c2360a04b4a83924a6851913",
     "released_core_revision": "a119ca1ecd3d5d6c437065839d22739b04f2f4d8",
     "released_generation": "particle-gmix-1600-v2",
-    "proposed_ph3_generation": "existing pinned modern ConditionalPG09/official ParticleGAN 0.9.4; not released-Anima parity",
-    "native_adoption_generation_decision": "unresolved",
-    "source_comparison": {
+    "selected_generation": "released-source gmix with exact Anima Game/Sampler"
+  },
+  "shared_runner": {
+    "package": "particle-sliders-anima-gmix",
+    "version": "0.1.0a1",
+    "repository": "https://github.com/HyperGAN/particle-sliders",
+    "revision": "426fc9297e407a890c88163b9e21075efa78bde3",
+    "subdirectory": "packages/particle-sliders-anima-gmix",
+    "publication": "LOCAL_ONLY_OWNER_REVIEW_PENDING; no public source push allowed yet",
+    "anima_source_revision": "c018f32759f49a05c2360a04b4a83924a6851913",
+    "game_sha256": "802ba0706a465aaa3d269064f3deb494e275cc89d4d793eb207856c937ac3ab5"
+  },
+  "historical_modern_proposal": {
+    "product_head": "fef61c13bc3c0324c54f1efb7f07be889473d76d",
+    "core_revision": "5adca87d32a159d529a89592fe35d3476dca7da3",
+    "particlegan_version": "0.9.4",
+    "selected": false,
+    "receipt": "validation/anima-pg094-cpu.json",
+    "evidence_transfers_to_classic": false,
+    "core_source_diff_from_released": {
       "formulation.py": {
         "anima_sha256": "7e82efbef5e67107c717d8249d47542dd55e07ce0d508154b9ddb06848e6ad0a",
         "ph3_sha256": "1c248ca0d3d7bf5edb5ae06821cf52480ed9877414b10d1c7c9f843968bd8d01",

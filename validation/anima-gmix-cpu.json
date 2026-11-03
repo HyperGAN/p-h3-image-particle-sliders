@@ -1,0 +1,124 @@
+{
+  "schema": "ph3-classic-anima-gmix-cpu-v1",
+  "date": "2026-11-03",
+  "python": "3.12.15",
+  "packages": {
+    "p-h3-image-particle-sliders": "0.3.0a1",
+    "particle-sliders-anima-gmix": "0.1.0a1",
+    "particle-sliders-core": "0.3.0",
+    "particlegan": "0.6.0",
+    "torch": "2.14.1+cpu",
+    "pytest": "9.1.1"
+  },
+  "tests": {
+    "product_passed": 54,
+    "shared_passed": 7,
+    "source_free_installed_wheels": true,
+    "command": "python -m pytest -q -c /dev/null -o cache_dir=/tmp/ph3-classic-product-cache /tmp/ph3-classic-product-tests",
+    "initial_source_harness_failure": "52 passed/2 subprocess ModuleNotFoundError with a relative src PYTHONPATH; corrected by source-free installed-wheel qualification,54 passed",
+    "guards": [
+      "CUDA_VISIBLE_DEVICES empty",
+      "HF_HUB_OFFLINE=1",
+      "TRANSFORMERS_OFFLINE=1",
+      "OMP_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "network connection and CUDA initialization rejected by product test fixture"
+    ]
+  },
+  "source_sha256": {
+    "FORMULATION.md": "6ecda9ed3334837b49b522acd40300d9866a1cce40a9f17bcb9671f1ff7e92c7",
+    "NOTICE": "6096fb3028bf81b899d7b68c94060e7808df586977c32666e3190d6db958faf0",
+    "README.md": "c358400cc8d332051342a7f188e81faf0920a7faf606d0857322647a6eb21691",
+    "VALIDATION.md": "de03bc8f969e50fd291c369e4a915fb200262364239bbe7971c0611033af355c",
+    "backend.lock.json": "b17581edf07f03a631673d26a2fec7d2f38be80b1af2fcf1c60733b8091051f8",
+    "docs/NEXT-STEPS.md": "def7e1cab6ad736f7eb361483e37d79a8852eeb71152e7138bb9d4bac1a2213f",
+    "pyproject.toml": "6e51776c1d8b675c4badf21eb952fd68af1a8310e07482b4782e13cf1b788a4e",
+    "src/ph3_sliders/__init__.py": "256542e5087d6c63568df6c25e9e285b0bf4c66ea6ff16f74649eae7b2d68a6e",
+    "src/ph3_sliders/adapter.py": "27a2dae146d331667ecbade21125f90fc686040f61965b5b050ab640699718c7",
+    "src/ph3_sliders/cli.py": "5c032eead5781b4110e615ebd4ad53862402c22babc8db4225e6547d1ab818b2",
+    "src/ph3_sliders/contract.py": "2811ea12a57dbb515c283dc6e98e1db09c8a886a498d478a212af51a5e162c84",
+    "src/ph3_sliders/gmix_fixture.py": "4b5886319a109c5c3a859095fc5aacbbda4c8d63e78af686170aa04482c39b3d",
+    "src/ph3_sliders/lifecycle.py": "33d9666b487836ab2bbe7463813a70413c9cf61f0b9d9ee8d1df05c081e0e42e",
+    "src/ph3_sliders/paired_cache.py": "3403a2ecaca1f937a69b758bc372f2395d925e02ed5816b94cde326710e70fa3",
+    "src/ph3_sliders/synthetic.py": "791ff745e2b8fd4be25ee866db72867d9b1e984f186bda3c57abda2081c24e2a",
+    "tests/conftest.py": "e590f8d222896f897f97c7f47522231677b00858e7f32f8258dc0d4de6a5dcb8",
+    "tests/test_contract.py": "2c8c28001cf10dafe520b3dae25a32d43f002c4b7e713cc2a160bf1458ff6d79",
+    "tests/test_gmix.py": "ed5b2f4f4d6669d14f384959ebee245be07832692e2d09dc6dfbe389070e630f",
+    "tests/test_native_gate.py": "e4197c20dd4f205763f4f67d3f610820a64e0658454364dd605a98c98893e1b7",
+    "tests/test_synthetic.py": "f73cb7964778f0d48ad54fa36d837e11032d15d33436ee31ab7d5ab23701df9d"
+  },
+  "wheel_sha256": {
+    "p_h3_image_particle_sliders-0.3.0a1-py3-none-any.whl": "b063b9e5b36482da4840ba76d050900763b8119f3bbc1b2665b93fd7055c47f4",
+    "particle_sliders_anima_gmix-0.1.0a1-py3-none-any.whl": "8d904d00bebc882c525bc1babb040ba642bf53d16ff4d2be7060bd1ed59f7d7e",
+    "particle_sliders_core-0.3.0-py3-none-any.whl": "f809b34f5104ac072d69dd91cdcfc04c0bc449a179ad82839f90641971e6bacd"
+  },
+  "installed_python_file_set_matches_source": true,
+  "deleted_modern_module_absent_from_wheel": true,
+  "anima_mit_notice_present_in_wheel": true,
+  "shared_parity": {
+    "reference": "Anima c018f327 Game source",
+    "updates": 8,
+    "microbatch": 1,
+    "full_response_width": 12,
+    "adapter_critic_optimizers_sampler_ema_metrics": "torch.equal / exact scalar equality"
+  },
+  "default10_normalization_matches_original": true,
+  "cli_probe": {
+    "status": "passed",
+    "device": "cpu",
+    "fixture": "unrelated-classic-gmix-v1",
+    "engine": "particle_sliders_anima_gmix.anima_game.Game",
+    "formulation_id": "particle-gmix-1600-v2",
+    "completed_steps": 4,
+    "response_width": 32,
+    "rank": 8,
+    "particle_shape": [
+      128,
+      4
+    ],
+    "g_lr": 2e-05,
+    "d_lr": 0.0009,
+    "particle_lr": 0.006,
+    "ema_decay": 0.995,
+    "last_metrics": {
+      "step": 4,
+      "d_adv": 0.3538863454014063,
+      "d_penalty": 0.0,
+      "g_adv": 1.338928870856762,
+      "vic": 0.05321631580591202,
+      "d_grad_norm": 1.1659059524536133,
+      "g_grad_norm": 0.7635603547096252,
+      "particle_gan_grad_norm": 1.5326527318393346e-06,
+      "noise_min": 4.843893995850644,
+      "noise_max": 4.843895258580187,
+      "d_rows": [
+        12,
+        0,
+        11,
+        23,
+        26,
+        6,
+        19,
+        28
+      ],
+      "g_rows": [
+        0,
+        17,
+        8,
+        23,
+        3,
+        6,
+        2,
+        22
+      ]
+    },
+    "auxiliary_losses": [],
+    "artifacts_written": false,
+    "model_weights_loaded": false,
+    "native_h3_qualified": false,
+    "published_run_parity": false,
+    "noise_hold": "pinned source stamp: edit_rms*1.3"
+  },
+  "source_publication": "LOCAL_ONLY_PENDING_SHARED_OWNER_REVIEW_AND_ADA_CONFIRMATION",
+  "scope": "Unrelated synthetic CPU source qualification; no pretrained weights, GPU work, H3 outputs or native H3 qualification"
+}
