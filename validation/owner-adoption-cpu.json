@@ -1,0 +1,88 @@
+{
+  "schema": "ph3-owner-adoption-cpu-v1",
+  "base_revision": "c563af4c3b8086c7a591a30a6fb7fd8bc0115ca1",
+  "upstream_handoff_revision": "ed8e5a8785fc6e3626ccaf88b61acb49a4b3d153",
+  "adopted_source_revision": "b30e34bced6779457187bbb5e1f31a50c2ec63e4",
+  "patch_sha256": "60001b7e1ea82cadea08e9b2503f5ca2fd7dbab73bd6a2ab6c427e5ac17b6bfd",
+  "handoff_nine_file_hashes_verified": true,
+  "original_handoff_receipt": "validation/metric-lr-cpu-preparation.json",
+  "historical_receipt_note": "Original author receipt retained unchanged. Its docs/LR-SEARCH.md hash predates the later static-contract link; current nine-file handoff hashes match exactly. New evidence below is independently executed on adopted bytes.",
+  "python": "3.12.15",
+  "packages": {
+    "torch": "2.14.1+cpu",
+    "numpy": "2.5.3",
+    "pytest": "9.1.1",
+    "particle-sliders-anima-gmix": "0.1.0a1",
+    "particle-sliders-core": "0.3.0",
+    "particlegan": "0.6.0"
+  },
+  "tests": {
+    "passed": 83,
+    "source_free_installed_wheel": true,
+    "copied_test_directory": "/tmp/ph3-owner-adoption-tests",
+    "network_cuda_initialization_denied": true,
+    "cuda_visible_devices": "",
+    "hf_hub_offline": true,
+    "transformers_offline": true
+  },
+  "wheel_sha256": "85189dd7779d0ba42ceb73b7bcfca5e69a75a8c48dcf08d6165e140d9077fb72",
+  "source_sha256": {
+    "README.md": "7703a2e8b0611503f6af3fdcb3d6f1fcc14a6afae89d8210750c024d90557227",
+    "docs/LR-SEARCH.md": "8fd687ddba565efe4aae0218e4cea4c0d66c1c560ead4d8e5bc388da2ec22580",
+    "docs/NATIVE-SOURCE-CONTRACT.md": "40ad33a6d857537861aa95a7fb3a0805f86570e6bec9241d3bf951e1d913eb71",
+    "docs/lr-search.proposed.json": "8a3efe4b266409fe802faf10d51b5ef6176b58f477162cafdd1868f8b093c3fe",
+    "src/ph3_sliders/__init__.py": "256542e5087d6c63568df6c25e9e285b0bf4c66ea6ff16f74649eae7b2d68a6e",
+    "src/ph3_sliders/adapter.py": "27a2dae146d331667ecbade21125f90fc686040f61965b5b050ab640699718c7",
+    "src/ph3_sliders/cli.py": "5c032eead5781b4110e615ebd4ad53862402c22babc8db4225e6547d1ab818b2",
+    "src/ph3_sliders/contract.py": "2811ea12a57dbb515c283dc6e98e1db09c8a886a498d478a212af51a5e162c84",
+    "src/ph3_sliders/evaluation.py": "4f57ebe406b310308ffb3a580044dc5082ad320b649ceccf724b58214fb942b7",
+    "src/ph3_sliders/gmix_fixture.py": "94c1577b1d40207fe7f6797cdd3ca532efe1b8092303ac96309e66adf0adf113",
+    "src/ph3_sliders/learning_rates.py": "7743ff905dc51e59fabbc44ad2696fe642c3c4e55f1450c80b9f1cd685e32b66",
+    "src/ph3_sliders/lifecycle.py": "33d9666b487836ab2bbe7463813a70413c9cf61f0b9d9ee8d1df05c081e0e42e",
+    "src/ph3_sliders/paired_cache.py": "3403a2ecaca1f937a69b758bc372f2395d925e02ed5816b94cde326710e70fa3",
+    "src/ph3_sliders/synthetic.py": "791ff745e2b8fd4be25ee866db72867d9b1e984f186bda3c57abda2081c24e2a",
+    "tests/conftest.py": "e590f8d222896f897f97c7f47522231677b00858e7f32f8258dc0d4de6a5dcb8",
+    "tests/test_contract.py": "2c8c28001cf10dafe520b3dae25a32d43f002c4b7e713cc2a160bf1458ff6d79",
+    "tests/test_evaluation.py": "4ca18a0113feda765537edc053ad8124d1382a4245e67a0720f7127a7998c7d8",
+    "tests/test_gmix.py": "ed5b2f4f4d6669d14f384959ebee245be07832692e2d09dc6dfbe389070e630f",
+    "tests/test_learning_rates.py": "43a696ec2e117f137e3c70c71ffc2b94667b19d39a25c7f248e72398c2a30b76",
+    "tests/test_native_gate.py": "e4197c20dd4f205763f4f67d3f610820a64e0658454364dd605a98c98893e1b7",
+    "tests/test_synthetic.py": "f73cb7964778f0d48ad54fa36d837e11032d15d33436ee31ab7d5ab23701df9d"
+  },
+  "static_native_source": {
+    "revision": "35087a644038eb531f48581708d4763044cb4852",
+    "selected_files": 21,
+    "bytes": 280800,
+    "sha256_and_git_blob_hashes_verified": true,
+    "official_github_tree_blob_identities_verified": true,
+    "model_code_imported": false,
+    "native_qualification": false
+  },
+  "formulation": {
+    "shared_runner_revision": "18ff6c18565263a693b4a85ba6680beb8d577a65",
+    "game_sha256": "802ba0706a465aaa3d269064f3deb494e275cc89d4d793eb207856c937ac3ab5",
+    "existing_product_runtime_files_changed": [],
+    "existing_tests_changed": [],
+    "new_training_objectives": [],
+    "new_helpers": [
+      "detached raw-response evaluation",
+      "owned fresh optimizer param-group LR binding"
+    ],
+    "lr_identity_boundary": "Helper is not wired into the fixed synthetic snapshot schema. Native users must bind actual rates into their full recipe identity before checkpoint save/restore; no native schema is implemented."
+  },
+  "review": {
+    "nova_base_product": "c563af4c3b8086c7a591a30a6fb7fd8bc0115ca1",
+    "nova_shared": "18ff6c18565263a693b4a85ba6680beb8d577a65",
+    "base_verdict": "PASS; no blockers; static only, no suite rerun",
+    "metric_lr_delta": "PENDING exact-source review; base PASS does not transfer",
+    "shared_owner_publication": "PENDING; no source push/merge"
+  },
+  "scope": {
+    "native_h3_training_steps": 0,
+    "native_weights_loaded": false,
+    "gpu_used": false,
+    "native_outputs_produced": false,
+    "lr_search_executed": false,
+    "publication": "local only"
+  }
+}
