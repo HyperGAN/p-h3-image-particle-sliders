@@ -9,6 +9,10 @@ The local `ph3_sliders.evaluation` implementation measures the same pooled
 relative squared L2 formula and retains additive raw-response statistics. Its
 analytical tests do not qualify a native model.
 
+The [pinned upstream source contract](NATIVE-SOURCE-CONTRACT.md) records H3's
+time/velocity sign, packed image/audio state, decoder and projection inventory.
+These static findings must be verified by the native implementation.
+
 ## Measurement binding
 
 For this unipolar formulation, teacher is the frozen positive-conditioned
