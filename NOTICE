@@ -1,0 +1,13 @@
+P-H3-Image Particle Sliders
+Copyright 2026 HyperGAN contributors
+
+This repository contains original source-only integration planning and synthetic
+CPU checks. It does not contain MiniMax H3 or Pruna model implementation,
+weights, model derivatives, adapters trained on those models, or model outputs.
+
+The Apache-2.0 license applies to this repository's original source only.
+It grants no rights to MiniMax H3 or P-H3-Image. Their separate license and
+territorial restrictions apply to any future use. See docs/LICENSE-REVIEW.md.
+
+The externally pinned particle-sliders-core is MIT licensed and has its own
+dependencies and notices. Its implementation is not vendored here.
