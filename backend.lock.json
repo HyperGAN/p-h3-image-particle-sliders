@@ -1,0 +1,33 @@
+{
+  "schema": "ph3-source-plan-v1",
+  "inspected_at": "2026-11-03",
+  "model": {
+    "id": "PrunaAI/P-H3-Image",
+    "revision": "7f98acef503cf2bcfba821a78cb1cf1a9928b2df",
+    "weights_downloaded": false
+  },
+  "shared_core": {
+    "repository": "https://github.com/HyperGAN/particle-sliders",
+    "revision": "5adca87d32a159d529a89592fe35d3476dca7da3",
+    "subdirectory": "packages/particle-sliders-core",
+    "version": "0.12.0",
+    "particlegan": "0.9.4"
+  },
+  "official_metadata_sha256": {
+    "LICENSE": "59b99642b95ea21630e311198ddbfffbfe05aadba0c2f5d884cbdf4efcc90f44",
+    "NOTICE": "ddbc153ae7c62e5fac13c4fef6c607d0cefa7456f44bf837137320ebe4453950",
+    "modular_model_index.json": "6dc2f1240440c559b48c61ffa81145629e809e3805795df76fcaa7c366b6d1b2",
+    "transformer/config.json": "104c7bbe0698822190c88f3a90863a127566960a5e8842bca82b8028854eb433",
+    "README.md": "c43ba35357b752f0f5142a3bb21662b8b7d46e3a1d4edb730d364287a6aa071f",
+    "scheduler/scheduler_config.json": "2bf04b0952ec7f09798fb667b52f14df4f50deb634736a242aa8c0171744dfa9"
+  },
+  "native_dependency_pin": null,
+  "native_status": "unimplemented and disabled; license authorization and native qualification required",
+  "runtime_policy": {
+    "download": false,
+    "load_weights": false,
+    "train": false,
+    "render": false,
+    "publish_models": false
+  }
+}
