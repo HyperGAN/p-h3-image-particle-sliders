@@ -29,5 +29,41 @@
     "train": false,
     "render": false,
     "publish_models": false
+  },
+  "synthetic_training_policy": {
+    "backend": "ph3-synthetic",
+    "protocol": "ph3-synthetic-paired-field-pg094-v1",
+    "recipe": "bispf_optimized",
+    "device": "cpu",
+    "steps_max": 16,
+    "actual_particle_shape": [
+      128,
+      4
+    ],
+    "adapter_rank": 8,
+    "auxiliary_losses": [],
+    "native_model": false,
+    "accepts_staged_models": false,
+    "native_backend_enabled": false
+  },
+  "anima_source_comparison": {
+    "repository": "https://github.com/HyperGAN/anima-particle-sliders",
+    "revision": "c018f32759f49a05c2360a04b4a83924a6851913",
+    "released_core_revision": "a119ca1ecd3d5d6c437065839d22739b04f2f4d8",
+    "released_generation": "particle-gmix-1600-v2",
+    "proposed_ph3_generation": "existing pinned modern ConditionalPG09/official ParticleGAN 0.9.4; not released-Anima parity",
+    "native_adoption_generation_decision": "unresolved",
+    "source_comparison": {
+      "formulation.py": {
+        "anima_sha256": "7e82efbef5e67107c717d8249d47542dd55e07ce0d508154b9ddb06848e6ad0a",
+        "ph3_sha256": "1c248ca0d3d7bf5edb5ae06821cf52480ed9877414b10d1c7c9f843968bd8d01",
+        "byte_identical": false
+      },
+      "reference.py": {
+        "anima_sha256": "d35963f072c4cd4acc92d255af5d3ea32535d2deb3d4a3c18625d85f30c42de3",
+        "ph3_sha256": "2c5809edd3818fab9efdd0c5234ea6b5027de5fc0130155e537950471018a371",
+        "byte_identical": false
+      }
+    }
   }
 }

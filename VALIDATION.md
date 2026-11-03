@@ -1,4 +1,27 @@
-# Initial CPU validation
+# CPU validation and immutable cohorts
+
+## Modern ParticleGAN follow-up
+
+The `0.2.0a1` source candidate adds a separately registered unrelated synthetic
+field factory for the actual shared `ConditionalPG09` law. Its current evidence
+is recorded in [validation/anima-pg094-cpu.json](validation/anima-pg094-cpu.json).
+It does not activate the native H3 backend or establish released-Anima parity.
+
+The expanded suite additionally verifies the real shared adversarial/prior and
+critic/penalty loss decomposition, actual participating rank-8/128×4 bank,
+frozen base/teachers, positive-teacher sensitivity with neutral-student holding,
+zero/fractional strengths, exact full-versus-split resume including EMA, inference
+export versus training packet refusal, cleanup after observer failure, CPU RNG
+preservation, and refusal of external models, auxiliary-loss knobs and media.
+The fixture accepts no H3 runtime, model paths, teacher cache or Hub options.
+
+The installed `gan-check` command performs bounded synthetic optimizer updates
+and returns detached scalar metrics. It writes no checkpoint, adapter or media.
+Tests use in-memory synthetic packets and do not publish synthetic weights.
+The dedicated `check()` regression also snapshots its temporary working directory
+before and after execution and verifies that no artifact files appear.
+
+## Historical initial source cohort: 870f9d3
 
 **40 tests passed**, including a fresh-process, source-free installed-wheel run.
 The product and exact shared-core wheels were built locally and installed under
@@ -27,7 +50,7 @@ ownership, fractional strength, exact fresh-base preservation, cleanup after
 exceptions, CPU RNG/thread restoration, and CPU/FP32 behavior under different
 caller defaults.
 
-[validation.json](validation.json) records exact source hashes, wheel hashes,
+[validation.json](validation.json) records this historical cohort's exact source hashes, wheel hashes,
 package versions, installed module locations and the CPU probe result. Wheels
 remain local validation artifacts; no package registry or model Hub was used for
 publication. This does not qualify an H3 architecture, model license, pretrained

@@ -2,9 +2,9 @@
 
 Source-only integration planning for [PrunaAI/P-H3-Image](https://huggingface.co/PrunaAI/P-H3-Image),
 using [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders).
-This initial revision has a request planner, an installed shared-lifecycle
-registration that refuses native operations, and an unrelated synthetic CPU
-fixture that exercises the shared routed-particle projection. It contains no
+This source proposal has a request planner, an installed shared-lifecycle
+registration that refuses native operations, and unrelated synthetic CPU
+fixtures for the shared routed projection and actual ParticleGAN updates. It contains no
 model loader, trained slider, pretrained-model results, or model outputs.
 
 **Native download, loading, training, rendering and model publication are disabled.**
@@ -26,6 +26,8 @@ ph3-slider plan --prompt 'A documentary photograph of a ceramic cup beside a win
 CUDA_VISIBLE_DEVICES='' HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
   OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 ph3-slider cpu-check
 CUDA_VISIBLE_DEVICES='' HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
+  OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 ph3-slider gan-check --steps 2
+CUDA_VISIBLE_DEVICES='' HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 \
   OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python -m pytest -q
 ```
 
@@ -43,7 +45,7 @@ unipolar strength. No native request is executed, and strengths have no image
 quality qualification. Native prompt expansion must be frozen for paired teacher
 collection in a future implementation.
 
-The common interface is registered as `ph3-image`:
+The native common interface is registered as `ph3-image`:
 
 ```python
 from particle_sliders.lifecycle import SessionConfig, backend
@@ -55,6 +57,27 @@ print(backend('ph3-image').describe(config))  # operations=(), no native allocat
 All six shared operations refuse before validation, PG admission, factory
 preparation, CUDA selection or weight allocation. There is no environment flag,
 `allow_hub`, acknowledgment switch or CLI option to unlock them in this revision.
+
+The separate `ph3-synthetic` backend runs only a fixed, unrelated random field:
+
+```python
+from particle_sliders.lifecycle import SessionConfig, open_session
+
+config = SessionConfig('ph3-synthetic', 'new-synthetic-cohort',
+    fixture='unrelated-random-field-v1', steps=4, ema_decay=.9)
+with open_session(config) as run:
+    run.train(stop_after=2)
+    packet = run.checkpoint()  # synthetic in-memory packet; not an H3 adapter
+with open_session(config) as run:
+    run.restore(packet)
+    run.train()
+    response = run.evaluate(strength=.5)  # numerical synthetic field, not an image
+```
+
+This factory accepts no staged model, native request, teacher cache, Hub download
+or auxiliary-loss options. `gan-check` writes no artifacts. The shared lifecycle
+owns updates, EMA, strict checkpoint restore and export. The real H3 registration
+is unchanged and remains disabled.
 
 ## What the CPU fixture establishes
 
@@ -69,6 +92,20 @@ and native refusal before preparation.
 This is a test of shared software wiring on unrelated synthetic tensors. It does
 not execute an H3 architecture, evaluate its velocity field, train a useful
 concept, establish GPU fit, or qualify a sampler. No synthetic adapter is saved.
+
+`gan-check` additionally runs the pinned `ConditionalPG09` with public
+`bispf_optimized`, actual rank-8 routed branches and an actual 128×4 bank. Frozen
+positive and neutral teachers share the same synthetic state/time; the student
+uses neutral conditioning. Generator loss is the public adversarial loss plus
+public particle prior, and critic loss is the public adversarial loss plus public
+critic penalty. No reconstruction, perceptual or other auxiliary objective is
+added. Resume, EMA and export tests exercise the shared implementations.
+
+**This is not a claim of matching the released Anima recipe.** Anima's released
+gmix sliders and its separate PG0.9 training proposal are different generations.
+The existing P-H3 stack remains the proposed modern ParticleGAN path. See
+[FORMULATION.md](FORMULATION.md) for the source comparison and unresolved native
+generation decision, and [VALIDATION.md](VALIDATION.md) for bounded CPU evidence.
 
 ## Native integration remains separate work
 
