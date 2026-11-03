@@ -1,0 +1,71 @@
+{
+  "schema": "ph3-cpu-validation-v1",
+  "date": "2026-11-03",
+  "python": "3.12.15",
+  "packages": {
+    "torch": "2.14.1+cpu",
+    "particle-sliders-core": "0.12.0",
+    "particlegan": "0.9.4",
+    "pytest": "9.1.1",
+    "setuptools": "84.2.1"
+  },
+  "tests": {
+    "count": 40,
+    "passed": 40,
+    "location": "copied tests outside checkout; installed product and core wheels",
+    "command": "python -m pytest -q -c /dev/null /tmp/ph3-source-free-tests",
+    "guards": [
+      "CUDA_VISIBLE_DEVICES empty",
+      "HF_HUB_OFFLINE=1",
+      "TRANSFORMERS_OFFLINE=1",
+      "OMP_NUM_THREADS=1",
+      "MKL_NUM_THREADS=1",
+      "socket.create_connection and CUDA initialization forbidden by tests"
+    ]
+  },
+  "installed_modules": {
+    "product": "/tmp/ph3-installed/ph3_sliders",
+    "core": "/tmp/ph3-installed/particle_sliders",
+    "particlegan": "/tmp/ph3-python-deps/particlegan"
+  },
+  "source_sha256": {
+    "backend.lock.json": "3c60c55f8b686fd2dd17f5b5cd72946c9be57e1fa79f07b3378b50457f58ff88",
+    "pyproject.toml": "9754bf68d6b478c154c3d01224a537649e7343a7d3b20fd3f3ba630cb1732379",
+    "src/ph3_sliders/__init__.py": "44bcb4a5fcb93782085e16fb7444462d95fa940e14acc8d1d5ed38f2c8e128a3",
+    "src/ph3_sliders/cli.py": "d13438fe2c70d0fa32a97708e497b83f609817556845b9432a4bc20fd62f0d1e",
+    "src/ph3_sliders/contract.py": "e82c97d85807d5be87a91ea5ddf01f37f4a699fa5d62375b3a9f281bb5bb08c1",
+    "src/ph3_sliders/lifecycle.py": "487035922b9daf30bc92b2e2a033fcc5acce3880641e8fbd924252afcd389a0e",
+    "src/ph3_sliders/synthetic.py": "4e28b5f56c4882564666fb3f6854a20d322ae098f05a2ac7697ec75a9e9a078a",
+    "tests/conftest.py": "e590f8d222896f897f97c7f47522231677b00858e7f32f8258dc0d4de6a5dcb8",
+    "tests/test_contract.py": "2c8c28001cf10dafe520b3dae25a32d43f002c4b7e713cc2a160bf1458ff6d79",
+    "tests/test_lifecycle.py": "48aba4b0470709c4bff756cc4243a8011086bff95c66f1326b422b19f73962fe",
+    "tests/test_synthetic.py": "c8d0c33bd1cc94c2813f897e556c5716035e93d19566b61313c36ce7d935cec0"
+  },
+  "wheel_sha256": {
+    "p_h3_image_particle_sliders-0.1.0-py3-none-any.whl": "93a7f2334dd4c4d373d91774b573b779d1d7143e82a9bb379266e66cb2a421f0",
+    "particle_sliders_core-0.12.0-py3-none-any.whl": "c5ba57217dbb347f5b1618c7d39d0b2b0e6f0bc709cf16dcf50e6b737dfb2e2b"
+  },
+  "official_pg_source_manifest_verified": "2ccc05a2e2e4c9ce00187e6cd13495f0b468a6fb22644cd5f8993dd6ec80a3a8",
+  "cpu_probe": {
+    "status": "passed",
+    "device": "cpu",
+    "fixture": "unrelated random 8x8 Linear",
+    "shared_projection": "particle_sliders.routed_projection.TinyParticleProjection",
+    "particle_shape": [
+      128,
+      4
+    ],
+    "base_identity_at_init": true,
+    "fractional_strength": true,
+    "finite_particle_gradients": true,
+    "model_weights_loaded": false,
+    "optimizer_steps": 0,
+    "native_h3_qualified": false
+  },
+  "native_operations": "disabled; no model download/load/train/render/publication",
+  "limitations": [
+    "not an H3 architecture test",
+    "no pretrained quality or native sampler parity",
+    "no dependency co-installation qualification beyond the described isolated targets"
+  ]
+}

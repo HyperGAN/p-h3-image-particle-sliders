@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "p-h3-image-particle-sliders"
+version = "0.1.0"
+description = "Source-only P-H3-Image integration planning and synthetic Particle Sliders checks"
+requires-python = ">=3.11"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+dependencies = [
+  "particle-sliders-core @ git+https://github.com/HyperGAN/particle-sliders.git@5adca87d32a159d529a89592fe35d3476dca7da3#subdirectory=packages/particle-sliders-core",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "build>=1"]
+
+[project.scripts]
+ph3-slider = "ph3_sliders.cli:main"
+
+[project.entry-points."particle_sliders.image_backends"]
+ph3-image = "ph3_sliders.lifecycle:BACKEND"
+
+[project.urls]
+Repository = "https://github.com/HyperGAN/p-h3-image-particle-sliders"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
