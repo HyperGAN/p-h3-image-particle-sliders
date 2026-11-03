@@ -1,0 +1,46 @@
+{
+  "schema": "ph3-metric-lr-cpu-preparation-v1",
+  "date": "2026-11-03",
+  "base_product_revision": "c563af4",
+  "worktree": "/ml2/particlesliders-working/ph3-native-lr",
+  "python": "3.12.15",
+  "packages": {
+    "torch": "2.14.1+cu130",
+    "pytest": "9.2.0",
+    "numpy": "2.5.4"
+  },
+  "tests": {
+    "passed": 83,
+    "metric_controls": 20,
+    "rate_binding": 9,
+    "existing_product": 54,
+    "cuda_visible_devices": "",
+    "hf_hub_offline": true,
+    "transformers_offline": true,
+    "network_and_cuda_initialization_denied_by_fixture": true,
+    "command": "PYTHONPATH=/ml2/particlesliders-working/ph3-native-lr/src:/tmp/ph3-classic-numpy-runner-installed:/tmp/ph3-classic-installed:/tmp/ph3-classic-deps <qwen-native-python> -m pytest -q",
+    "initial_harness_failure": "72passed/2failed because relative src PYTHONPATH could not resolve after subprocess cwd change; absolute path corrected,83passed after adding9 rate checks"
+  },
+  "sources": {
+    "README.md": "7703a2e8b0611503f6af3fdcb3d6f1fcc14a6afae89d8210750c024d90557227",
+    "docs/LR-SEARCH.md": "80959467beec0578c20ac02be37a4e4447d2ba2f920e3b749cabd0f108ede0f4",
+    "docs/lr-search.proposed.json": "8a3efe4b266409fe802faf10d51b5ef6176b58f477162cafdd1868f8b093c3fe",
+    "src/ph3_sliders/evaluation.py": "4f57ebe406b310308ffb3a580044dc5082ad320b649ceccf724b58214fb942b7",
+    "src/ph3_sliders/learning_rates.py": "7743ff905dc51e59fabbc44ad2696fe642c3c4e55f1450c80b9f1cd685e32b66",
+    "tests/test_evaluation.py": "4ca18a0113feda765537edc053ad8124d1382a4245e67a0720f7127a7998c7d8",
+    "tests/test_learning_rates.py": "43a696ec2e117f137e3c70c71ffc2b94667b19d39a25c7f248e72398c2a30b76"
+  },
+  "native_model_weights_loaded": false,
+  "native_h3_training_steps": 0,
+  "native_qualification": false,
+  "lr_search_executed": false,
+  "shared_game_source_changed": false,
+  "source_publication": "local_only_pending_owner_reconciliation",
+  "unresolved": [
+    "model access rights",
+    "shared proposal owner review",
+    "native loading/collector/sampler/adapter artifact implementation",
+    "native update/resume/OFF/memory qualification",
+    "search and final >=512 training"
+  ]
+}

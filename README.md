@@ -5,6 +5,11 @@ using **the released Anima gmix formulation as the reference**, as requested.
 No model loader, H3 attention-target discovery, trained slider, image sampler or
 pretrained-model result is implemented. Native operations remain disabled.
 
+The next native experiment's [teacher/student LR protocol](docs/LR-SEARCH.md)
+and [proposed manifest](docs/lr-search.proposed.json) follow the common base
+metric. Analytical metric controls are implemented; no native LR candidate or
+trained H3 slider exists yet.
+
 The selected source is Anima `c018f327`, classic shared core `a119ca1e` (0.3.0)
 and its exact ParticleGAN `82b72661` dependency (0.6.0). The complete Anima
 `Game`/`Sampler` module is reused byte for byte through the additive shared
