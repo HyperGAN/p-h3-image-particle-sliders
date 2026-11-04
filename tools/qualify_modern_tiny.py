@@ -25,7 +25,7 @@ def qualify(args, lease):
     from ph3_sliders.native_host import H3Host
     from ph3_sliders.native_runtime import (configure_numeric_runtime,
         verify_diffusers_source, load_transformer, verify_loaded_transformer)
-    from modern_native import equal, save, restore, evaluate_saved, export, write, event, parity
+    from modern_native import equal, save, restore, evaluate_saved, evaluate_off, export, write, event, parity
 
     args.output.mkdir(parents=True, exist_ok=False)
     configure_numeric_runtime(47)
@@ -75,6 +75,9 @@ def qualify(args, lease):
         if not torch.equal(off.cpu(), cache[0]["neutral"]):
             raise ValueError("trained HNDL int8 OFF differs")
         evaluation = evaluate_saved(run, cache, args.output / "evaluation")
+        off_evaluation = evaluate_off(run, cache, args.output / "OFF-evaluation")
+        if off_evaluation["mean_teacher_student_relative_error"] != 1.:
+            raise ValueError("full trained-attachment OFF score differs from1")
         export(run, args.output / "step-000004-ema", identity)
         equal(expected, run.snapshot())
         result = dict(schema="ph3-modern-random-native-gpu-qualification-v1", status="passed",
@@ -84,6 +87,7 @@ def qualify(args, lease):
             actual_random_updates=run.step, replay_calls=2, pretrained_training_updates=0,
             native_targets=len(host.targets), response_elements=cache[0]["positive"].numel(),
             evaluation=evaluation, elapsed_seconds=time.monotonic()-started,
+            OFF_evaluation=off_evaluation,
             gpu_peak_allocated_bytes=torch.cuda.max_memory_allocated(), gpu=lease.check())
         write(args.output / "result.json", result)
         event(phase="modern_random_int8_gpu_passed", completed_steps=run.step,

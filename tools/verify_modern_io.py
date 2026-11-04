@@ -86,6 +86,9 @@ def main():
             result = driver.evaluate_saved(run, cache, evaluation)
             driver.equal(expected, run.snapshot())
             assert driver.evaluate_saved(run, cache, evaluation) == result
+            off = driver.evaluate_off(run, cache, root / "OFF-evaluation")
+            assert off["mean_teacher_student_relative_error"] == 1.
+            driver.equal(expected, run.snapshot())
             assert file_hash(evaluation / "student.safetensors") == result["raw_student_responses"]["sha256"]
             driver.export(run, root / "ema", {"probe": "reduced random H3"})
             driver.equal(expected, run.snapshot())
@@ -101,6 +104,7 @@ def main():
                 checkpoint_interruption_recovery=True, legacy_incomplete_slot_preserved=True,
                 raw_and_metric_atomic_publication=True, evaluation_interruption_recovery=True,
                 evaluation_idempotent=True, export_and_evaluation_preserve_full_state=True,
+                full_trained_attachment_OFF_control_exact=True,
                 HNDL_EMA_export_load_exact=True, GPU_initialized=False,
                 pretrained_training_updates=0, driver_sha256=file_hash(Path(driver.__file__)))
             output = Path(__file__).resolve().parents[1] / "validation/modern-driver-cpu-io.json"

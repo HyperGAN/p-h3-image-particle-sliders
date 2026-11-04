@@ -9,8 +9,9 @@
   "evaluation_interruption_recovery": true,
   "evaluation_idempotent": true,
   "export_and_evaluation_preserve_full_state": true,
+  "full_trained_attachment_OFF_control_exact": true,
   "HNDL_EMA_export_load_exact": true,
   "GPU_initialized": false,
   "pretrained_training_updates": 0,
-  "driver_sha256": "59b527858ff31e6e3481990e27f152b93fcd1d00eaa769e23a0b1eb299f90bdf"
+  "driver_sha256": "06f7085ba7d5e5ab1309463a9adb629836c38053a8cd0dc82b9cae8c9ab84395"
 }

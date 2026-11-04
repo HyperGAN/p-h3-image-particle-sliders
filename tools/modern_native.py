@@ -9,6 +9,8 @@ import signal
 import tempfile
 import time
 
+MEMORY_FRACTION = .94
+
 
 def write(path, value):
     temporary = path.with_name(path.name + ".partial")
@@ -55,7 +57,7 @@ def prepare(args):
     import ph3_sliders.evaluation as metric
 
     configure_numeric_runtime()
-    torch.cuda.set_per_process_memory_fraction(.88, 0)
+    torch.cuda.set_per_process_memory_fraction(MEMORY_FRACTION, 0)
     collection_plan = json.loads(args.plan.read_text())
     training_plan = json.loads(args.training_plan.read_text())
     if (training_plan["batch_size"] != 1 or training_plan["schedule_horizon"] < 512
@@ -77,6 +79,7 @@ def prepare(args):
         training_plan=training_plan, training_plan_sha256=file_hash(args.training_plan),
         driver_sha256=file_hash(Path(__file__)),
         metric_source_sha256=file_hash(Path(metric.__file__)),
+        resource_budget=dict(torch_cuda_memory_fraction=MEMORY_FRACTION, maximum_gpu_used_mib=46000),
         caches={"train": train.index["fingerprint"], "development": development.index["fingerprint"]})
     event(phase="modern_full_transformer_loading")
     model = load_transformer(args.model_directory)
@@ -179,6 +182,48 @@ def evaluate_saved(run, cache, directory, *, selection="ema", qualification_sha2
     return document
 
 
+def evaluate_off(run, cache, directory):
+    """Full-cohort, trained-attachment OFF control, with no optimizer activity."""
+    import torch
+    from safetensors.torch import save_file
+    from ph3_sliders.native_cache import file_hash
+    from ph3_sliders.evaluation import response_statistics, aggregate_rows
+
+    if directory.exists():
+        raise FileExistsError(directory)
+    directory.parent.mkdir(parents=True, exist_ok=True)
+    temporary = Path(tempfile.mkdtemp(prefix=directory.name + ".partial-", dir=directory.parent))
+    modes = [(module, module.training) for module in run.host.model.modules()]
+    devices = [run.host.device.index or 0] if run.host.device.type == "cuda" else []
+    rows, raw = [], {}
+    try:
+        run.host.model.eval()
+        with torch.random.fork_rng(devices=devices), torch.no_grad(), run.adapter.scaled(0.):
+            for i, row in enumerate(cache.records):
+                velocity = run.host.velocity(row["state"], cache.contexts[row["neutral_context"]], row["position"])
+                student = run.host.response(velocity)
+                labels = {key: row[key] for key in ("scene", "seed", "path", "position")}
+                rows.append(dict(labels, **response_statistics(student, row["neutral"], row["positive"])))
+                raw[f"student.{i}"] = student.detach().cpu().contiguous()
+        metadata = dict(cache_fingerprint=cache.index["fingerprint"], selection="off",
+            completed_steps=str(run.step), row_labels=json.dumps([
+                {k:r[k] for k in ("scene", "seed", "path", "position")} for r in rows]))
+        save_file(raw, str(temporary / "student.safetensors"), metadata=metadata)
+        result = dict(aggregate_rows(rows, expected_examples=cache.examples,
+            expected_positions=range(cache.positions)), selection="off", attachment_strength=0.,
+            student="native neutral-conditioned velocity at explicit strength0",
+            trained_adapter_bypassed=True, completed_steps=run.step,
+            training_signature=run.signature, cache_fingerprint=cache.index["fingerprint"],
+            raw_student_responses=dict(path=str(directory / "student.safetensors"),
+                sha256=file_hash(temporary / "student.safetensors")))
+        write(temporary / "result.json", result)
+        os.rename(temporary, directory)
+        return result
+    finally:
+        for module, training in modes:
+            module.training = training
+
+
 def parity(host, cache):
     import torch
     from diffusers import MiniMaxH3Scheduler
@@ -224,9 +269,6 @@ def qualify(args, lease, prepared):
             update_calls=update_calls, replay=replay, seconds=time.monotonic()-started)
         lease.check()
     try:
-        initial = evaluate_saved(run, development, args.output / "OFF-evaluation", selection="raw")
-        if initial["mean_teacher_student_relative_error"] != 1.:
-            raise ValueError("complete development OFF control must score exactly1")
         for _ in range(2):
             qualification_update()
         save(run, args.output / "step-000002")
@@ -236,6 +278,12 @@ def qualify(args, lease, prepared):
         restore(run, args.output / "step-000002")
         for _ in range(2):
             qualification_update(replay=True)
+        equal(expected, run.snapshot())
+        # Establish update/backward memory fit before spending128 full native
+        # forwards on the control. OFF uses the trained attachment's hard bypass.
+        off_evaluation = evaluate_off(run, development, args.output / "OFF-evaluation")
+        if off_evaluation["mean_teacher_student_relative_error"] != 1.:
+            raise ValueError("complete trained-attachment development OFF control must score exactly1")
         equal(expected, run.snapshot())
         if tensor_hash(host.model.state_dict()) != base:
             raise ValueError("frozen pretrained weights changed")
@@ -249,7 +297,7 @@ def qualify(args, lease, prepared):
         write(args.output / "QUALIFICATION.json", dict(schema="ph3-modern-native-qualification-v1",
             status="passed", identity=identity, completed_steps=run.step, replay_calls=2,
             full_state_exact=True, full_pretrained_frozen_base_exact=True, OFF_exact=True,
-            OFF_evaluation=initial, native_sampler_parity=native_parity,
+            OFF_evaluation=off_evaluation, native_sampler_parity=native_parity,
             response_elements=train[0]["positive"].numel(), targets=len(host.targets),
             peak_allocated_bytes=torch.cuda.max_memory_allocated(),
             peak_reserved_bytes=torch.cuda.max_memory_reserved(), gpu=lease.check()))
