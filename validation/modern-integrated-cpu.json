@@ -1,0 +1,26 @@
+{
+  "schema": "ph3-modern-integrated-cpu-v1",
+  "integrated_parent": "3fab0ae",
+  "installed_packages": {
+    "hypergan_bridge": "/tmp/ph3-hypergan-bridge-release-installed",
+    "hndl_bridge": "/tmp/ph3-hndl-installed",
+    "engine_runtime": "/tmp/ph3-hypergan-develop-runtime"
+  },
+  "tests": {
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 6.21
+  },
+  "command": "CUDA_VISIBLE_DEVICES='' PH3_NATIVE_TEST=1 PH3_REFERENCE_SOURCE=/tmp/ph3-classic-installed/particle_sliders/reference.py python -m pytest -q -o pythonpath= packages/ph3-hndl/tests packages/ph3-hypergan-develop/tests",
+  "native_forward_source_unchanged_from": "6e3782ad6350f5bf65becfe90e3e62bcea8ce263",
+  "pretrained_training_updates": 0,
+  "drivers": {
+    "render_native.py": "87fbdb9a15e9d57cb20ee989fb23a5bd0b36ef00034c6ccf43b66e0f69067c25",
+    "modern_native.py": "054322904687bb7def83a6ff2a3a58a15093fa957c19f8fbd1e065c33bd57efa",
+    "verify_modern_io.py": "7ba59b866e77f6e02bbc9c6d13b11028a7ba65a3485d221fc2adebd58e24c9ac",
+    "qualify_modern_tiny.py": "b385d288a5732568671dffd22f36486ee428ecf1c64e1351fdf2dbf6ae6b71e5"
+  },
+  "driver_IO_receipt": "validation/modern-driver-cpu-io.json",
+  "GPU_fit_qualification": "pending actual GPU execution; CPU results do not qualify full pretrained fitting"
+}

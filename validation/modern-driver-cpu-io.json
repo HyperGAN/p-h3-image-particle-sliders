@@ -1,0 +1,16 @@
+{
+  "schema": "ph3-modern-gpu-driver-cpu-io-v2",
+  "full_checkpoint_exact_replay": true,
+  "completed_updates": 4,
+  "replay_calls": 2,
+  "checkpoint_interruption_recovery": true,
+  "legacy_incomplete_slot_preserved": true,
+  "raw_and_metric_atomic_publication": true,
+  "evaluation_interruption_recovery": true,
+  "evaluation_idempotent": true,
+  "export_and_evaluation_preserve_full_state": true,
+  "HNDL_EMA_export_load_exact": true,
+  "GPU_initialized": false,
+  "pretrained_training_updates": 0,
+  "driver_sha256": "054322904687bb7def83a6ff2a3a58a15093fa957c19f8fbd1e065c33bd57efa"
+}
