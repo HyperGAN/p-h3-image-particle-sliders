@@ -28,12 +28,13 @@ the selected UUID and uses logical `cuda:0`, with matching per-device admission
 and P-H3 role locks. It never switches to the other GPU automatically.
 
 Training includes prompt encoding, paired native teacher collection, four
-qualification updates plus two replay calls, and 128 separate retained training
+qualification updates plus two replay calls, and 1,600 separate retained training
 updates. Full optimizer/critic/EMA/RNG checkpoints are saved periodically, with
 a portable EMA adapter at the final update. Samples and LR search are separate.
 The `2e-5` generator LR is an explicit exploratory starting rate, not a measured
-winner. This 128-step example demonstrates execution; it does not establish
-visual quality. The woman's expression, clothes, hair color, framing and light
+winner. The original 128-step pass was an execution smoke test, too short for the
+intended full training. The default now completes the existing 1,600-update
+schedule; that budget alone does not establish visual quality. The woman's expression, clothes, hair color, framing and light
 are shared by both prompts; the intended edit is hair shape and volume.
 
 Direct native invocation is also available:
@@ -46,14 +47,30 @@ Remove `--check` to run. Check is CPU-only and never loads model tensors.
 It now verifies the actual isolated modern environment with CUDA hidden,
 including the HyperGAN/HNDL source closures and package metadata. Missing
 runtime dependencies fail here before any model is loaded.
-For a retained run, use the same source/config and add
-`--resume /absolute/retained/native/artifacts`. A fresh controller output can
-reference the original native directory through `resume-ref.json`; it receives
-the new status and metrics while checkpoints remain in the original directory.
-Stages with completion receipts are reused;
-the native trainer restores its last full checkpoint. Interrupted collection
-reuses completed paired teacher caches. A partially written qualification or
-encoding directory must be inspected rather than silently discarded.
+For the original Wild Hair pass, continue through the same command:
+
+```sh
+particle-slider train --config wild-hair-gpu0.json \
+  --resume /absolute/original-controller-output/artifacts
+```
+
+Use a new output directory. Resume selects and byte-verifies the latest complete
+checkpoint, then copies only that full state, the exact trial identity and the
+initialization receipt into the new training output. The old run, its 128-step
+result, plans, conditioning, cache, qualification and original request stay
+unchanged. Training resumes at the retained step and continues to 1,600 using
+the original 1,600-step schedule; no teacher collection or qualification is rerun.
+New metrics contain only the continuation's updates. The new report records the
+original checkpoint as its initial durable frontier.
+
+`continuation.json` records the original target, retained step, new target,
+immutable file hashes and the narrowly allowed control-script migration from
+commit `3a5120f`. Any change to prompts, learning rates, seed, precision, device,
+runtime, numerical source or fixed schedule is rejected. Only `training.steps`
+may increase, up to the existing horizon. `--check --resume ...` performs the
+same validation without GPU allocation or copying state. The active original
+run can keep training while this read-only check inspects a published checkpoint;
+launch the continuation after that run has completed and released its GPU.
 
 Local dependencies are explicitly separated from the default classic Anima
 environment. The profile uses the archived engine, HyperGAN bridge, HNDL bridge,
@@ -78,3 +95,7 @@ native run still requires its own collected cohort and GPU qualification.
 The runtime-identity fix passed 47 focused CPU checks, including failure before
 model/CUDA allocation and rejection of changed modern bridge identities. The
 actual archive check is recorded in `validation/modern-runtime-identity.json`.
+The extension branch passed 59 CPU checks plus the allocation-free continuation
+check against the actual original run. Its receipt is
+`validation/budget-extension-cpu.json`; the numerical driver and all 23 native
+source files remain byte-identical to the original run.

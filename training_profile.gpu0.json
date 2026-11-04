@@ -13,7 +13,8 @@
     "device": "cuda:0",
     "env": {
       "PH3_PHYSICAL_GPU": "0"
-    }
+    },
+    "cwd": "/ml2/particlesliders-working/single-command/ph3-extended"
   },
   "capabilities": {
     "resume": true,

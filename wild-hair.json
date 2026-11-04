@@ -7,8 +7,8 @@
     "positive": "The subject has wild dark brown hair: a huge lopsided fan of jagged spikes, springy corkscrew curls bursting between them, and fine flyaways shooting in every direction. One unruly lock curves partly over a cheek. The hair is gravity-defying, eccentric, and full of unruly volume."
   },
   "training": {
-    "steps": 128,
-    "generator_lr": 0.00002,
+    "steps": 1600,
+    "generator_lr": 2e-05,
     "critic_lr": 0.0009,
     "particle_lr": 0.006,
     "seed": 17,

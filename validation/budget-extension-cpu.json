@@ -1,0 +1,16 @@
+{
+  "schema": "ph3-budget-extension-cpu-v1",
+  "status": "passed",
+  "base_commit": "3a5120fe7ac724ace3a83c2b7533471f6ff7d240",
+  "tests_passed": 59,
+  "native_source_files_unchanged": 23,
+  "numerical_driver_sha256": "3274414d06ea9e5ba94071f5e52745c70bb0467ac41536083ed4359cf0a93c66",
+  "control_driver_sha256": "dd9beb765cc6f290e1af6ec7d3f2e8987a7f92187560be2237dd1cb7d364b2ce",
+  "check": "extension-actual-check.json",
+  "checked_restore_step": 32,
+  "target_steps": 1600,
+  "cuda_initialized": false,
+  "original_request_sha256": "801274af3fecf71f2172defee65ab5d3f691868d566d67365cb4846b9dead792",
+  "model_updates_executed": 0,
+  "original_receipts_written_by_validation": false
+}

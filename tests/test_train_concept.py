@@ -19,14 +19,14 @@ spec.loader.exec_module(worker)
 def test_wild_hair_plan_keeps_matched_scenes_and_separate_split():
     request = worker.recipe(ROOT / 'wild-hair.json')
     plan, modern = worker.plans(request)
-    assert modern['requested_steps'] == 128
+    assert modern['requested_steps'] == 1600
     assert modern['generator_rates'] == [.00002]
     assert plan['conditioning']['positive_suffix'] == request['concept']['positive']
     assert plan['conditioning']['neutral_suffix'] == request['concept']['neutral']
     assert len(plan['splits']['train']['scenes']) == 2
     assert len(plan['splits']['development']['scenes']) == 1
     assert plan['training']['batch'] == 1
-    assert plan['training']['requested_steps'] == 128
+    assert plan['training']['requested_steps'] == 1600
 
 
 @pytest.mark.parametrize('change', [
