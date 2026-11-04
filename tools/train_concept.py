@@ -101,6 +101,7 @@ def plans(value):
     plan = json.loads((ROOT / 'native-collection-template.json').read_text())
     concept = value['concept']
     plan['compute_placement'] = placement(value)
+    plan['runtime_cohort'] = 'ph3-modern-hypergan-hndl-v1'
     plan['concept'] = concept['name']
     plan['conditioning']['neutral_suffix'] = concept['neutral']
     plan['conditioning']['positive_suffix'] = concept['positive']
@@ -173,6 +174,17 @@ def verify_complete(output, target):
         quality_status='exploratory; no LR selection or visual acceptance claimed')
 
 
+def runtime_preflight(device):
+    env = environment(device)
+    env['CUDA_VISIBLE_DEVICES'] = ''
+    completed = subprocess.run([str(PYTHON), str(ROOT / 'tools/runtime_preflight.py'),
+        '--source-manifest', str(SOURCE)], cwd=ROOT, env=env, text=True, capture_output=True, check=True)
+    result = json.loads(completed.stdout)
+    if result.get('status') != 'verified' or result.get('cuda_initialized') is not False:
+        raise RuntimeError('isolated modern runtime preflight did not verify a CPU-only identity')
+    return result
+
+
 def run(args):
     value = recipe(args.config)
     chosen = placement(value)
@@ -180,11 +192,14 @@ def run(args):
     for path in (PYTHON, MODEL, INVENTORY, SOURCE, ARCHIVE / 'engine-runtime', ARCHIVE / 'hypergan-bridge', ARCHIVE / 'hndl-bridge'):
         if not path.exists():
             raise FileNotFoundError('required native runtime path is absent: ' + str(path))
+    runtime = runtime_preflight(value['device'])
     if args.check:
         print(json.dumps(dict(status='validated', product='p-h3-image-particle-sliders', gpu_uuid=chosen['uuid'],
             physical_gpu=chosen['physical_index'], logical_device='cuda:0', qualification='fresh native qualification required for this run',
             steps=value['training']['steps'], phases=['encode', 'collect', 'qualify', 'train', 'export'],
-            inference=False, lr_search=False, estimated_train_seconds=16 * value['training']['steps'])))
+            inference=False, lr_search=False, estimated_train_seconds=16 * value['training']['steps'],
+            runtime_cohort=runtime['runtime_identity']['runtime_cohort'],
+            verified_packages=runtime['runtime_identity']['packages'], cuda_initialized=False)))
         return
     delivery = args.output.resolve()
     output = args.resume.resolve() if args.resume else delivery
@@ -194,8 +209,11 @@ def run(args):
     delivery.mkdir(parents=True, exist_ok=True)
     if delivery != output:
         write(delivery / 'resume-ref.json', dict(native_run=str(output)))
+    write(delivery / 'runtime-preflight.json', runtime)
     identity = dict(recipe=value, source={str(path.relative_to(ROOT)): sha(path) for path in (
-        ROOT / 'tools/train_concept.py', ROOT / 'tools/modern_native.py', ROOT / 'src/ph3_sliders/gpu_lease.py', ROOT / 'native-collection-template.json')}, compute_placement=chosen, checkpoint_every=args.checkpoint_every)
+        ROOT / 'tools/train_concept.py', ROOT / 'tools/modern_native.py', ROOT / 'tools/runtime_preflight.py',
+        ROOT / 'src/ph3_sliders/gpu_lease.py', ROOT / 'native-collection-template.json')},
+        runtime_identity=runtime['runtime_identity'], compute_placement=chosen, checkpoint_every=args.checkpoint_every)
     record = output / 'native-request.json'
     if record.exists() and json.loads(record.read_text()) != identity:
         raise ValueError('run recipe/source/checkpoint interval changed; use a fresh output')

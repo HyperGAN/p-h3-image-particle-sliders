@@ -65,6 +65,8 @@ def encode(args):
     staged = verify_staged(args.model_directory, args.inventory,
                            ("text_encoder", "text_connector", "tokenizer", "processor"))
     configure_numeric_runtime()
+    identity = runtime_identity(args.source_manifest, quantization="encoder_bf16",
+                                cohort=plan.get("runtime_cohort", "classic"))
     torch.cuda.set_per_process_memory_fraction(.40, 0)
     prompts = prompt_map(plan)
     event(phase="encoding_start", prompts=len(prompts))
@@ -72,7 +74,7 @@ def encode(args):
     save_file(tensors, str(args.output / "conditioning.safetensors"))
     document = dict(schema="ph3-frozen-verbatim-conditioning-v1", prompts=prompts,
         plan_sha256=file_hash(args.plan), tensor_sha256=file_hash(args.output / "conditioning.safetensors"),
-        staged_components=staged, source_identity=runtime_identity(args.source_manifest, quantization="encoder_bf16"))
+        staged_components=staged, source_identity=identity)
     write_json(args.output / "manifest.json", document)
     event(phase="encoding_complete", prompts=len(tensors), peak_bytes=torch.cuda.max_memory_allocated())
 
@@ -112,6 +114,14 @@ def collect(args, lease):
         staged = verify_staged(args.model_directory, args.inventory)
         write_json(staged_path, staged)
     configure_numeric_runtime()
+    runtime = runtime_identity(args.source_manifest, quantization=plan["numerical_cohort"],
+                               cohort=plan.get("runtime_cohort", "classic"))
+    embeddings, encoded = load_encoded(args.conditioning, plan)
+    if plan.get("runtime_cohort") == "ph3-modern-hypergan-hndl-v1":
+        expected_encoded = runtime_identity(args.source_manifest, quantization="encoder_bf16",
+                                            cohort=plan["runtime_cohort"])
+        if encoded.get("source_identity") != expected_encoded:
+            raise ValueError("encoded conditioning runtime identity differs from the modern collection cohort")
     torch.cuda.set_per_process_memory_fraction(.88, 0)
     event(phase="transformer_loading")
     model = load_transformer(args.model_directory)
@@ -120,8 +130,7 @@ def collect(args, lease):
     event(phase="transformer_bound", keys=binding["keys"], quantized=binding["quantized_weight_matrices"])
     host = H3Host(model, device="cuda:0", latent_height=plan["resolution"]["height"] // 16,
                   latent_width=plan["resolution"]["width"] // 16, sigmas=plan["sigmas"])
-    embeddings, encoded = load_encoded(args.conditioning, plan)
-    identity = dict(runtime_identity(args.source_manifest, quantization=plan["numerical_cohort"]),
+    identity = dict(runtime,
         staged_weights_sha256=file_hash(staged_path), plan_sha256=file_hash(args.plan),
         encoded_conditioning_sha256=file_hash(args.conditioning / "manifest.json"))
     for split in args.splits:

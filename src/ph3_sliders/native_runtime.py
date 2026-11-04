@@ -60,14 +60,28 @@ def verify_diffusers_source(manifest_path):
                 manifest_sha256=file_hash(manifest_path))
 
 
-def runtime_identity(source_manifest, *, quantization):
-    return dict(diffusers=verify_diffusers_source(source_manifest), model_revision=MODEL_REVISION,
-        packages={name: version(name) for name in ("torch", "transformers", "accelerate", "safetensors", "numpy",
-            "bitsandbytes", "huggingface-hub", "particlegan", "particle-sliders-core", "particle-sliders-anima-gmix")},
+MODERN_COHORT = "ph3-modern-hypergan-hndl-v1"
+
+
+def runtime_identity(source_manifest, *, quantization, cohort="classic"):
+    if cohort not in ("classic", MODERN_COHORT):
+        raise ValueError("unknown native collection runtime cohort")
+    packages = ["torch", "transformers", "accelerate", "safetensors", "numpy",
+                "bitsandbytes", "huggingface-hub", "particlegan", "particle-sliders-core"]
+    if cohort == "classic":
+        packages.append("particle-sliders-anima-gmix")
+    else:
+        packages.extend(["hypergan", "hndl", "ph3-hypergan-develop", "p-h3-particle-sliders-hndl"])
+    identity = dict(diffusers=verify_diffusers_source(source_manifest), model_revision=MODEL_REVISION,
+        packages={name: version(name) for name in packages},
         quantization=quantization, int8_activation_quantization_cast="float16",
         deterministic_algorithms=torch.are_deterministic_algorithms_enabled(),
         tf32=torch.backends.cuda.matmul.allow_tf32,
         product_sources={p.name: file_hash(p) for p in sorted(Path(__file__).parent.glob("*.py"))})
+    if cohort == MODERN_COHORT:
+        from .modern_identity import modern_engine_identity
+        identity.update(runtime_cohort=MODERN_COHORT, modern_runtime=modern_engine_identity())
+    return identity
 
 
 def load_transformer(model_directory, *, device="cuda:0", quantization="int8"):

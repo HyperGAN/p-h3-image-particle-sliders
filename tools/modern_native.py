@@ -61,6 +61,9 @@ def prepare(args, *, compute_placement):
     torch.cuda.set_per_process_memory_fraction(MEMORY_FRACTION, 0)
     collection_plan = json.loads(args.plan.read_text())
     training_plan = json.loads(args.training_plan.read_text())
+    if collection_plan.get("runtime_cohort") == "ph3-modern-hypergan-hndl-v1":
+        from ph3_sliders.modern_identity import verify_modern_teacher_identity
+        verify_teacher_identity = verify_modern_teacher_identity
     if (training_plan["batch_size"] != 1 or training_plan["schedule_horizon"] < 512
             or training_plan["collection_plan_sha256"] != file_hash(args.plan)):
         raise ValueError("explicit batch1 modern plan must bind the immutable collection plan")

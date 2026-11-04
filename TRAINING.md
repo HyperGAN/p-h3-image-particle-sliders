@@ -43,6 +43,9 @@ Direct native invocation is also available:
 ```
 
 Remove `--check` to run. Check is CPU-only and never loads model tensors.
+It now verifies the actual isolated modern environment with CUDA hidden,
+including the HyperGAN/HNDL source closures and package metadata. Missing
+runtime dependencies fail here before any model is loaded.
 For a retained run, use the same source/config and add
 `--resume /absolute/retained/native/artifacts`. A fresh controller output can
 reference the original native directory through `resume-ref.json`; it receives
@@ -58,9 +61,20 @@ the clean pinned native Diffusers source and model revision. A Modal image
 needs its own portable runtime profile and qualification; these local absolute
 paths do not constitute cloud support.
 
+New concept collections explicitly use `ph3-modern-hypergan-hndl-v1` identities.
+They record the actual HyperGAN, HNDL and bridge packages/source bytes and do not
+require or fabricate the classic Anima distribution. Encoded conditioning and
+teacher caches must match that exact modern identity before qualification.
+The classic collection API retains its default identity; its states cannot be
+silently rebound to the new modern cohort. A source update requires a fresh run
+directory and new native qualification; preserve earlier failed outputs.
+
 The local CPU tests cover request rejection, GPU queue state, UUID and logical
 device binding, independent per-device locks, headroom guards, allocation-free
 checks, final hash validation and failure reporting. Its isolated
 archived runtime passes the engine closure and pinned Diffusers source checks.
 The common CLI's `--check` also passes. These are preparation checks; a new
 native run still requires its own collected cohort and GPU qualification.
+The runtime-identity fix passed 47 focused CPU checks, including failure before
+model/CUDA allocation and rejection of changed modern bridge identities. The
+actual archive check is recorded in `validation/modern-runtime-identity.json`.

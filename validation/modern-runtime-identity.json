@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "runtime_cohort": "ph3-modern-hypergan-hndl-v1",
+  "packages": {
+    "torch": "2.14.1+cu130",
+    "transformers": "5.17.0",
+    "accelerate": "1.15.0",
+    "safetensors": "0.8.0",
+    "numpy": "2.5.4",
+    "bitsandbytes": "0.50.2",
+    "huggingface-hub": "1.33.0",
+    "particlegan": "0.9.4",
+    "particle-sliders-core": "0.12.0",
+    "hypergan": "2.0.0",
+    "hndl": "0.10.0",
+    "ph3-hypergan-develop": "0.1.0a1",
+    "p-h3-particle-sliders-hndl": "0.1.0a1"
+  },
+  "anima_distribution_absent": true,
+  "cuda_initialized": false,
+  "modern_bridge_tamper_rejected": true,
+  "classic_interchange_allowed": false,
+  "identity_sha256": "1b3615bf423b184b9b875e6f5711f70003ea3a8ea060af361346c11023d88c79"
+}
