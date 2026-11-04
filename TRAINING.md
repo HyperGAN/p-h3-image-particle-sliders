@@ -12,6 +12,21 @@ and sufficient free memory without stopping other work. An available GPU is
 not by itself a source or numerical qualification: every new concept collects
 its own frozen teacher pairs and passes a fresh full native qualification.
 
+For explicit physical GPU0 placement, the separate example is a complete
+execution envelope, so it needs no extra profile argument:
+
+```sh
+particle-slider train --config wild-hair-gpu0.json
+```
+
+This selects `training_profile.gpu0.json` and the same prompts, rates, resolution,
+precision and training budget. GPU0 is a new compute placement requiring its own
+collected teacher cache and full native qualification before training. The GPU1
+receipt is not reused. The recipe or `PH3_PHYSICAL_GPU=0|1` chooses the physical
+device; conflicting explicit selections fail. Each native child is pinned by
+the selected UUID and uses logical `cuda:0`, with matching per-device admission
+and P-H3 role locks. It never switches to the other GPU automatically.
+
 Training includes prompt encoding, paired native teacher collection, four
 qualification updates plus two replay calls, and 128 separate retained training
 updates. Full optimizer/critic/EMA/RNG checkpoints are saved periodically, with
@@ -43,8 +58,9 @@ the clean pinned native Diffusers source and model revision. A Modal image
 needs its own portable runtime profile and qualification; these local absolute
 paths do not constitute cloud support.
 
-The local worker's 14 CPU tests cover request rejection, GPU queue state,
-allocation-free checks, final hash validation and failure reporting. Its isolated
+The local CPU tests cover request rejection, GPU queue state, UUID and logical
+device binding, independent per-device locks, headroom guards, allocation-free
+checks, final hash validation and failure reporting. Its isolated
 archived runtime passes the engine closure and pinned Diffusers source checks.
 The common CLI's `--check` also passes. These are preparation checks; a new
 native run still requires its own collected cohort and GPU qualification.

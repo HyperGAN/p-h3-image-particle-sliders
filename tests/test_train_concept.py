@@ -30,7 +30,7 @@ def test_wild_hair_plan_keeps_matched_scenes_and_separate_split():
 
 
 @pytest.mark.parametrize('change', [
-    {'device': 'cuda:0'}, {'training': {'steps': 0}}, {'training': {'steps': True}},
+    {'device': 'cuda:2'}, {'training': {'steps': 0}}, {'training': {'steps': True}},
     {'training': {'generator_lr': float('nan')}}, {'training': {'resolution': 1024}},
     {'training': {'critic_lr': .001}}, {'training': {'particle_lr': .005}}])
 def test_incompatible_request_rejected_before_gpu(tmp_path, change):
@@ -68,6 +68,37 @@ def test_archived_native_runtime_selected_not_classic_environment():
     assert '20261104-pinned-modern/engine-runtime' in env['PYTHONPATH']
     assert '20261104-pinned-modern/hypergan-bridge' in env['PYTHONPATH']
     assert env['HF_HUB_OFFLINE'] == '1'
+
+
+def test_gpu0_example_changes_only_placement_and_preserves_numerical_plan(tmp_path, monkeypatch):
+    monkeypatch.delenv('PH3_PHYSICAL_GPU', raising=False)
+    envelope = json.loads((ROOT / 'wild-hair-gpu0.json').read_text())
+    config = tmp_path / 'gpu0.json'
+    config.write_text(json.dumps(envelope['training']))
+    zero = worker.recipe(config)
+    one = worker.recipe(ROOT / 'wild-hair.json')
+    assert zero['training'] == one['training']
+    assert zero['concept'] == one['concept']
+    plan0, modern0 = worker.plans(zero)
+    plan1, modern1 = worker.plans(one)
+    assert plan0.pop('compute_placement')['physical_index'] == 0
+    assert plan1.pop('compute_placement')['physical_index'] == 1
+    assert plan0 == plan1 and modern0 == modern1
+    env = worker.environment('cuda:0')
+    assert env['CUDA_VISIBLE_DEVICES'] == worker.gpu_policy().GPU_UUIDS[0]
+    assert env['PH3_PHYSICAL_GPU'] == '0'
+    assert env['CUBLAS_WORKSPACE_CONFIG'] == worker.environment('cuda:1')['CUBLAS_WORKSPACE_CONFIG']
+
+
+def test_runtime_environment_can_select_gpu_without_config_device(tmp_path, monkeypatch):
+    monkeypatch.setenv('PH3_PHYSICAL_GPU', '0')
+    value = json.loads((ROOT / 'wild-hair.json').read_text())
+    value.pop('device')
+    config = tmp_path / 'env.json'
+    config.write_text(json.dumps(value))
+    assert worker.recipe(config)['device'] == 'cuda:0'
+    with pytest.raises(ValueError, match='conflicts'):
+        worker.recipe(ROOT / 'wild-hair.json')
 
 
 def test_busy_gpu_records_queue_and_does_not_start_process(tmp_path, monkeypatch):

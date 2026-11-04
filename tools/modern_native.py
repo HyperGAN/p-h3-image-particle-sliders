@@ -1,4 +1,4 @@
-"""Offline, physical-GPU1 H3 qualification and LR trials with real HyperGAN/HNDL."""
+"""Offline, explicitly pinned physical-GPU H3 qualification and LR trials with real HyperGAN/HNDL."""
 
 import argparse
 import json
@@ -45,7 +45,7 @@ def equal(left, right):
         raise ValueError("full-state scalar differs")
 
 
-def prepare(args):
+def prepare(args, *, compute_placement):
     import torch
     from ph3_hypergan import verify_teacher_identity, fit_normalization
     from ph3_hypergan.runtime import require_runtime
@@ -76,7 +76,7 @@ def prepare(args):
             staged_weights_sha256=file_hash(stored_path), plan_sha256=file_hash(args.plan),
             encoded_conditioning_sha256=file_hash(args.conditioning / "manifest.json"))
     identity = dict(schema="ph3-modern-native-qualified-cohort-v1", engine=require_runtime(),
-        hndl=hndl_identity(), teachers=teacher_identities,
+        hndl=hndl_identity(), teachers=teacher_identities, compute_placement=compute_placement,
         training_plan=training_plan, training_plan_sha256=file_hash(args.training_plan),
         driver_sha256=file_hash(Path(__file__)),
         metric_source_sha256=file_hash(Path(metric.__file__)),
@@ -409,7 +409,7 @@ def main():
     from ph3_sliders.gpu_lease import GpuLease
     try:
         with GpuLease(required_free_mib=40500) as lease:
-            prepared = prepare(args)
+            prepared = prepare(args, compute_placement=lease.identity)
             (qualify if args.command == "qualify" else trial)(args, lease, prepared)
     except BaseException as error:
         state = json.loads((args.output / "STATE.json").read_text()) if (args.output / "STATE.json").exists() else None

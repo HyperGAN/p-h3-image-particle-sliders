@@ -1,0 +1,27 @@
+{
+  "schema": "particle-slider-profile-v1",
+  "name": "ph3-native-gpu0",
+  "product": "p-h3-image-particle-sliders",
+  "config_kind": "native",
+  "status": "source_only",
+  "command": [
+    "{python}",
+    "tools/train_concept.py"
+  ],
+  "runtime": {
+    "python": "/ml2/codex-storage/future-workspaces/2026-10-31/task-14/.venv-qwen-native/bin/python",
+    "device": "cuda:0",
+    "env": {
+      "PH3_PHYSICAL_GPU": "0"
+    }
+  },
+  "capabilities": {
+    "resume": true,
+    "periodic_checkpoint": true,
+    "check": true
+  },
+  "target_steps_path": "training.steps",
+  "default_checkpoint_every": 64,
+  "evidence": "GPU0 requires fresh native qualification; GPU1 evidence is not reused",
+  "qualification_policy": "Every new native run collects its own teachers and qualifies the selected physical UUID before retained training"
+}
