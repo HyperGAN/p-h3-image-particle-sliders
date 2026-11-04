@@ -37,7 +37,8 @@ def qualify(args, lease):
         model="reduced random actual H3", quantization="int8 threshold6 BF16/FP16 declared conversion")
     model = MiniMaxH3Transformer3DModel(num_attention_heads=2, attention_head_dim=16,
         hidden_size=24, num_layers=2, num_refiner_layers=2, ffn_dim=32,
-        in_channels=4, audio_in_channels=6, patch_size=(1, 2, 2), text_dim=8,
+        # The unmodified native image pipeline's VAE contract is24 channels.
+        in_channels=24, audio_in_channels=6, patch_size=(1, 2, 2), text_dim=8,
         freq_dim=8, time_embed_hidden_dim=24, time_embed_dim=16, rope_freq_dim=2)
     model.save_pretrained(args.output / "random-model/transformer")
     del model
