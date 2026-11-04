@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+sampling_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+export PYTHONPATH="/ml2/particlesliders-working/ph3-native-deps:/ml2/particlesliders-working/ph3-native-runtime/20261104-pinned-modern/engine-runtime:/ml2/particlesliders-working/ph3-native-runtime/20261104-pinned-modern/hypergan-bridge:/ml2/particlesliders-working/ph3-native-runtime/20261104-pinned-modern/hndl-bridge:/ml2/particlesliders-working/ph3-diffusers/src:/ml2/particlesliders-working/single-command/ph3/src"
+export CUDA_VISIBLE_DEVICES=GPU-72c1b506-891d-b8bc-b353-e020585e1c47
+export PH3_PHYSICAL_GPU=0
+export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 CUBLAS_WORKSPACE_CONFIG=:4096:8
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True OMP_NUM_THREADS=4 MKL_NUM_THREADS=4
+sample_artifacts=/ml2/particlesliders-working/single-command/runs/wild-hair-20261104-attempt-2/artifacts
+exec /ml2/codex-storage/future-workspaces/2026-10-31/task-14/.venv-qwen-native/bin/python \
+  "$sampling_root/tools/render_native.py" export \
+  --model-directory /mnt/nvme/sliders/models/PrunaAI--P-H3-Image/7f98acef503cf2bcfba821a78cb1cf1a9928b2df \
+  --inventory /ml2/particlesliders-working/ph3-native-source/HF_FILE_INVENTORY.json \
+  --source-manifest /ml2/particlesliders-working/ph3-native-source/35087a644038eb531f48581708d4763044cb4852/SOURCE_MANIFEST.json \
+  --plan "$sample_artifacts/PLAN.json" --cache-root "$sample_artifacts/caches" \
+  --conditioning "$sample_artifacts/conditioning" \
+  --export "$sample_artifacts/training/exports/step-000128-ema" \
+  --scene woman_dev --split development --seed 171 \
+  --output /ml2/particlesliders-working/single-command/runs/wild-hair-step128-samples \
+  "$@"

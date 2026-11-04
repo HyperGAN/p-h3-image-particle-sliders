@@ -35,6 +35,46 @@ def contact_sheet(images, labels, path):
     sheet.save(path)
 
 
+def verify_modern_export(args, plan, artifact_document):
+    """Allocation-free cohort and serialized-export admission before model load."""
+    from ph3_sliders.native_cache import file_hash
+    from ph3_hypergan.runtime import require_runtime, source_digest
+    from ph3_hndl import runtime_identity as hndl_identity
+    import ph3_hypergan.training as training
+
+    identity = artifact_document["signature"]["identity"]
+    if (identity["engine"] != require_runtime() or identity["hndl"] != hndl_identity()
+            or identity["training_signature"]["bridge_python_sha256"] != source_digest(Path(training.__file__).parent)
+            or identity["driver_sha256"] != file_hash(Path(__file__).with_name("modern_native.py"))):
+        raise ValueError("modern inference artifact engine/bridge/driver cohort differs")
+    if plan.get("runtime_cohort") == "ph3-modern-hypergan-hndl-v1":
+        from ph3_sliders.modern_identity import verify_modern_teacher_identity as verifier
+    else:
+        from ph3_hypergan import verify_teacher_identity as verifier
+    verified = verifier(identity["teachers"]["train"]["teacher_collection"],
+        source_manifest=args.source_manifest, quantization=plan["numerical_cohort"],
+        staged_weights_sha256=file_hash(args.cache_root / "STAGED_WEIGHTS.json"),
+        plan_sha256=file_hash(args.plan),
+        encoded_conditioning_sha256=file_hash(args.conditioning / "manifest.json"))
+    if verified != identity["teachers"]["train"]:
+        raise ValueError("modern inference frozen forward cohort differs")
+    if file_hash(args.export / "adapter.safetensors") != artifact_document.get("weights_sha256"):
+        raise ValueError("modern inference adapter bytes differ")
+    if (artifact_document["signature"].get("strength_range") != [0., 1.]
+            or any(type(x) not in (float, int) or not 0 <= x <= 1 for x in plan["samples"]["strengths"])):
+        raise ValueError("samples must respect the pinned adapter strength range [0,1]")
+    return identity
+
+
+def verify_exact_off(detached, attached):
+    import torch
+    result = {kind: torch.equal(getattr(detached, kind), getattr(attached, kind))
+              for kind in ("image", "audio")}
+    if not all(result.values()):
+        raise ValueError("attached strength-zero differs from adapter-detached OFF")
+    return dict(exact=True, image_equal=result["image"], audio_equal=result["audio"])
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("mode", choices=("cached-teachers", "export"))
@@ -47,15 +87,40 @@ def main():
     parser.add_argument("--scene")
     parser.add_argument("--split", choices=("train", "development", "confirmation"), default="development")
     parser.add_argument("--seed", type=int)
+    parser.add_argument("--check", action="store_true", help="Verify the pinned export/cohort without CUDA or model loading")
     parser.add_argument("--device", choices=("cuda:0", "cpu"), default="cuda:0")
     args = parser.parse_args()
     if args.output.exists():
         raise FileExistsError(args.output)
     if args.mode == "export" and (args.device != "cuda:0" or any(x is None for x in
             (args.export, args.conditioning, args.cache_root, args.scene, args.seed))):
-        parser.error("export requires GPU1, --export, --conditioning, --cache-root, --scene and --seed")
+        parser.error("export requires the selected physical GPU, --export, --conditioning, --cache-root, --scene and --seed")
     if args.mode == "cached-teachers" and args.cache_pair is None:
         parser.error("cached-teachers requires --cache-pair")
+    if args.check:
+        import os
+        os.environ["CUDA_VISIBLE_DEVICES"] = ""
+        if args.mode != "export":
+            parser.error("--check currently admits an export")
+        from ph3_sliders.native_cli import load_encoded
+        from ph3_sliders.native_runtime import configure_numeric_runtime
+        import torch
+        configure_numeric_runtime()
+        plan = json.loads(args.plan.read_text())
+        artifact = json.loads((args.export / "manifest.json").read_text())
+        if artifact.get("schema") != "ph3-hndl-routed-inference-v1":
+            raise ValueError("--check requires a modern routed export")
+        verify_modern_export(args, plan, artifact)
+        load_encoded(args.conditioning, plan)
+        if args.scene not in {x["id"] for x in plan["splits"][args.split]["scenes"]}:
+            raise ValueError("sample scene outside declared split")
+        if torch.cuda.is_initialized():
+            raise RuntimeError("sampling preflight unexpectedly initialized CUDA")
+        print(json.dumps(dict(status="checked", completed_steps=artifact["completed_steps"],
+            selection=artifact["selection"], strengths=plan["samples"]["strengths"],
+            scene=args.scene, seed=args.seed, resolution=plan["resolution"],
+            cuda_initialized=torch.cuda.is_initialized())))
+        return
     from ph3_sliders.gpu_lease import GpuLease
 
     with (GpuLease(required_free_mib=40500 if args.mode == "export" else 10000)
@@ -117,22 +182,7 @@ def render(args, lease):
             artifact_document = json.loads((args.export / "manifest.json").read_text())
             modern = artifact_document.get("schema") == "ph3-hndl-routed-inference-v1"
             if modern:
-                from ph3_hypergan import verify_teacher_identity
-                from ph3_hypergan.runtime import require_runtime, source_digest
-                from ph3_hndl import runtime_identity as hndl_identity
-                import ph3_hypergan.training as training
-
-                identity = artifact_document["signature"]["identity"]
-                if (identity["engine"] != require_runtime() or identity["hndl"] != hndl_identity()
-                        or identity["training_signature"]["bridge_python_sha256"] != source_digest(Path(training.__file__).parent)
-                        or identity["driver_sha256"] != file_hash(Path(__file__).with_name("modern_native.py"))):
-                    raise ValueError("modern inference artifact engine/bridge/driver cohort differs")
-                verified = verify_teacher_identity(identity["teachers"]["train"]["teacher_collection"],
-                    source_manifest=args.source_manifest, quantization=plan["numerical_cohort"],
-                    staged_weights_sha256=file_hash(staged_path), plan_sha256=file_hash(args.plan),
-                    encoded_conditioning_sha256=file_hash(args.conditioning / "manifest.json"))
-                if verified != identity["teachers"]["train"]:
-                    raise ValueError("modern inference frozen forward cohort differs")
+                identity = verify_modern_export(args, plan, artifact_document)
             else:
                 identity = dict(runtime_identity(args.source_manifest, quantization=plan["numerical_cohort"]),
                     staged_weights_sha256=file_hash(staged_path))
@@ -146,6 +196,10 @@ def render(args, lease):
                 raise ValueError("sample scene outside declared split")
             neutral = host.conditioning(args.scene + ":neutral", embeddings[args.scene + ":neutral"])
             positive = host.conditioning(args.scene + ":positive", embeddings[args.scene + ":positive"])
+            # Measure OFF with no adapter hooks, then require exact packed image
+            # AND coupled-audio equality at attached strength zero.
+            detached_off = host.rollout(neutral, args.seed, strength=0.).copy()
+            event(phase="detached_off_complete", gpu=lease.check())
             if modern:
                 from ph3_hndl import load_adapter
                 host.adapter = load_adapter(host.model, host.targets, args.export,
@@ -161,9 +215,12 @@ def render(args, lease):
             for strength in plan["samples"]["strengths"]:
                 name = "strength-" + str(strength)
                 final = host.rollout(neutral, args.seed, strength=strength)
+                if strength == 0:
+                    document["off_parity"] = verify_exact_off(detached_off, final.copy())
+                    event(phase="exact_off_verified", **document["off_parity"])
                 states[name] = host.unpack_image(final).cpu()
                 recorded[name + ".image"], recorded[name + ".audio"] = final.image.cpu(), final.audio.cpu()
-                labels.append("slider " + str(strength))
+                labels.append("OFF (exact)" if strength == 0 else "slider " + str(strength))
                 event(phase="sample_latent_complete", strength=strength, gpu=lease.check())
             final = host.rollout(positive, args.seed, strength=0.)
             states["positive-teacher"] = host.unpack_image(final).cpu()
