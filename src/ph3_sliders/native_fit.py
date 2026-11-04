@@ -5,6 +5,8 @@ import gc
 import json
 from pathlib import Path
 import signal
+import os
+import tempfile
 import time
 
 import torch
@@ -17,6 +19,26 @@ from .native_host import H3Host
 from .native_qualify import same
 from .native_runtime import configure_numeric_runtime, load_transformer, runtime_identity, verify_loaded_transformer
 from .native_training import NativeTrainingRun
+from .selection import nominate
+
+
+def evaluate_completed(run, cache, directory, step):
+    """Publish the full raw responses and metric as one complete directory."""
+    target = directory / "evaluations" / f"step-{step:06d}-ema"
+    if target.exists():
+        result = json.loads((target / "result.json").read_text())
+        if (result["completed_steps"] != step or result["cache_fingerprint"] != cache.index["fingerprint"]
+                or result["raw_student_responses"]["sha256"] != file_hash(target / "student.safetensors")):
+            raise ValueError("saved native evaluation identity or bytes differ")
+    else:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        temporary = Path(tempfile.mkdtemp(prefix=target.name + ".partial-", dir=target.parent))
+        result = run.evaluate(cache, selection="ema", raw_path=temporary / "student.safetensors")
+        result["raw_student_responses"]["path"] = str(target / "student.safetensors")
+        write_json(temporary / "result.json", result)
+        os.rename(temporary, target)
+    write_json(directory / f"eval-{step:06d}-ema.json", result)
+    return result
 
 
 def prepare(args):
@@ -207,9 +229,7 @@ def run_trials(args, lease):
                     if step in plan["training"]["metric_checkpoints"] or step == args.steps:
                         path = directory / f"eval-{step:06d}-ema.json"
                         if not path.exists():
-                            evaluation = run.evaluate(development, selection="ema",
-                                raw_path=directory / f"eval-{step:06d}-ema.safetensors")
-                            write_json(path, evaluation)
+                            evaluation = evaluate_completed(run, development, directory, step)
                             event(phase="trial_evaluated", lr=rate, step=step,
                                   score=evaluation["mean_teacher_student_relative_error"])
                     write_json(directory / "STATE.json", dict(completed_steps=step, interrupted=bool(interrupted)))
@@ -218,8 +238,7 @@ def run_trials(args, lease):
                         return
                 evaluation_path = directory / f"eval-{args.steps:06d}-ema.json"
                 if not evaluation_path.exists():
-                    write_json(evaluation_path, run.evaluate(development,
-                        raw_path=directory / f"eval-{args.steps:06d}-ema.safetensors"))
+                    evaluate_completed(run, development, directory, args.steps)
                 evaluation = json.loads(evaluation_path.read_text())
                 results.append(dict(lr=rate, seed=args.seed, completed_steps=args.steps,
                     evaluation=evaluation, metric_feasible=eligible(evaluation), trial=str(directory),
@@ -234,13 +253,13 @@ def run_trials(args, lease):
                 release_run(host, run)
                 del run
                 torch.cuda.empty_cache()
-        feasible = sorted((r for r in results if r["metric_feasible"]),
-                          key=lambda r: (r["evaluation"]["mean_teacher_student_relative_error"], r["lr"]))
-        nomination = dict(status="metric_candidate_requires_matched_media" if feasible else "no_feasible_candidate",
+        candidate = nominate(results, tie_tolerance=plan["selection"]["tie_tolerance"])
+        nomination = dict(status="metric_candidate_requires_matched_media" if candidate else "no_feasible_candidate",
             common_budget=args.steps, seed=args.seed, results=results,
-            candidate=feasible[0] if feasible else None, native_qualification=identity["native_qualification_sha256"])
+            candidate=candidate, tie_tolerance=plan["selection"]["tie_tolerance"],
+            native_qualification=identity["native_qualification_sha256"])
         write_json(args.output / f"NOMINATION-step-{args.steps:06d}-seed-{args.seed}.json", nomination)
-        event(phase="common_budget_complete", step=args.steps, candidate_lr=feasible[0]["lr"] if feasible else None)
+        event(phase="common_budget_complete", step=args.steps, candidate_lr=candidate["lr"] if candidate else None)
     finally:
         for sig, handler in previous_handlers.items():
             signal.signal(sig, handler)

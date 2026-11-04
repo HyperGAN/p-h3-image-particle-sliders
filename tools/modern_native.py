@@ -52,6 +52,7 @@ def prepare(args):
     from ph3_sliders.native_cli import verify_staged
     from ph3_sliders.native_host import H3Host
     from ph3_sliders.native_runtime import configure_numeric_runtime, load_transformer, verify_loaded_transformer
+    import ph3_sliders.evaluation as metric
 
     configure_numeric_runtime()
     torch.cuda.set_per_process_memory_fraction(.88, 0)
@@ -75,6 +76,7 @@ def prepare(args):
         hndl=hndl_identity(), teachers=teacher_identities,
         training_plan=training_plan, training_plan_sha256=file_hash(args.training_plan),
         driver_sha256=file_hash(Path(__file__)),
+        metric_source_sha256=file_hash(Path(metric.__file__)),
         caches={"train": train.index["fingerprint"], "development": development.index["fingerprint"]})
     event(phase="modern_full_transformer_loading")
     model = load_transformer(args.model_directory)

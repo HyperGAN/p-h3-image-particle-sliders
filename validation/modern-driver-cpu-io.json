@@ -12,5 +12,5 @@
   "HNDL_EMA_export_load_exact": true,
   "GPU_initialized": false,
   "pretrained_training_updates": 0,
-  "driver_sha256": "054322904687bb7def83a6ff2a3a58a15093fa957c19f8fbd1e065c33bd57efa"
+  "driver_sha256": "59b527858ff31e6e3481990e27f152b93fcd1d00eaa769e23a0b1eb299f90bdf"
 }

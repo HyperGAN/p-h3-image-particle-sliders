@@ -85,6 +85,12 @@ checkpoints. Repeating a trial resumes its last complete checkpoint. Preserve
 training logs: an update beyond the latest checkpoint can have completed before
 an interruption and must not be silently counted as retained state.
 
+Use `tools/select_modern.py --cache "$ph3_run/caches/development" --steps 128
+--seed 17 --trials <the three trial directories> --output <fresh nomination.json>`
+to audit the completed comparison. It verifies full checkpoint and raw-response
+hashes, exact row labels and source identity, recomputes the teacher/student
+scores from the saved full tensors, then applies the tolerance-aware nomination.
+
 Nominate candidates from common-budget EMA evaluation only. Require finite
 complete evaluations, positive gain, and every scene better than OFF. Scores
 within 1e-6 favor the lower G rate. An edge winner calls for a targeted logarithmic
