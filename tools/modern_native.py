@@ -352,7 +352,7 @@ def trial(args, lease, prepared):
             event(phase="modern_native_step", **{k:v for k,v in record.items() if k != "metrics"})
             write(args.output / "STATE.json", dict(completed_steps=run.step, clean_stop=bool(stopped)))
             lease.check()
-            if run.step % 64 == 0 or run.step in (32, 64, 128) or run.step == args.steps or stopped:
+            if run.step % args.checkpoint_every == 0 or run.step in (32, 64, 128) or run.step == args.steps or stopped:
                 destination = args.output / "checkpoints" / f"step-{run.step:06d}"
                 if not (destination / "manifest.json").is_file():
                     save(run, destination)
@@ -399,7 +399,10 @@ def main():
     parser.add_argument("--rate", type=float, default=2e-5)
     parser.add_argument("--seed", type=int, default=17)
     parser.add_argument("--steps", type=int, default=128)
+    parser.add_argument("--checkpoint-every", type=int, default=64)
     args = parser.parse_args()
+    if args.checkpoint_every < 1:
+        parser.error("--checkpoint-every must be positive")
     if args.command == "trial" and args.qualification is None:
         parser.error("trial requires --qualification")
     args.output.mkdir(parents=True, exist_ok=args.command == "trial")

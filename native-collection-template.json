@@ -1,0 +1,165 @@
+{
+  "schema": "ph3-native-experiment-v1",
+  "concept": "warm golden lighting",
+  "model_revision": "7f98acef503cf2bcfba821a78cb1cf1a9928b2df",
+  "resolution": {
+    "height": 2048,
+    "width": 2048
+  },
+  "sigmas": [
+    1.0,
+    0.984753,
+    0.967905,
+    0.951688,
+    0.925372,
+    0.881923,
+    0.810083,
+    0.528718,
+    0.0
+  ],
+  "conditioning": {
+    "prompt_upsampler": false,
+    "mode": "verbatim_native_text2image",
+    "neutral_suffix": "The scene is illuminated by soft neutral daylight.",
+    "positive_suffix": "The scene is illuminated by warm golden light.",
+    "references": []
+  },
+  "splits": {
+    "train": {
+      "seeds": [
+        17,
+        29
+      ],
+      "scenes": [
+        {
+          "id": "cup",
+          "text": "A documentary photograph of a ceramic cup on a wooden table."
+        },
+        {
+          "id": "cottage",
+          "text": "A documentary photograph of a stone cottage beside a field."
+        },
+        {
+          "id": "trail",
+          "text": "A documentary photograph of a wooded trail with ferns."
+        },
+        {
+          "id": "fabric",
+          "text": "A documentary photograph of folded linen beside a woven basket."
+        }
+      ]
+    },
+    "development": {
+      "seeds": [
+        171,
+        172
+      ],
+      "scenes": [
+        {
+          "id": "bottle",
+          "text": "A documentary photograph of a glass bottle on a shelf."
+        },
+        {
+          "id": "bicycle",
+          "text": "A documentary photograph of a bicycle parked on a city street."
+        },
+        {
+          "id": "room",
+          "text": "A documentary photograph of a reading room with books and an armchair."
+        },
+        {
+          "id": "boat",
+          "text": "A documentary photograph of a fishing boat moored at a dock."
+        }
+      ]
+    },
+    "confirmation": {
+      "seeds": [
+        271,
+        272
+      ],
+      "scenes": [
+        {
+          "id": "bird",
+          "text": "A documentary photograph of a small bird perched on a branch."
+        },
+        {
+          "id": "bench",
+          "text": "A documentary photograph of a wooden bench in a garden."
+        },
+        {
+          "id": "lake",
+          "text": "A documentary photograph of a mountain lake with a rocky shore."
+        },
+        {
+          "id": "portrait",
+          "text": "A documentary photograph of an adult standing beside a window."
+        }
+      ]
+    }
+  },
+  "training": {
+    "generator_rates": [
+      6e-06,
+      2e-05,
+      6e-05
+    ],
+    "critic_rate": 0.0009,
+    "particle_rate": 0.006,
+    "initial_seed": 17,
+    "confirmation_seed": 29,
+    "batch": 8,
+    "microbatch": 1,
+    "schedule_horizon": 1600,
+    "ema": 0.995,
+    "common_selection_step": 128,
+    "finalist_confirmation_step": 256,
+    "final_minimum_steps": 512,
+    "checkpoint_interval": 64,
+    "metric_checkpoints": [
+      32,
+      64,
+      128
+    ],
+    "inference_selection": "ema",
+    "auxiliary_losses": []
+  },
+  "selection": {
+    "metric": "matched_example_teacher_student_relative_l2_v2",
+    "lower_is_better": true,
+    "coordinate_system": "full_packed_image_then_audio_velocity_unwhitened",
+    "complete_example_position_grid": true,
+    "require_all_scenes_below_OFF": true,
+    "require_positive_gain": true,
+    "require_exact_OFF": true,
+    "require_matched_media": true,
+    "tie_tolerance": 1e-06,
+    "tie_breaker": "lower_generator_lr",
+    "edge_winner": "targeted_followup",
+    "raw_weights": "diagnostic_only",
+    "failure": "unscoreable"
+  },
+  "samples": {
+    "strengths": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "reference": "native_positive_conditioned_teacher",
+    "same_noise": true,
+    "same_sigmas": true,
+    "same_decoder": true
+  },
+  "numerical_cohort": {
+    "frozen_base": "bitsandbytes_int8",
+    "threshold": 6.0,
+    "bitsandbytes": "0.50.2",
+    "activation_quantization_cast": "float16",
+    "remaining_base_dtype": "bfloat16_with_upstream_fp32_modules",
+    "adapter_dtype": "float32",
+    "deterministic": true,
+    "tf32": false
+  }
+}

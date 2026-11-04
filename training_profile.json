@@ -1,0 +1,16 @@
+{
+  "schema": "particle-slider-profile-v1",
+  "name": "ph3-native",
+  "product": "p-h3-image-particle-sliders",
+  "config_kind": "native",
+  "status": "native",
+  "command": ["{python}", "tools/train_concept.py"],
+  "runtime": {
+    "python": "/ml2/codex-storage/future-workspaces/2026-10-31/task-14/.venv-qwen-native/bin/python",
+    "device": "cuda:1"
+  },
+  "capabilities": {"resume": true, "periodic_checkpoint": true, "check": true},
+  "target_steps_path": "training.steps",
+  "default_checkpoint_every": 64,
+  "evidence": "/ml2/particlesliders-working/ph3-native-runs/warm-lighting-v1/bulk/qualification-v4/QUALIFICATION.json"
+}
