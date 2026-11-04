@@ -35,6 +35,20 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def parent_death_guard(parent_pid):
+    """Bind a native child to this exact controller, including forced kill."""
+    def configure():
+        import ctypes
+        if not sys.platform.startswith('linux'):
+            raise RuntimeError('this native process-lifecycle profile requires Linux')
+        libc = ctypes.CDLL(None, use_errno=True)
+        if libc.prctl(1, signal.SIGKILL, 0, 0, 0):
+            raise OSError(ctypes.get_errno(), 'cannot set parent-death SIGKILL')
+        if os.getppid() != parent_pid:
+            os._exit(125)
+    return configure
+
+
 def environment():
     roots = [WORKSPACE / 'ph3-native-deps', ARCHIVE / 'engine-runtime',
              ARCHIVE / 'hypergan-bridge', ARCHIVE / 'hndl-bridge',
@@ -181,7 +195,8 @@ def run(args):
         write(delivery / 'progress.json', dict(status='running', phase=name))
         with (output / (name + '.log')).open('a') as log:
             child = subprocess.Popen([str(PYTHON), '-u', *command], cwd=ROOT, env=env,
-                stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+                stdout=log, stderr=subprocess.STDOUT, start_new_session=True,
+                preexec_fn=parent_death_guard(os.getpid()))
             try:
                 while child.poll() is None:
                     metrics = output / 'training/training.jsonl'

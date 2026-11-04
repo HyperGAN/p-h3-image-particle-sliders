@@ -1,8 +1,12 @@
 """Dependency-free public native request checks; no model/GPU substitution."""
 import importlib.util
 import json
+import os
 from pathlib import Path
+import signal
+import subprocess
 import sys
+import time
 
 import pytest
 
@@ -102,3 +106,43 @@ def test_unexpected_failure_records_failed_result(tmp_path, monkeypatch):
     with pytest.raises(TimeoutError):
         worker.main(['--config', str(ROOT / 'wild-hair.json'), '--output', str(tmp_path)])
     assert json.loads((tmp_path / 'result.json').read_text())['status'] == 'failed'
+
+
+@pytest.mark.skipif(not sys.platform.startswith('linux'), reason='Linux native lifecycle profile')
+def test_forced_controller_kill_cannot_orphan_native_stage(tmp_path):
+    """Actual detached grandchild dies even when controller cannot run finally."""
+    pidfile = tmp_path / 'native-child.pid'
+    program = f'''import importlib.util, os, subprocess, sys, time
+s=importlib.util.spec_from_file_location("worker", {str(ROOT / 'tools/train_concept.py')!r})
+w=importlib.util.module_from_spec(s);s.loader.exec_module(w)
+p=subprocess.Popen([sys.executable,"-c","import time;time.sleep(120)"], start_new_session=True, preexec_fn=w.parent_death_guard(os.getpid()))
+open({str(pidfile)!r},"w").write(str(p.pid))
+time.sleep(120)
+'''
+    controller = subprocess.Popen([sys.executable, '-c', program])
+    child_pid = None
+    try:
+        deadline = time.monotonic() + 10
+        while not pidfile.exists() and time.monotonic() < deadline:
+            time.sleep(.02)
+        assert pidfile.exists()
+        child_pid = int(pidfile.read_text())
+        os.kill(controller.pid, signal.SIGKILL)
+        controller.wait(timeout=5)
+        deadline = time.monotonic() + 5
+        while time.monotonic() < deadline:
+            status = Path(f'/proc/{child_pid}/stat')
+            if not status.exists() or status.read_text().split()[2] == 'Z':
+                break
+            time.sleep(.02)
+        else:
+            pytest.fail('native stage survived forced controller termination')
+    finally:
+        if controller.poll() is None:
+            controller.kill()
+            controller.wait()
+        if child_pid is not None:
+            try:
+                os.kill(child_pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
