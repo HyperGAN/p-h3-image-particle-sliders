@@ -1,0 +1,21 @@
+{
+  "schema": "ph3-hypergan-develop-engine-v1",
+  "repository": "https://github.com/HyperGAN/HyperGAN",
+  "revision": "5f368a3770cf5bdae0448995c9f76e29af8049f7",
+  "branch": "develop",
+  "verified_at": "2026-11-04",
+  "packages": {
+    "hypergan": {
+      "version": "2.0.0",
+      "python_source_sha256": "9c725516409bfbb80f9740c65a435c0b7219be55d0ca88e2c777dc76aea2cb1e"
+    },
+    "particlegan": {
+      "version": "0.9.4",
+      "python_source_sha256": "a82ab634d07bd768a27a3aae3faf9e768241c5840a5690d0fea9c8af8c14303f"
+    },
+    "hndl": {
+      "version": "0.10.0",
+      "python_source_sha256": "8d1e9b0dc44920eb62de4bc780ca2eef3525ab438e7100dd7759411ce6f091df"
+    }
+  }
+}

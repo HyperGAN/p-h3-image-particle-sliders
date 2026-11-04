@@ -1,0 +1,65 @@
+{
+  "schema": "ph3-hypergan-develop-cpu-verification-v1",
+  "verified_at": "2026-11-04",
+  "base_product_commit": "6e3782a",
+  "canonical_hypergan": {
+    "schema": "ph3-hypergan-develop-engine-v1",
+    "repository": "https://github.com/HyperGAN/HyperGAN",
+    "revision": "5f368a3770cf5bdae0448995c9f76e29af8049f7",
+    "branch": "develop",
+    "verified_at": "2026-11-04",
+    "packages": {
+      "hypergan": {
+        "version": "2.0.0",
+        "python_source_sha256": "9c725516409bfbb80f9740c65a435c0b7219be55d0ca88e2c777dc76aea2cb1e"
+      },
+      "particlegan": {
+        "version": "0.9.4",
+        "python_source_sha256": "a82ab634d07bd768a27a3aae3faf9e768241c5840a5690d0fea9c8af8c14303f"
+      },
+      "hndl": {
+        "version": "0.10.0",
+        "python_source_sha256": "8d1e9b0dc44920eb62de4bc780ca2eef3525ab438e7100dd7759411ce6f091df"
+      }
+    }
+  },
+  "package": "ph3-hypergan-develop==0.1.0a1",
+  "wheel_sha256": "4e279efa27d7bdf9174ca0455d6e1d469610d01272a75c1b95e2f8f342be4cf7",
+  "interpreter": "/ml2/codex-storage/future-workspaces/2026-10-31/task-14/.venv-qwen-native/bin/python",
+  "tested_installed_packages": [
+    "/tmp/ph3-hypergan-bridge-release-installed",
+    "/tmp/ph3-hndl-installed",
+    "/tmp/ph3-hypergan-develop-runtime"
+  ],
+  "tests": {
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "source_and_installed_wheel": true
+  },
+  "proof": {
+    "actual_hypergan_executor": true,
+    "actual_modern_pg_optimizers": true,
+    "reduced_actual_random_h3": true,
+    "hndl_native_graphs": true,
+    "full_image_audio_coordinates": 88,
+    "attention_targets": 16,
+    "effective_batch": 1,
+    "completed_updates": 4,
+    "replay_calls": 2,
+    "fresh_host_full_state_replay_exact": true,
+    "base_unchanged": true,
+    "OFF_exact": true,
+    "OFF_pooled_metric": 1.0,
+    "EMA_export_executes_in_owned_hooks": true,
+    "raw_full_response_safetensors": true,
+    "normalizer_train_only_analytical_control": true,
+    "teacher_forward_identity_drift_rejection": true
+  },
+  "pretrained_model_loaded": false,
+  "gpu_initialized": false,
+  "pretrained_or_image_quality_claim": false,
+  "live_collector_worktree_changed": false,
+  "public_push_or_merge": false,
+  "command": "PYTHONPATH=/tmp/ph3-hypergan-develop-runtime:/tmp/ph3-hypergan-bridge-release-installed:/tmp/ph3-hndl-installed:/ml2/particlesliders-working/ph3-diffusers/src:/ml2/particlesliders-working/ph3-hypergan-develop/src /ml2/codex-storage/future-workspaces/2026-10-31/task-14/.venv-qwen-native/bin/python -m pytest -q -o pythonpath= /ml2/particlesliders-working/ph3-hypergan-develop/packages/ph3-hypergan-develop/tests"
+}

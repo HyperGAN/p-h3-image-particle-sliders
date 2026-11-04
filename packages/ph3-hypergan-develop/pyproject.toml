@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ph3-hypergan-develop"
+version = "0.1.0a1"
+description = "Explicit P-H3 paired-response binding to the HyperGAN develop engine"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.11,<3.15"
+dependencies = [
+  "hypergan @ git+https://github.com/HyperGAN/HyperGAN.git@5f368a3770cf5bdae0448995c9f76e29af8049f7",
+  "particlegan==0.9.4",
+  "hndl==0.10.0",
+  "foldlitedb==0.1.2",
+  "torch>=2.6,<3",
+  "numpy>=1.26,<3",
+  "safetensors>=0.8,<1",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ph3_hypergan = ["engine.lock.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
