@@ -55,6 +55,7 @@ def prepare(args):
     from ph3_sliders.native_host import H3Host
     from ph3_sliders.native_runtime import configure_numeric_runtime, load_transformer, verify_loaded_transformer
     import ph3_sliders.evaluation as metric
+    import ph3_sliders.native_checkpointing as checkpointing
 
     configure_numeric_runtime()
     torch.cuda.set_per_process_memory_fraction(MEMORY_FRACTION, 0)
@@ -80,10 +81,12 @@ def prepare(args):
         driver_sha256=file_hash(Path(__file__)),
         metric_source_sha256=file_hash(Path(metric.__file__)),
         resource_budget=dict(torch_cuda_memory_fraction=MEMORY_FRACTION, maximum_gpu_used_mib=46000),
+        activation_checkpointing=dict(mode=checkpointing.MODE, source_sha256=file_hash(Path(checkpointing.__file__))),
         caches={"train": train.index["fingerprint"], "development": development.index["fingerprint"]})
     event(phase="modern_full_transformer_loading")
     model = load_transformer(args.model_directory)
     binding = verify_loaded_transformer(model, args.model_directory)
+    checkpointing.enable_native_checkpointing(model)
     event(phase="modern_full_transformer_bound", keys=binding["keys"])
     host = H3Host(model, device="cuda:0", latent_height=collection_plan["resolution"]["height"] // 16,
         latent_width=collection_plan["resolution"]["width"] // 16, sigmas=collection_plan["sigmas"])

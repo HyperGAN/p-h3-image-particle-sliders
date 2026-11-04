@@ -23,6 +23,7 @@ def qualify(args, lease):
     from ph3_hypergan.runtime import require_runtime
     from ph3_sliders.native_cache import NativeCache, file_hash, tensor_hash
     from ph3_sliders.native_host import H3Host
+    from ph3_sliders.native_checkpointing import enable_native_checkpointing
     from ph3_sliders.native_runtime import (configure_numeric_runtime,
         verify_diffusers_source, load_transformer, verify_loaded_transformer)
     from modern_native import equal, save, restore, evaluate_saved, evaluate_off, export, write, event, parity
@@ -44,6 +45,7 @@ def qualify(args, lease):
     del model
     model = load_transformer(args.output / "random-model")
     binding = verify_loaded_transformer(model, args.output / "random-model")
+    identity["activation_checkpointing"] = enable_native_checkpointing(model)
     host = H3Host(model, device="cuda:0", latent_height=4, latent_width=4, sigmas=(1., .5, 0.))
     neutral = host.conditioning("neutral", torch.randn(1, 4, 8))
     positive = host.conditioning("positive", torch.randn(1, 5, 8))

@@ -17,6 +17,7 @@ def main():
     from ph3_hypergan import NativeHyperganRun, fit_normalization
     from ph3_sliders.native_cache import NativeCache, file_hash
     from ph3_sliders.native_host import H3Host
+    from ph3_sliders.native_checkpointing import enable_native_checkpointing
     import modern_native as driver
 
     torch.set_num_threads(1)
@@ -26,6 +27,7 @@ def main():
         in_channels=4, audio_in_channels=6, patch_size=(1, 2, 2), text_dim=8,
         freq_dim=8, time_embed_hidden_dim=24, time_embed_dim=16, rope_freq_dim=2)
     model.requires_grad_(False).eval().enable_gradient_checkpointing()
+    enable_native_checkpointing(model)
     host = H3Host(model, latent_height=4, latent_width=4, sigmas=(1., .5, 0.))
     neutral = host.conditioning("neutral", torch.randn(1, 4, 8))
     positive = host.conditioning("positive", torch.randn(1, 5, 8))

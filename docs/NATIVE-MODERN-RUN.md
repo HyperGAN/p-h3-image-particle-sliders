@@ -65,6 +65,16 @@ and audio sampler parity, full-development OFF, four actual pretrained updates,
 two replay calls with exact full trainer state, frozen base integrity and trained
 OFF bypass. A reduced CPU model test does not satisfy this gate.
 
+The frozen int8 host uses reentrant whole-block activation checkpointing in
+both refiner and main blocks. Pinned BnB stores inputs directly in autograd
+contexts, bypassing the saved-tensor hooks used by the default nonreentrant
+checkpointing. Whole-block recomputation releases those intermediate contexts.
+The first frozen hidden input becomes an activation leaf when needed; base
+parameters stay frozen and existing upstream gradients remain connected.
+The helper mode and source hash are part of training identity. This path assumes
+the qualified plain generator `loss.backward()` recipe; a future generator
+recipe using `autograd.grad` requires separate compatibility qualification.
+
 Then run each proposed rate to the **same** completed update count:
 
 ```bash

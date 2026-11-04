@@ -1,0 +1,74 @@
+{
+  "schema": "ph3-reentrant-native-gradient-equivalence-v1",
+  "status": "passed",
+  "checkpoint_mode": "reentrant_whole_block_frozen_input_grad_v1",
+  "checkpoint_source_sha256": "dac34a3d0b13f65c7f72b791ef0ea216134da4820e78bc31b8ec04050aa59064",
+  "checkpoint_source": "/ml2/particlesliders-working/ph3-modern-native/src/ph3_sliders/native_checkpointing.py",
+  "hndl": {
+    "repository": "https://github.com/HyperGAN/HNDL",
+    "commit": "df5af35d3b4017e1164b011d12264a01546a3ff4",
+    "hndl_version": "0.10.0",
+    "python_sources_sha256": "65dea9722967cae93ecbfb08d2a55bbad9bc60def10dd228754f75c113289da6"
+  },
+  "torch": "2.14.1+cu130",
+  "random_reduced_actual_h3": true,
+  "pretrained_model": false,
+  "bitsandbytes_kernels": false,
+  "image_elements": 64,
+  "audio_elements": 24,
+  "outputs_and_loss_bitwise_equal": true,
+  "target_count": 16,
+  "all_adapter_gradients_present_finite_and_nonzero": true,
+  "adapter_gradient_leaves": 289,
+  "gradient_tolerance": {
+    "rtol": 2e-05,
+    "atol": 1e-07
+  },
+  "gradient_max_absolute_difference": 3.637978807091713e-12,
+  "particle_gradient_max_absolute_difference": 3.637978807091713e-12,
+  "base_frozen_unchanged_and_no_grad": true,
+  "rng_unchanged": true,
+  "cuda_initialized": false,
+  "plain_events": {
+    "refiner_first": [
+      {
+        "stage": "forward",
+        "grad_enabled": true,
+        "input_requires_grad": false
+      }
+    ],
+    "main_first": [
+      {
+        "stage": "forward",
+        "grad_enabled": true,
+        "input_requires_grad": true
+      }
+    ]
+  },
+  "reentrant_events": {
+    "refiner_first": [
+      {
+        "stage": "forward",
+        "grad_enabled": false,
+        "input_requires_grad": true
+      },
+      {
+        "stage": "backward",
+        "grad_enabled": true,
+        "input_requires_grad": true
+      }
+    ],
+    "main_first": [
+      {
+        "stage": "forward",
+        "grad_enabled": false,
+        "input_requires_grad": true
+      },
+      {
+        "stage": "backward",
+        "grad_enabled": true,
+        "input_requires_grad": true
+      }
+    ]
+  }
+}
