@@ -25,7 +25,7 @@ def qualify(args, lease):
     from ph3_sliders.native_host import H3Host
     from ph3_sliders.native_runtime import (configure_numeric_runtime,
         verify_diffusers_source, load_transformer, verify_loaded_transformer)
-    from modern_native import equal, save, restore, evaluate_saved, export, write, event
+    from modern_native import equal, save, restore, evaluate_saved, export, write, event, parity
 
     args.output.mkdir(parents=True, exist_ok=False)
     configure_numeric_runtime(47)
@@ -51,6 +51,7 @@ def qualify(args, lease):
         expected_examples=[("cup", 17, "neutral"), ("cup", 17, "positive")],
         identity=dict(split="train", actual_random_int8_h3=True, pretrained=False))
     cache.save(args.output / "paired-cache")
+    upstream_parity = parity(host, cache)
     base = tensor_hash(model.state_dict())
     host.adapter = RoutedAdapter(model, host.targets, device=host.device)
     try:
@@ -77,6 +78,7 @@ def qualify(args, lease):
         equal(expected, run.snapshot())
         result = dict(schema="ph3-modern-random-native-gpu-qualification-v1", status="passed",
             identity=identity, weight_binding=binding, full_state_exact_replay=True,
+            upstream_sampler_parity=upstream_parity,
             frozen_base_exact=True, OFF_exact=True, evaluation_and_export_preserve_state=True,
             actual_random_updates=run.step, replay_calls=2, pretrained_training_updates=0,
             native_targets=len(host.targets), response_elements=cache[0]["positive"].numel(),

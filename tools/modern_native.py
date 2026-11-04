@@ -192,7 +192,9 @@ def parity(host, cache):
         audio_scheduler=MiniMaxH3Scheduler(shift_provided_sigmas=False))
     pipeline.set_progress_bar_config(disable=True)
     reference = pipeline(prompt_embeds=context.embeddings.to(host.device),
-        text_token_tags=torch.ones(context.embeddings.shape[1], dtype=torch.long, device=host.device),
+        # Native encoders construct tags on CPU; layout packs there, then moves
+        # every layout tensor to the transformer's execution device.
+        text_token_tags=torch.ones(context.embeddings.shape[1], dtype=torch.long),
         height=host.latent_height * 16, width=host.latent_width * 16,
         generator=torch.Generator().manual_seed(row["seed"]), sigmas=list(host.sigmas))
     actual_audio = actual.audio.reshape(2, 2, host.model.config.audio_in_channels).permute(0, 2, 1)

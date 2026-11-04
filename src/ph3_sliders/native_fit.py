@@ -104,7 +104,7 @@ def upstream_sampler_parity(host, conditioning, seed):
         audio_scheduler=MiniMaxH3Scheduler(shift_provided_sigmas=False))
     pipeline.set_progress_bar_config(disable=True)
     reference = pipeline(prompt_embeds=conditioning.embeddings.to(host.device),
-        text_token_tags=torch.ones(conditioning.embeddings.shape[1], dtype=torch.long, device=host.device),
+        text_token_tags=torch.ones(conditioning.embeddings.shape[1], dtype=torch.long),
         height=host.latent_height * 16, width=host.latent_width * 16,
         generator=torch.Generator().manual_seed(seed), sigmas=list(host.sigmas))
     actual_image = host.unpack_image(actual)
