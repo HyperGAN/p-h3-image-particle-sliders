@@ -1,0 +1,40 @@
+{
+  "schema": "ph3-hndl-native-cpu-verification-v1",
+  "runtime": {
+    "repository": "https://github.com/HyperGAN/HNDL",
+    "commit": "df5af35d3b4017e1164b011d12264a01546a3ff4",
+    "hndl_version": "0.10.0",
+    "python_sources_sha256": "65dea9722967cae93ecbfb08d2a55bbad9bc60def10dd228754f75c113289da6"
+  },
+  "reduced_random_h3": true,
+  "pretrained_quality_claim": false,
+  "native_targets": 16,
+  "teacher_rows": 4,
+  "full_response_width": 88,
+  "image_coordinates": 64,
+  "audio_coordinates": 24,
+  "differentiability_probe_updates": 3,
+  "actual_hndl_graphs": 17,
+  "frozen_model_unchanged": true,
+  "particle_bank_changed": true,
+  "exact_off": true,
+  "raw_inference_roundtrip_exact": true,
+  "artifact_schema": "ph3-hndl-routed-inference-v1",
+  "artifact_signature_sha256": "3cf7c4fcb35718a4a20c4bdb53804d1fdbb7832b38e8003c5c6d104293fbeeca",
+  "adapter_binding_sha256": "b36087ac88b623adab9d10f1417ca9fd7253b5d75c2db79500cccfa6a0471fcd",
+  "critic_identity": {
+    "repository": "https://github.com/HyperGAN/HNDL",
+    "commit": "df5af35d3b4017e1164b011d12264a01546a3ff4",
+    "hndl_version": "0.10.0",
+    "python_sources_sha256": "65dea9722967cae93ecbfb08d2a55bbad9bc60def10dd228754f75c113289da6",
+    "source_sha256": "74861a1750a3dbc0c3ebcf0bb1a9d8bde10ef6bc107a9eee735551369bbbfd13",
+    "plan_sha256": "87b8f6c041ee254f2b835157625acd48553e306923a812af34f6b91162c438d5",
+    "formulation": "anima-global-mix-hndl-v1",
+    "input_width": 88,
+    "tokens": 2,
+    "width": 8,
+    "layers": 1,
+    "heads": 2,
+    "score_bound": 8.0
+  }
+}

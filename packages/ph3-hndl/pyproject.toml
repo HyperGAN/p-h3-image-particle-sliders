@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "p-h3-particle-sliders-hndl"
+version = "0.1.0a1"
+description = "Native HNDL routed particle adapter and global-mix critic for P-H3"
+requires-python = ">=3.11,<3.15"
+license = "Apache-2.0"
+dependencies = ["hndl==0.10.0", "torch>=2.6,<3", "safetensors>=0.8,<1"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ph3_hndl = ["runtime.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

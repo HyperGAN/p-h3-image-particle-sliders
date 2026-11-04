@@ -1,5 +1,11 @@
 # P-H3-Image Particle Sliders
 
+The isolated optional [native HNDL network package](packages/ph3-hndl/README.md)
+executes routed particle projections and the full-response global-mix critic,
+with strict portable inference export/load. It has been verified against the
+actual reduced H3 architecture on CPU. It does not change the classic default
+cohort described below or claim pretrained image quality.
+
 Source-only preparation for [PrunaAI/P-H3-Image](https://huggingface.co/PrunaAI/P-H3-Image),
 using **the released Anima gmix formulation as the reference**, as requested.
 No model loader, H3 attention-target discovery, trained slider, image sampler or
