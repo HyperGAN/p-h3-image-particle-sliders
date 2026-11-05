@@ -17,7 +17,7 @@
    Pair neutral/positive teachers at identical native states, seeds and ordered
    references. Freeze the expanded prompts, conditionings and model identities.
    Preserve non-concept controls and separate held-out evaluation. Core owns
-   game updates, losses, regularization, EMA, strict restore and serialization;
+   game updates, losses, regularization, strict restore and serialization;
    the product owns native geometry and sampling.
 5. Declare the actual response geometry/domain and obey core admission. The
    pinned PG0.9.4 path refuses flat continuous vectors of width >=170. There is
