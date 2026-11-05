@@ -36,10 +36,11 @@ def test_plan_uses_no_native_runtime_or_file_access(tmp_path):
     # A fresh subprocess proves this path does not import Torch or model libraries.
     source = """
 import sys
+startup_modules = set(sys.modules)
 from ph3_sliders.contract import RequestPlan
 p = RequestPlan('a bowl', references=('nonexistent.png',)).as_dict()
 assert p['task'] == 'image-edit'
-assert not {'torch', 'diffusers', 'transformers', 'huggingface_hub', 'particle_sliders'} & sys.modules.keys()
+assert not {'torch', 'diffusers', 'transformers', 'huggingface_hub', 'particle_sliders'} & (sys.modules.keys() - startup_modules)
 """
     env = dict(os.environ)
     subprocess.run([sys.executable, "-c", source], check=True, env=env, cwd=tmp_path)

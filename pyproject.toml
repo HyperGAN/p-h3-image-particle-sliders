@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "p-h3-image-particle-sliders"
-version = "0.1.0"
+version = "0.2.0"
 description = "Source-only P-H3-Image integration planning and synthetic Particle Sliders checks"
 requires-python = ">=3.11"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 dependencies = [
-  "particle-sliders-core @ git+https://github.com/HyperGAN/particle-sliders.git@5adca87d32a159d529a89592fe35d3476dca7da3#subdirectory=packages/particle-sliders-core",
+  "particle-sliders-core @ git+https://github.com/HyperGAN/particle-sliders.git@3dd672a7f9b8c169daef90fd63e4bb42b9ddc423#subdirectory=packages/particle-sliders-core",
 ]
 
 [project.optional-dependencies]
