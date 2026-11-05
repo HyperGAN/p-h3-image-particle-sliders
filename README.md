@@ -50,9 +50,14 @@ The common interface is registered as `ph3-image`:
 ```python
 from particle_sliders.lifecycle import SessionConfig, backend
 
-config = SessionConfig('ph3-image', 'new-source-cohort')
+config = SessionConfig('ph3-image', 'new-source-cohort', ema_decay=None)
 print(backend('ph3-image').describe(config))  # operations=(), no native allocation
 ```
+
+The common configuration explicitly disables EMA with `ema_decay=None`. Any
+future separately admitted training, evaluation, export and inference must use
+RAW current weights, without weight EMA, checkpoint averaging or EMA comparison.
+This policy does not enable a native operation or alter historical evidence.
 
 All six shared operations refuse before validation, PG admission, factory
 preparation, CUDA selection or weight allocation. There is no environment flag,
