@@ -5,7 +5,7 @@ import math
 
 MODEL_ID = "PrunaAI/P-H3-Image"
 MODEL_REVISION = "7f98acef503cf2bcfba821a78cb1cf1a9928b2df"
-CORE_REVISION = "5adca87d32a159d529a89592fe35d3476dca7da3"
+CORE_REVISION = "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423"
 REFUSAL = (
     "P-H3-Image live operations are disabled: model-license authorization and "
     "native shared-lifecycle qualification are unresolved. This revision has "

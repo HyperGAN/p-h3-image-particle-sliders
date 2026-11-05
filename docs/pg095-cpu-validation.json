@@ -1,0 +1,20 @@
+{
+  "status": "CPU_SYNTHETIC_AND_PLANNING_CHECKS_PASS_NOT_NATIVE_QUALIFICATION",
+  "core_commit": "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423",
+  "core_version": "0.13.0",
+  "particlegan": "0.9.5",
+  "core_wheel_sha256": "af1f64ee624d103a9f77b949b57a97cfeddf37d0e56a8aa5cc93a7d94855dda2",
+  "PG_wheel_sha256": "c1c0de7a635ac1b1634ba158eed050b6f6aed993e01f9b463435430c77d846ae",
+  "python": "3.12.15",
+  "torch": "2.9.1+cu128",
+  "CUDA_VISIBLE_DEVICES": "",
+  "checks": {
+    "source": 40,
+    "installed_outside_checkout": 40
+  },
+  "native_weights_loaded": false,
+  "GPU_initialized": false,
+  "native_operations_enabled": false,
+  "foreign_process_or_environment_modified": false,
+  "old_validation_and_model_metadata_preserved": true
+}

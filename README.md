@@ -1,3 +1,5 @@
+Current planning/synthetic package: core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`, published PG **0.9.5**. This changes no native capability or model authorization. Historical validation below belongs to its recorded source.
+
 # P-H3-Image Particle Sliders
 
 Source-only integration planning for [PrunaAI/P-H3-Image](https://huggingface.co/PrunaAI/P-H3-Image),
@@ -16,7 +18,7 @@ unresolved. See [the license review](docs/LICENSE-REVIEW.md).
 
 Use a new Python >=3.11 environment. Install your selected CPU PyTorch >=2.6,<3
 build first, then install this project. This installs the shared core at a full
-Git commit; ParticleGAN 0.9.4 is its transitive dependency. This product adds no
+Git commit; ParticleGAN 0.9.5 is its transitive dependency. This product adds no
 Diffusers/Transformers native runtime or model weights. The shared package retains
 its own historical backend namespaces; none is invoked by this product.
 

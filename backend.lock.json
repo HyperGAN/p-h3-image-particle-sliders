@@ -1,5 +1,5 @@
 {
-  "schema": "ph3-source-plan-v1",
+  "schema": "ph3-source-plan-v2",
   "inspected_at": "2026-11-03",
   "model": {
     "id": "PrunaAI/P-H3-Image",
@@ -8,10 +8,10 @@
   },
   "shared_core": {
     "repository": "https://github.com/HyperGAN/particle-sliders",
-    "revision": "5adca87d32a159d529a89592fe35d3476dca7da3",
+    "revision": "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423",
     "subdirectory": "packages/particle-sliders-core",
-    "version": "0.12.0",
-    "particlegan": "0.9.4"
+    "version": "0.13.0",
+    "particlegan": "0.9.5"
   },
   "official_metadata_sha256": {
     "LICENSE": "59b99642b95ea21630e311198ddbfffbfe05aadba0c2f5d884cbdf4efcc90f44",
@@ -29,5 +29,12 @@
     "train": false,
     "render": false,
     "publish_models": false
+  },
+  "previous_shared_core": {
+    "repository": "https://github.com/HyperGAN/particle-sliders",
+    "revision": "5adca87d32a159d529a89592fe35d3476dca7da3",
+    "subdirectory": "packages/particle-sliders-core",
+    "version": "0.12.0",
+    "particlegan": "0.9.4"
   }
 }
