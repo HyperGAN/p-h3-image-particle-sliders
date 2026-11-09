@@ -1,25 +1,30 @@
-# P-H3 learning rates: original comparison pending
+# P-H3 learning rates: existing RAW32 result
 
-No learning-rate winner or new default is selected. Use the original four-arm
-RAW32 comparison and exact literal tuples in the [fixed-bank API](docs/FIXED-BANK-API.md),
-with current training profile `ph3-image-fixed-bank32`, explicit runner
-`ph3-root-owned` and `ema_decay=None` / JSON `null`.
+**Use saved cell3/G`0.036` for the measured WarmGoldenLight setup.** Its equal-eight-case
+finished-effect ON−OFF mean is **+`0.017445931987216074`**, uniquely highest among
+the four original RAW32 arms. Fixed actual D is `0.018000000000000002` and bank
+`0.029999999999999995`; exact common options are `lr=0.036`,
+`d_lr_mult=0.5000000000000001`, `prior_lr_mult=0.8333333333333333`,
+`ema_decay=None` (JSON `null`). No package default changed.
 
-[The scoped guide](docs/finished-output-learning-rates.md) explains actual
-planning commands, G/D/bank interpretation, saved FULL continuation and local
-asset limitations. [The portable summary](docs/finished-output-rate.json)
-records all four original tuples without volatile live job identifiers.
+[The scoped guide](docs/finished-output-learning-rates.md) gives the actual profile,
+option interpretation and local asset limits. [The portable summary](docs/finished-output-rate.json)
+retains all four literal tuples and scores; [the decision](docs/finished-output-decision.json)
+retains all32 matched pairs and40 first image intensities, including negative gains.
+This is a frozen model-instrument comparison at RAW32/b2/h128/r8/native2048 on
+four DEV scenes×seeds171/172, not a global/joint optimum or human/holdout claim.
 
-The sole selector is equal-case arithmetic mean intended-effect ON−exact
-matched OFF in finished outputs, retaining negatives, zeros and exact ties.
-Technical failures are missing, not zero. Teacher/student SSE is diagnostic
-only; preservation, beauty, confidence or completion are not selectors or
-tiebreaks. Reuse completed searches, teachers, RAWs, proofs, outputs and first
-observations. Finish only genuine missing declared updates or resume the exact
-latest complete FULL state; never replay a prefix or add fresh confirmation,
-new top-two extension or worse-arm completion. All weight EMA is refused.
+The sole selector is equal-case arithmetic mean intended-effect ON−exact matched
+OFF. Preserve negatives, zeros and exact ties. Technical failures are missing,
+not zero. Teacher/student SSE is diagnostic only; preservation, beauty,
+confidence and completion never select or break ties. Use RAW current weights,
+with weight EMA disabled. All four declared arms,32ON and8sharedOFF previews
+are complete. Reuse their RAWs, teachers, proofs, outputs and first measurements;
+no new search, output rerun, rerating, prefix replay or extra confirmation is needed.
 
-Completed common training first use is evidence for the supported fixed local
-bank, not an effect score, arbitrary prompt/data trainer or ordinary Generate
-qualification. Keep historical planning/fixture reports within their original
-scope; no historical result, code, default or Source pin is changed here.
+The common profile `ph3-image-fixed-bank32` and explicit `ph3-root-owned` runner
+support only the original local bank. Completed arms cannot be trained again.
+The unchanged `ph3-native-response095` factory remains response-only; local model,
+conditioning and runtime dependencies are unbundled. Ordinary Generate/preset
+integration remains separately pending. Historical planning/fixture reports and
+original source/lock/default identities are unchanged.

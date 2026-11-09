@@ -5,10 +5,15 @@
   "concept": "WarmGoldenLight",
   "selection_metric": "Equal-case arithmetic mean of intended-effect intensity ON minus exact matched OFF in finished images; higher wins.",
   "comparison_policy": "Retain negative gains, native zeros and exact ties. Technical failures are missing evidence, not zero. No teacher-SSE, preservation, beauty, confidence or completion selector/tiebreak. Reuse completed searches, checkpoints, proofs, outputs and first scores; no additional fresh confirmation or worse-arm completion.",
-  "status": "effect_measurement_pending",
-  "common_rate_overrides": null,
-  "selected_unique_G": null,
-  "mean_gain": null,
+  "status": "selected_existing_best_tested_RAW32",
+  "common_rate_overrides": {
+    "lr": 0.036,
+    "d_lr_mult": 0.5000000000000001,
+    "prior_lr_mult": 0.8333333333333333,
+    "ema_decay": null
+  },
+  "selected_unique_G": 0.036,
+  "mean_gain": 0.017445931987216074,
   "weight_EMA": null,
   "package_defaults_changed": false,
   "additional_fresh_confirmation_required": false,
@@ -43,7 +48,8 @@
         "d_lr_mult": 45.0,
         "prior_lr_mult": 74.99999999999999,
         "ema_decay": null
-      }
+      },
+      "mean_gain": -0.00029275131722291336
     },
     {
       "arm": "cell1",
@@ -52,7 +58,8 @@
         "d_lr_mult": 4.5,
         "prior_lr_mult": 7.499999999999999,
         "ema_decay": null
-      }
+      },
+      "mean_gain": 0.002527267051239808
     },
     {
       "arm": "cell2",
@@ -61,7 +68,8 @@
         "d_lr_mult": 1.5000000000000002,
         "prior_lr_mult": 2.4999999999999996,
         "ema_decay": null
-      }
+      },
+      "mean_gain": 0.0009762506621579328
     },
     {
       "arm": "cell3",
@@ -70,10 +78,11 @@
         "d_lr_mult": 0.5000000000000001,
         "prior_lr_mult": 0.8333333333333333,
         "ema_decay": null
-      }
+      },
+      "mean_gain": 0.017445931987216074
     }
   ],
-  "availability": "Original local frozen model/data, captured environment, Root-owned preparation/admission and source identities are required; not bundled as portable public assets.",
+  "availability": "The four RAW32 arms and32ON+8sharedOFF native2048 previews are complete in the original local deployment. One trained WarmGoldenLight control; zero released weights. RAW/model/conditioning/runtime/admission assets are not bundled, and ordinary Generate/preset deployment remains separate and pending.",
   "completed_common_API_first_use": {
     "arm": "cell2",
     "G": 0.012,
@@ -84,5 +93,15 @@
     "terminal_bytes": 38459,
     "terminal_sha256": "43e0c9bcb2ef50243f25f82609f9b7d0a96d2ae3dd24363b533aec9cce843fc8",
     "scope": "Static completed first-use evidence, not a changing bank-completion or LR-selection record."
-  }
+  },
+  "selected_control": "cell3",
+  "best_tied_controls": [
+    "cell3"
+  ],
+  "comparison_cases": 8,
+  "comparison_arms": 4,
+  "all_declared_arms_completed": true,
+  "ordinary_Generate_ready": false,
+  "finished_output_decision": "finished-output-decision.json",
+  "scope": "Original four declared RAW32 arms, original four DEV scenes x seeds171/172; eight equally weighted cases at native2048. Best tested G with fixedD/bank, not a joint/global optimum or fresh confirmation."
 }
