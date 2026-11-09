@@ -1,13 +1,22 @@
-"""No model-loading command is implemented in this source-only revision."""
+"""Historical planner and explicit fixed-bank current014 product commands."""
 
 import argparse
 import json
+import sys
 
 from .contract import LiveOperationUnavailable, RequestPlan, refuse_live
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] in ("bank-config", "bank-check", "bank-train"):
+        from .execution import product_cli
+        try:
+            return product_cli(argv)
+        except (ValueError, OSError, KeyError, TypeError) as exc:
+            print(f"{type(exc).__name__}: {exc}", file=sys.stderr)
+            return 2
+    parser = argparse.ArgumentParser(description=__doc__, epilog="Fixed native bank: bank-config, bank-check, bank-train; see docs/FIXED-BANK-API.md")
     commands = parser.add_subparsers(dest="command", required=True)
     plan = commands.add_parser("plan", help="print a request plan without runtime imports or file reads")
     plan.add_argument("--prompt", required=True)

@@ -1,6 +1,30 @@
-Current planning/synthetic package: core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`, published PG **0.9.5**. This changes no native capability or model authorization. Historical validation below belongs to its recorded source.
-
 # P-H3-Image Particle Sliders
+
+This proposed product revision registers the current core **0.14.0** native
+training profile `ph3-image-fixed-bank32`, the explicit `ph3-root-owned` runner,
+and the unchanged `ph3-native-response095` public RAW inference factory. PG is
+**0.9.5**. See [the fixed-bank API](docs/FIXED-BANK-API.md) for exact supported
+options, preparation dependencies, checks and execution ownership.
+
+The supported training method is only the already declared four-arm RAW32 bank.
+It uses the frozen native data, native2048 geometry, optimizer and FULL durability
+code. It does not add arbitrary prompt/data training, a generic image lifecycle,
+or a public image renderer. No trained result or completion is created by
+installing the adapter. This Source proposal has not itself executed a model.
+
+The public inference entry point returns the exact existing response-only factory
+object from its pinned original file. NativeRow conditioning, local model/runtime
+assets and leases remain required. The separate ordinary Generate integration
+owns finished-image rollout and VAE decode.
+
+The original planner and CPU fixture remain available. The following description
+records the earlier 0.2.0 planning package, not the capabilities of the explicit
+fixed-bank profile. Its unresolved historical TODOs are not new proof or search
+requirements for the already captured native work.
+
+## Historical planning package
+
+Current planning/synthetic package: core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`, published PG **0.9.5**. This changes no native capability or model authorization. Historical validation below belongs to its recorded source.
 
 Source-only integration planning for [PrunaAI/P-H3-Image](https://huggingface.co/PrunaAI/P-H3-Image),
 using [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders).

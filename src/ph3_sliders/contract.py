@@ -5,11 +5,12 @@ import math
 
 MODEL_ID = "PrunaAI/P-H3-Image"
 MODEL_REVISION = "7f98acef503cf2bcfba821a78cb1cf1a9928b2df"
-CORE_REVISION = "3dd672a7f9b8c169daef90fd63e4bb42b9ddc423"
+CORE_REVISION = "8a696eb33c1a9d34472afad3a3199bd4776a797f"
 REFUSAL = (
-    "P-H3-Image live operations are disabled: model-license authorization and "
-    "native shared-lifecycle qualification are unresolved. This revision has "
-    "no model download, loading, training, rendering, or publication path."
+    "Generic P-H3 image lifecycle operations are disabled here. Use the explicit "
+    "ph3-image-fixed-bank32 profile with the ph3-root-owned runner for the "
+    "original declared bank only. The proven public RAW factory is response-only; "
+    "this product does not provide arbitrary-prompt training or image rendering."
 )
 
 
@@ -63,5 +64,5 @@ class RequestPlan:
             "sampling": "checkpoint's native eight-step sigma grid; no CFG",
             "prompt_upsampler": "future paired collection must freeze expanded prompts",
             "request": asdict(self),
-            "blockers": ["model-license authorization", "native adapter and sampler qualification"],
+            "blockers": ["arbitrary-prompt lifecycle is not implemented; fixed bank profile is separate"],
         }

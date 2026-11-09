@@ -1,0 +1,33 @@
+{
+  "schema": "ph3-product-fixed-native-authority-v1",
+  "core_version": "0.14.0",
+  "core_commit": "8a696eb33c1a9d34472afad3a3199bd4776a797f",
+  "PG_version": "0.9.5",
+  "native_python": "/ml2/particlesliders-working/lr-work/pg095/ph3-research-native-env-v1/bin/python",
+  "scientific_plan": {
+    "path": "/mnt/nvme/sliders/experiments/lr-standardization-20261104/p-h3/pg095-gpu1-declared4-cell32-durable-current014-v1/plan.json",
+    "bytes": 54338,
+    "sha256": "36770b64d7544208919ce5719e1f33efdbba0b48f38cc36fabcd1795a01ee046"
+  },
+  "genuine_native_proofs": {
+    "path": "/mnt/nvme/sliders/experiments/lr-standardization-20261104/p-h3/pg095-gpu1-declared4-cell32-durable-current014-v1/Root-genuine-native-predecessors-corrected-RAW-v2.json",
+    "bytes": 8502,
+    "sha256": "9c49b48181d9dccb39fea59b180a41c5032f06226732750eabe9c74f76ef237d"
+  },
+  "GPU1_one_job_driver": {
+    "path": "/mnt/nvme/sliders/experiments/lr-standardization-20261104/p-h3/pg095-gpu1-declared4-cell32-durable-current014-v1/run_one_cell_proof_dispatch_v3.py",
+    "bytes": 13573,
+    "sha256": "4d8d255caec6c9a3f1fe38055f13fa162ef7473c3a00c8520f5892b8b8970cec"
+  },
+  "GPU0_execution": {
+    "path": "/ml2/particlesliders-working/lr-work/source-reviews/ph3-GPU0-bank-execution32-source-v1/execution.json",
+    "bytes": 5130,
+    "sha256": "161381b11b3d6299401e9d44b6e05cfa51de46ba29559f57a9aa71c06b0dc646"
+  },
+  "public_response_factory": {
+    "path": "/mnt/nvme/sliders/experiments/lr-standardization-20261104/p-h3/pg095-public-native-response-bridge-v2/ph3_native_inference.py",
+    "bytes": 14979,
+    "sha256": "4b8cd086e9a81185cc405877658cf0af062edd251533fecff994b01191ba9641"
+  },
+  "scope": "Only the original four declared RAW32 arms and exact FULL continuation. External frozen Source/model/data/runtime dependencies are not bundled. No generic image training/render support, proof replay or new LR search."
+}

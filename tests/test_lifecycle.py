@@ -18,5 +18,6 @@ def test_shared_lifecycle_refuses_before_factory_or_dependency_checks(operation)
     guarded = replace(BACKEND, prepare=unexpected, validate=unexpected)
     config = SessionConfig("ph3-image", "source-only-test", device="cuda:0", allow_hub=True)
     assert guarded.describe(config).operations == ()
-    with pytest.raises(UnsupportedOperation, match="license"):
+    with pytest.raises(UnsupportedOperation) as error:
         guarded.open(config, operation=operation)
+    assert "ph3-image-fixed-bank32" in str(error.value)
