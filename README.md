@@ -1,5 +1,14 @@
 # P-H3-Image Particle Sliders
 
+**Current eligible saved recipe — 2026-11-09:** **cell1/G`0.004`**, original
+eight-case mean **+`0.002527267051239808`**. All eight nominal-strength saved
+outputs passed the qualified catastrophic-only check, and its exact FULL32
+checkpoint passed the persistent core guard. Exact options are `lr=0.004`,
+`d_lr_mult=4.5`, `prior_lr_mult=7.499999999999999`, `ema_decay=None`.
+The failed cell3/G0.036 candidate stays blocked; every original score remains.
+See [current eligibility and boundaries](docs/current-eligibility-20261109.md)
+and [sanitized current metadata](docs/current-eligible-rate.json).
+
 **2026-11-09 measurement caveat:** cell3/G`0.036` has the highest frozen
 warmth-proxy mean, **+`0.017445931987216074`**, across eight original matched
 native2048 cases. The user confirmed the output is broken; review of saved bottle, room and
@@ -10,14 +19,14 @@ warm amber illumination at α0.25; full strength overdrives this case. This is
 one-case evidence, not a new LR ranking or general strength recommendation.
 See [the current caveat and four images](docs/measurement-caveat-20261109.md).
 
-Retain the saved cell3 RAW32 and its exact measured options `lr=0.036`,
+Retain the historical cell3 RAW32 and its exact measured options `lr=0.036`,
 `d_lr_mult=0.5000000000000001`, `prior_lr_mult=0.8333333333333333`,
 `ema_decay=None`. Actual fixed D/bank are `0.018000000000000002` /
 `0.029999999999999995`. All four declared RAW32 arms are complete; no new
 search or confirmation is required. The local fixed-preset decoder continuation
 completed with HTTP output and owned cleanup; it does not add arbitrary-prompt
 public rendering or establish control quality. See [learning-rate guidance](LEARNING-RATES.md),
-[portable options](docs/finished-output-rate.json) and
+[historical portable options](docs/finished-output-rate.json) and
 [all32 pairs/40 first image intensities](docs/finished-output-decision.json).
 
 This product revision registers the current core **0.14.0** native
@@ -35,8 +44,11 @@ G0.012 arm: 32 new updates, zero inherited updates, RAW weights and no EMA,
 with a genuine successful outer exit, reap and Root resource closure. This
 verifies the fixed original bank's local training frontdoor. This is a static
 first-use record; remaining work is determined from actual durable metadata.
-The later finished-output comparison selected existing cell3/G0.036 without
-repeating this completed training. Exact first-use evidence and scope are recorded in [the fixed-bank API](docs/FIXED-BANK-API.md#completed-common-api-first-use).
+The later frozen numerical comparison selected existing cell3/G0.036 without
+repeating training. The separate catastrophic check now rejects that candidate
+and permits saved cell1/G0.004 as the best remaining original score. The local
+Generate preset still uses cell3 at both fixed lower strengths; no route or
+weights were retargeted. Exact first-use evidence and scope are recorded in [the fixed-bank API](docs/FIXED-BANK-API.md#completed-common-api-first-use).
 
 The public inference entry point returns the exact existing response-only factory
 object from its pinned original file. NativeRow conditioning, local model/runtime

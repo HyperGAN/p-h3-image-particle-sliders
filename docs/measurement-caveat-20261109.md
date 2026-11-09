@@ -1,5 +1,14 @@
 # WarmGoldenLight measurement caveat — 2026-11-09
 
+**Current eligibility update:** the separate qualified catastrophic-only check
+rejects cell3/G0.036 and passes all8 nominal cell1/G0.004 saved outputs. Its
+exact FULL32 guard also passes; cell1's unchanged mean
+`+0.002527267051239808` is the current best remaining saved recipe. See
+[current eligibility and settings](current-eligibility-20261109.md). This does
+not repair the warmth proxy, rewrite its original numerical decision, clear
+cell3's failed state or retarget the fixed cell3 lower-alpha Generate preset.
+The sections below retain the earlier proxy/diagnostic evidence and scope.
+
 The original frozen SigLIP2 warmth proxy assigns its largest eight-case mean to
 cell3/G0.036: +0.017445931987216074. The user confirmed the output is broken. Review of the saved bottle, room and
 bicycle cases found yellow/noisy fields without recognizable subjects or surfaces.
@@ -7,7 +16,9 @@ Those high warmth scores therefore do not validate the intended illumination
 effect. G0.036 is the highest recorded proxy arm, not a working-control or
 strength recommendation. A subsequent lower-alpha diagnostic shows that this
 checkpoint can retain a clear bottle in one matched case; the result and its
-limits are recorded below. No replacement score or new LR winner is claimed.
+limits are recorded below. That lower-alpha diagnostic itself introduced no
+replacement score or new LR comparison; the later separate eligibility update
+above reuses the original effect means after rejecting a catastrophic candidate.
 
 The [portable decision](finished-output-decision.json) and
 [portable recipe snapshot](finished-output-rate.json) are preserved byte-for-byte,

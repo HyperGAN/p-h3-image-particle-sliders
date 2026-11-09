@@ -1,4 +1,19 @@
-# P-H3 learning rates: retained RAW32 proxy result
+# P-H3 learning rates: current eligible saved RAW32 recipe
+
+**Current recipe: cell1/G`0.004`**, original equal-eight-case effect mean
+**+`0.002527267051239808`**, with exact common options `lr=0.004`,
+`d_lr_mult=4.5`, `prior_lr_mult=7.499999999999999`, `ema_decay=None`.
+All8 nominal saved outputs and its exact FULL32-bound guard pass. The separate
+catastrophic gate rejects cell3/G0.036; cell1 has the highest remaining original
+mean. No original scalar, checkpoint or effect instrument changed, and no
+search, training, generation, rerating or extra confirmation was repeated.
+[Current eligibility](docs/current-eligibility-20261109.md) and
+[sanitized settings](docs/current-eligible-rate.json) supersede the historical
+selection flags in the unchanged original JSON snapshots. This is a scoped
+saved recipe, not a new generic/default training run. Generate still uses the
+separate cell3 fixed two-alpha preset.
+
+## Preserved numerical comparison and measurement caveat
 
 **2026-11-09: the frozen warmth proxy failed the intended illumination meaning.**
 The user confirmed the cell3/G`0.036` output is broken. Review of saved bottle,
@@ -23,10 +38,14 @@ retains all32 matched pairs and40 first image intensities, including negative ga
 This is a frozen model-instrument comparison at RAW32/b2/h128/r8/native2048 on
 four DEV scenes×seeds171/172, not a global/joint optimum or human/holdout claim.
 
-The sole selector is equal-case arithmetic mean intended-effect ON−exact matched
+The sole effect selector is equal-case arithmetic mean intended-effect ON−exact matched
 OFF. Preserve negatives, zeros and exact ties. Technical failures are missing,
 not zero. Teacher/student SSE is diagnostic only; preservation, beauty,
-confidence and completion never select or break ties. Use RAW current weights,
+confidence and completion never select or break ties. A separate qualified
+catastrophic-only check rejects broken outputs; weak effect is not failure,
+and missing/observer-error checks are unmeasured rather than passes or model
+failures. Actual failure blocks updates, resume and promotion while retaining
+the checkpoint and original metrics. Use RAW current weights,
 with weight EMA disabled. All four declared arms,32ON and8sharedOFF previews
 are complete. Reuse their RAWs, teachers, proofs, outputs and first measurements;
 no new search, output rerun, rerating, prefix replay or extra confirmation is needed.
