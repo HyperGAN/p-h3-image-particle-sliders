@@ -1,0 +1,284 @@
+{
+  "as_of": "2026-11-09",
+  "selection_metric": "Equal-case intended-effect ON minus exact matched OFF mean; all original scalar values retained.",
+  "catastrophic_check": "Separate qualified catastrophic-only eligibility check, not an effect score. Weak effect is not catastrophic failure; missing/observer error is unmeasured, never a pass or automatic model failure.",
+  "judgment_kind": "categorical",
+  "failure_probability": null,
+  "qualified_media": [
+    "image",
+    "text"
+  ],
+  "audio_qualified": false,
+  "all_product_deployment": false,
+  "new_training_render_effect_rating_or_model_calls_for_this_projection": 0,
+  "package_defaults_changed": false,
+  "weight_EMA": null,
+  "evidence": {
+    "actual_qualification": {
+      "artifact_id": "Root-actual-image-text-qualification-v1.json",
+      "bytes": 16500,
+      "sha256": "f78ec102cebab6651bf694129b706b5d31783ced97bc0bc9c617ccb090df777e"
+    },
+    "actual_bank_result": {
+      "artifact_id": "result.json",
+      "bytes": 110547,
+      "sha256": "e942cfc6973898ab60f39b8bcb1c3e1c251e5cbd9ee388a9683f1a46837c4877"
+    },
+    "actual_bank_terminal": {
+      "artifact_id": "root-actual-terminal-reap-resource0-v1.json",
+      "bytes": 3057,
+      "sha256": "10e623e02e89940cd69ec6ab2239bc87a95f76ee05cc354c5415b4003b0ada85"
+    },
+    "actual_FULL_bound_guard_integration": {
+      "artifact_id": "Root-actual-closed-bank-core-guard-integration.json",
+      "bytes": 4487,
+      "sha256": "4a2df6938f3b07a5c24fd90061e9bcfdace6a61fa0582d0c7ac41d018d6900e4"
+    }
+  },
+  "availability": "Sanitized documentation metadata only. Artifact identifiers, byte counts and hashes identify private retained evidence; they are not download links. RAW/FULL/model/conditioning/runtime and guard state files are not bundled.",
+  "schema": "documented-current-eligible-saved-rate-v1",
+  "product_id": "p-h3-image-particle-sliders",
+  "status": "best_remaining_saved_RAW32_after_catastrophic_exclusion",
+  "selected_for_use": true,
+  "selected_control": "cell1",
+  "common_rate_overrides": {
+    "lr": 0.004,
+    "d_lr_mult": 4.5,
+    "prior_lr_mult": 7.499999999999999,
+    "ema_decay": null
+  },
+  "actual_rates": {
+    "G": 0.004,
+    "D": 0.018000000000000002,
+    "bank": 0.029999999999999995
+  },
+  "mean_effect_gain": 0.002527267051239808,
+  "profile": {
+    "training_updates": 32,
+    "horizon": 128,
+    "batch": 2,
+    "rank": 8,
+    "native_resolution": 2048,
+    "comparison_cases": 8,
+    "training_core": "0.14.0",
+    "ParticleGAN": "0.9.5",
+    "comparison_strength_ON": 1,
+    "comparison_strength_OFF": 0
+  },
+  "FULL_checkpoint": {
+    "artifact_id": "step-000032.pt",
+    "bytes": 696270678,
+    "sha256": "90dab8f3fadf6d684760bef8492851b6bc694886585f3ce7068ee35f31d3f161"
+  },
+  "RAW_checkpoint": {
+    "artifact_id": "public-RAW32.pt",
+    "bytes": 91718006,
+    "sha256": "4594df49473b630607a1c3fdb4c51b678b6f1791f55ee6891ade1068974b5e39"
+  },
+  "training_COMPLETE": {
+    "artifact_id": "COMPLETE.json",
+    "bytes": 28110,
+    "sha256": "31f88bc229887c9ac8ac5ff5415f9791e9c3ba30fe14f0a736bc8f1385b9f709"
+  },
+  "nominal_case_assessment": {
+    "control_id": "cell1",
+    "status": "pass",
+    "nominal_cases": 8,
+    "cases": [
+      {
+        "case_id": "bottle-171",
+        "status": "pass",
+        "finished_output": {
+          "artifact_id": "bottle-171-ON.png",
+          "bytes": 4491918,
+          "sha256": "ed3bc3af106a411c2a3e3e73752d0cf4c0444486581fbf0ce30da89f563be411"
+        },
+        "first_observation": {
+          "artifact_id": "first-audit_56f1a19f1dd4bc00.json",
+          "bytes": 5556,
+          "sha256": "49e238821a479bc87188d228240c95736e1f87b2bbba00de942e2607488e1c29"
+        }
+      },
+      {
+        "case_id": "bottle-172",
+        "status": "pass",
+        "finished_output": {
+          "artifact_id": "bottle-172-ON.png",
+          "bytes": 5070885,
+          "sha256": "cf8242484994a9f796f1daa9725098062d8711ae4b67eb02e2243a6052f1d1d4"
+        },
+        "first_observation": {
+          "artifact_id": "first-audit_d23ff2df0e311544.json",
+          "bytes": 5424,
+          "sha256": "436a8798f33e08113f6b5db3f93a6252cd12eb136ac34515f643b085e5c23fda"
+        }
+      },
+      {
+        "case_id": "bicycle-171",
+        "status": "pass",
+        "finished_output": {
+          "artifact_id": "bicycle-171-ON.png",
+          "bytes": 6178872,
+          "sha256": "00ce2b84bcf251e2fae3dfe977acd505858874ddefcfc86be6cb5f4eedc55c2d"
+        },
+        "first_observation": {
+          "artifact_id": "first-audit_de183b8d3026ab4d.json",
+          "bytes": 5489,
+          "sha256": "b79cbaf763b524bc6d8a2d9355ba6776a746a7edab7df64afc8cb7a89d6c3f69"
+        }
+      },
+      {
+        "case_id": "bicycle-172",
+        "status": "pass",
+        "finished_output": {
+          "artifact_id": "bicycle-172-ON.png",
+          "bytes": 6490984,
+          "sha256": "188cd34244ee60e5003dbd76a92e25cf9a300af79bcc3365aea2654936f9bbad"
+        },
+        "first_observation": {
+          "artifact_id": "first-audit_945dea2004891df1.json",
+          "bytes": 5333,
+          "sha256": "1ee45b52e6d20f59b7009ed7c527c6edce6f56c6fe54633526dd441d67399438"
+        }
+      },
+      {
+        "case_id": "room-171",
+        "status": "pass",
+        "finished_output": {
+          "artifact_id": "room-171-ON.png",
+          "bytes": 6025006,
+          "sha256": "216dd8ab0bc2ee32b5c7ea6202b1f9e6310e17150be9c97538f733a0258cd792"
+        },
+        "first_observation": {
+          "artifact_id": "first-audit_79eb41d2f5a9765d.json",
+          "bytes": 5423,
+          "sha256": "c490241548a3efde4fdcc5662fc660098feac9adc762df8dfb8cd4d4f0d0e71a"
+        }
+      },
+      {
+        "case_id": "room-172",
+        "status": "pass",
+        "finished_output": {
+          "artifact_id": "room-172-ON.png",
+          "bytes": 6581097,
+          "sha256": "ed24090503fc26a203412e2d5f75ed3c9c48e4b0711fb659c99f4a2a997789d1"
+        },
+        "first_observation": {
+          "artifact_id": "first-audit_578f74c56e2a8c8c.json",
+          "bytes": 5324,
+          "sha256": "e6d2038ed8cca98bf355583e623bc6826356516ba773e402e5e49522d018fe56"
+        }
+      },
+      {
+        "case_id": "boat-171",
+        "status": "pass",
+        "finished_output": {
+          "artifact_id": "boat-171-ON.png",
+          "bytes": 5146037,
+          "sha256": "fc58489db76570b407b48d8302dce9d2e53786d9b3269681a1bdd4fea90025bc"
+        },
+        "first_observation": {
+          "artifact_id": "first-audit_a14130f0f5477586.json",
+          "bytes": 5474,
+          "sha256": "9ce881f68db8515e07ae2b80201cc6ff4aeea7f380086eed07c409577d72c8db"
+        }
+      },
+      {
+        "case_id": "boat-172",
+        "status": "pass",
+        "finished_output": {
+          "artifact_id": "boat-172-ON.png",
+          "bytes": 6034462,
+          "sha256": "400825d55734dfe55b4fd3e6fcf81e11c4a0db8c2f227214b7067bf21e37ec5f"
+        },
+        "first_observation": {
+          "artifact_id": "first-audit_ff89cdc756bae7b2.json",
+          "bytes": 5561,
+          "sha256": "80aae6bbc58fe5d691b7c5952384c58da56749227eec0826aa33d50b4a0e8001"
+        }
+      }
+    ]
+  },
+  "historical_comparison": {
+    "frozen_rate_summary": "finished-output-rate.json",
+    "frozen_decision": "finished-output-decision.json",
+    "original_maximum_control": "cell3",
+    "original_maximum_G": 0.036,
+    "original_maximum_mean": 0.017445931987216074,
+    "original_maximum_catastrophic_status": "failed",
+    "all_four_original_means": [
+      {
+        "control_id": "cell0",
+        "generator_rate": 0.0004,
+        "critic_rate": 0.018000000000000002,
+        "bank_rate": 0.029999999999999995,
+        "training_step": 32,
+        "horizon": 128,
+        "batch": 2,
+        "rank": 8,
+        "selection": "raw",
+        "ema_decay": null,
+        "matched_pairs": 8,
+        "mean_gain": -0.00029275131722291336
+      },
+      {
+        "control_id": "cell1",
+        "generator_rate": 0.004,
+        "critic_rate": 0.018000000000000002,
+        "bank_rate": 0.029999999999999995,
+        "training_step": 32,
+        "horizon": 128,
+        "batch": 2,
+        "rank": 8,
+        "selection": "raw",
+        "ema_decay": null,
+        "matched_pairs": 8,
+        "mean_gain": 0.002527267051239808
+      },
+      {
+        "control_id": "cell2",
+        "generator_rate": 0.012,
+        "critic_rate": 0.018000000000000002,
+        "bank_rate": 0.029999999999999995,
+        "training_step": 32,
+        "horizon": 128,
+        "batch": 2,
+        "rank": 8,
+        "selection": "raw",
+        "ema_decay": null,
+        "matched_pairs": 8,
+        "mean_gain": 0.0009762506621579328
+      },
+      {
+        "control_id": "cell3",
+        "generator_rate": 0.036,
+        "critic_rate": 0.018000000000000002,
+        "bank_rate": 0.029999999999999995,
+        "training_step": 32,
+        "horizon": 128,
+        "batch": 2,
+        "rank": 8,
+        "selection": "raw",
+        "ema_decay": null,
+        "matched_pairs": 8,
+        "mean_gain": 0.017445931987216074
+      }
+    ],
+    "effect_result": {
+      "artifact_id": "result.json",
+      "bytes": 79227,
+      "sha256": "ccada9314e3af984f0e0a2a4f42a076b704f273cf70fb1ac1b89a0c76e9dd5b0"
+    },
+    "effect_decision": {
+      "artifact_id": "root-existing-four-arm-RAW32-effect-decision-v1.json",
+      "bytes": 78381,
+      "sha256": "02972845c2c241a2d766184794c42fa435e4276fdd488de2c2af314bd7e63b9a"
+    }
+  },
+  "selection_scope": "Cell3 stays persistently failed; cell1 passed all8 nominal cases and its exact FULL32-bound core guard. Its unchanged original effect mean is highest among the remaining candidates. No new effect instrument, search, confirmation or restored illumination qualification.",
+  "operational_Generate_scope": "Unchanged local preset still uses cell3 RAW32 at both fixed alpha0.125/0.25 for bottle171/native2048. It is separate from this cell1 training recipe; no runtime, route or weight retarget.",
+  "source_current_rate_pack_sha256": "0f58a6200f3f3ddaba4772c833592b69d50b52d68cc55cde3924d0f141327cd7",
+  "completed_LR_decision": true,
+  "additional_fresh_confirmation_required": false,
+  "intended_illumination_validated": false
+}

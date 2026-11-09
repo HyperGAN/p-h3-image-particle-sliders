@@ -1,4 +1,12 @@
-# Retained WarmGoldenLight RAW32 warmth-proxy result
+# WarmGoldenLight: current eligible RAW32 recipe and retained proxy result
+
+**Current saved recipe is cell1/G`0.004`**, original mean
+**+`0.002527267051239808`**. All8 original nominal-strength outputs pass the
+qualified catastrophic check and its exact FULL32-bound core guard passes.
+Failed cell3/G0.036 remains blocked; cell1 is selected by the highest remaining
+unchanged effect mean. [Current eligibility](current-eligibility-20261109.md)
+and [current settings](current-eligible-rate.json) are separate from the two
+unchanged historical JSON snapshots below. No new LR/effect score is created.
 
 **2026-11-09 caveat:** cell3/G`0.036` is the original frozen warmth-proxy maximum,
 with equal-eight-case ON−OFF mean **+`0.017445931987216074`**. The user confirmed the output is broken; review of saved bottle, room and bicycle
@@ -40,9 +48,10 @@ holdout, human validation or changed package default.
 
 ## Actual common options
 
-The exact saved literals in [the portable summary](finished-output-rate.json) identify the measured recipe:
-`lr=0.036`, `d_lr_mult=0.5000000000000001`,
-`prior_lr_mult=0.8333333333333333`, `ema_decay=None` / JSON `null`.
+The current exact saved literals in [the eligibility summary](current-eligible-rate.json) are
+`lr=0.004`, `d_lr_mult=4.5`, `prior_lr_mult=7.499999999999999`,
+`ema_decay=None` / JSON `null`. The unchanged [original summary](finished-output-rate.json)
+retains all four tuples and the historical cell3 selection.
 `lr` is G; `d_lr_mult` scales G into D; `prior_lr_mult` scales G into the
 particle-bank rate. Rounded quotients can change exact recipe identity.
 [The fixed-bank API](FIXED-BANK-API.md) preserves all four accepted tuples and
@@ -50,8 +59,8 @@ its real preparation/dispatch contract. These existing commands only construct,
 check and plan a declaration; they do not retrain the completed selected arm:
 
 ```sh
-ph3-slider bank-config --lr 0.036 --d-lr-mult 0.5000000000000001 \
-  --prior-lr-mult 0.8333333333333333 > bank-request.json
+ph3-slider bank-config --lr 0.004 --d-lr-mult 4.5 \
+  --prior-lr-mult 7.499999999999999 > bank-request.json
 ph3-slider bank-check --config bank-request.json
 particle-slider plan --profile ph3-image-fixed-bank32 \
   --config bank-request.json --no-reporting
@@ -68,7 +77,11 @@ continuation; no prefix, teacher preparation or completed proof is replayed.
 Only equal-case intended-effect ON−OFF selects. Teacher/student SSE is historical
 diagnostic information; preservation, beauty, confidence and completion are not
 selectors, vetoes or tiebreaks. Preserve negative gains, native zeros and exact
-ties. Use RAW current adapter/critic/particle-bank weights with no weight EMA
+ties. Qualified catastrophic failure is a separate eligibility check: a failed
+candidate cannot update, resume or promote; weak effect is not failure, and
+missing/error is unmeasured. The actual cell1 guard is bound to its original
+FULL32 checkpoint and all8 nominal cases, without clearing failed cell3.
+Use RAW current adapter/critic/particle-bank weights with no weight EMA
 (`ema_decay=None`); official scalar optimizer statistics are unchanged.
 Reuse completed searches, source-bound RAWs, outputs and first observations.
 No extra top-two extension, worse-arm completion, rerating or fresh confirmation

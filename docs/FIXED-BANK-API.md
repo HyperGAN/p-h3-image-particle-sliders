@@ -25,6 +25,15 @@ trained again. This is not a generic arbitrary-dataset training implementation.
 
 ## Finished-output selection policy
 
+**Current eligible saved recipe:** cell1/G0.004 with exact overrides
+`(0.004,4.5,7.499999999999999,None)`, original mean
+`+0.002527267051239808`. All8 nominal outputs and its exact FULL32 guard pass.
+The separate catastrophic-only gate rejects cell3/G0.036; its failed state and
+all original metrics remain. This changes no completed update, package default,
+native Source identity or dispatch behavior. [Current metadata](current-eligible-rate.json)
+and [eligibility scope](current-eligibility-20261109.md) identify the new current
+recommendation separately from the original comparison history below.
+
 The original four-arm comparison is complete: existing cell3/G0.036 has the
 highest frozen warmth-proxy mean,+0.017445931987216074 over eight matched
 native2048 cases. **2026-11-09:** the user found its yellow/noisy outputs broken;
@@ -37,7 +46,11 @@ reranking or general strength recommendation is claimed. See
 [the dated caveat and images](measurement-caveat-20261109.md).
 This changes no package default. Rank only the equal-case arithmetic mean intended
 effect in finished ON minus exact matched OFF, retaining negatives, zeros and
-exact ties. Missing/failed outputs are not zero. SSE is historical diagnostic
+exact ties. Missing/failed outputs are not zero. Qualified catastrophic failures
+are excluded separately before
+effect ranking; weak effect is not failure, and missing/observer error is
+unmeasured. Failed candidates must not update, resume or promote. SSE is historical
+diagnostic
 information, never a selector or tiebreak; preservation, beauty, confidence and
 completion do not select. Reuse completed training/proofs, saved RAWs, outputs
 and first observations, with no additional fresh confirmation or prefix replay.
