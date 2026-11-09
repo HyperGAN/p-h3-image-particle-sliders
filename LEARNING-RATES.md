@@ -1,8 +1,17 @@
-# P-H3 learning rates: existing RAW32 result
+# P-H3 learning rates: retained RAW32 proxy result
 
-**Use saved cell3/G`0.036` for the measured WarmGoldenLight setup.** Its equal-eight-case
-finished-effect ON−OFF mean is **+`0.017445931987216074`**, uniquely highest among
-the four original RAW32 arms. Fixed actual D is `0.018000000000000002` and bank
+**2026-11-09: the frozen warmth proxy failed the intended illumination meaning.**
+The user confirmed the cell3/G`0.036` output is broken. Review of saved bottle,
+room and bicycle cases found yellow/noisy fields without recognizable subjects. It is not a validated working control or strength
+recommendation. Its recorded equal-eight-case proxy ON−OFF mean remains
+**+`0.017445931987216074`**, uniquely highest among the four original RAW32 arms.
+See [the current caveat and existing diagnostics](docs/measurement-caveat-20261109.md).
+A same-RAW bottle171 diagnostic subsequently retained the bottle at α0.125 and
+α0.25, with warm amber illumination at α0.25, while the reused α1 image remains
+yellow/noisy. Full strength overdrives this one case. No new LR score, reranking
+or general strength recommendation follows from that diagnostic.
+
+The exact saved recipe identifies that experiment. Fixed actual D is `0.018000000000000002` and bank
 `0.029999999999999995`; exact common options are `lr=0.036`,
 `d_lr_mult=0.5000000000000001`, `prior_lr_mult=0.8333333333333333`,
 `ema_decay=None` (JSON `null`). No package default changed.
@@ -26,5 +35,7 @@ The common profile `ph3-image-fixed-bank32` and explicit `ph3-root-owned` runner
 support only the original local bank. Completed arms cannot be trained again.
 The unchanged `ph3-native-response095` factory remains response-only; local model,
 conditioning and runtime dependencies are unbundled. Ordinary Generate/preset
-integration remains separately pending. Historical planning/fixture reports and
+continuation completed for the fixed bottle171/native2048 case; this is narrow
+technical integration, not arbitrary public rendering or a working-control claim.
+Historical planning/fixture reports and
 original source/lock/default identities are unchanged.
