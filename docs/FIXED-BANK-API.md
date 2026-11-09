@@ -23,6 +23,17 @@ tie, search, proof or completed update. A selected finished-output winner can
 use its exact retained tuple through this method; a completed arm cannot be
 trained again. This is not a generic arbitrary-dataset training implementation.
 
+## Finished-output selection policy
+
+The original four-arm comparison's LR decision is pending; no unique rate is
+selected by this interface. Rank only the equal-case arithmetic mean intended
+effect in finished ON minus exact matched OFF, retaining negatives, zeros and
+exact ties. Missing/failed outputs are not zero. SSE is historical diagnostic
+information, never a selector or tiebreak; preservation, beauty, confidence and
+completion do not select. Reuse completed training/proofs, saved RAWs, outputs
+and first observations, with no additional fresh confirmation or prefix replay.
+See [current scope and options](finished-output-learning-rates.md).
+
 ## Allocation-free planning and checking
 
 Install the product and its pinned current core into a **new**
@@ -127,10 +138,11 @@ The following exact paths are relative to that root:
 
 This success covers the original declared local bank and its common product
 training interface. It adds no arbitrary prompt/data training or public image
-render capability. Cell1 and cell2 have completed RAW32 training; cell0 and
-cell3 remain unfinished. No finished-output intended-effect comparison has
-selected an LR winner. Saved artifacts and the existing matched cases are
-reused for the remaining work; completed training is not replayed.
+render capability. This section preserves the completed first-use evidence,
+not a changing per-arm status tracker. Actual durable metadata determines
+which declared work remains missing. No finished-output intended-effect
+comparison has selected an LR winner. Saved artifacts and the existing matched
+cases are reused for remaining work; completed training is not replayed.
 
 ## Existing RAW inference and portability
 

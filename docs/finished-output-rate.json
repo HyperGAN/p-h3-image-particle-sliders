@@ -1,0 +1,88 @@
+{
+  "schema": "particle-slider-scoped-finished-output-rate-guidance-v1",
+  "as_of": "2026-11-09",
+  "product_id": "p-h3-image-particle-sliders",
+  "concept": "WarmGoldenLight",
+  "selection_metric": "Equal-case arithmetic mean of intended-effect intensity ON minus exact matched OFF in finished images; higher wins.",
+  "comparison_policy": "Retain negative gains, native zeros and exact ties. Technical failures are missing evidence, not zero. No teacher-SSE, preservation, beauty, confidence or completion selector/tiebreak. Reuse completed searches, checkpoints, proofs, outputs and first scores; no additional fresh confirmation or worse-arm completion.",
+  "status": "effect_measurement_pending",
+  "common_rate_overrides": null,
+  "selected_unique_G": null,
+  "mean_gain": null,
+  "weight_EMA": null,
+  "package_defaults_changed": false,
+  "additional_fresh_confirmation_required": false,
+  "profile": {
+    "training_profile": "ph3-image-fixed-bank32",
+    "runner": "ph3-root-owned",
+    "RAW_inference_backend": "ph3-native-response095",
+    "training_updates": 32,
+    "horizon": 128,
+    "batch": 2,
+    "rank": 8,
+    "seed": 7,
+    "native_resolution": 2048,
+    "native_response_width": 393344,
+    "particle_bank_shape": [
+      128,
+      4
+    ],
+    "data": "Original frozen native image/coupled-audio bank",
+    "core": "0.14.0",
+    "ParticleGAN": "0.9.5"
+  },
+  "actual_fixed_rates": {
+    "D": 0.018000000000000002,
+    "bank": 0.029999999999999995
+  },
+  "declared_arms": [
+    {
+      "arm": "cell0",
+      "options": {
+        "lr": 0.0004,
+        "d_lr_mult": 45.0,
+        "prior_lr_mult": 74.99999999999999,
+        "ema_decay": null
+      }
+    },
+    {
+      "arm": "cell1",
+      "options": {
+        "lr": 0.004,
+        "d_lr_mult": 4.5,
+        "prior_lr_mult": 7.499999999999999,
+        "ema_decay": null
+      }
+    },
+    {
+      "arm": "cell2",
+      "options": {
+        "lr": 0.012,
+        "d_lr_mult": 1.5000000000000002,
+        "prior_lr_mult": 2.4999999999999996,
+        "ema_decay": null
+      }
+    },
+    {
+      "arm": "cell3",
+      "options": {
+        "lr": 0.036,
+        "d_lr_mult": 0.5000000000000001,
+        "prior_lr_mult": 0.8333333333333333,
+        "ema_decay": null
+      }
+    }
+  ],
+  "availability": "Original local frozen model/data, captured environment, Root-owned preparation/admission and source identities are required; not bundled as portable public assets.",
+  "completed_common_API_first_use": {
+    "arm": "cell2",
+    "G": 0.012,
+    "new_updates": 32,
+    "inherited_updates": 0,
+    "RAW_updates": 32,
+    "outer_exit": 0,
+    "terminal_bytes": 38459,
+    "terminal_sha256": "43e0c9bcb2ef50243f25f82609f9b7d0a96d2ae3dd24363b533aec9cce843fc8",
+    "scope": "Static completed first-use evidence, not a changing bank-completion or LR-selection record."
+  }
+}

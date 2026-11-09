@@ -1,5 +1,10 @@
 # P-H3-Image Particle Sliders
 
+**LR decision pending:** use only the original declared four-arm RAW32 method,
+with RAW weights, no EMA and one equal-case finished-effect ON−OFF selector.
+No unique rate/default or ordinary Generate winner is claimed. See
+[learning-rate guidance](LEARNING-RATES.md) and [portable declared tuples](docs/finished-output-rate.json).
+
 This product revision registers the current core **0.14.0** native
 training profile `ph3-image-fixed-bank32`, the explicit `ph3-root-owned` runner,
 and the unchanged `ph3-native-response095` public RAW inference factory. PG is
@@ -13,8 +18,9 @@ or a public image renderer. Installing the adapter does not create a trained
 result. On 2026-11-09, the installed common API completed the original cell2
 G0.012 arm: 32 new updates, zero inherited updates, RAW weights and no EMA,
 with a genuine successful outer exit, reap and Root resource closure. This
-verifies the fixed original bank's local training frontdoor. Cell0 and cell3
-remain unfinished, and no finished-output LR winner has been selected. Exact
+verifies the fixed original bank's local training frontdoor. This is a static
+first-use record; remaining work is determined from actual durable metadata.
+No finished-output LR winner has been selected. Exact
 evidence and scope are recorded in [the fixed-bank API](docs/FIXED-BANK-API.md#completed-common-api-first-use).
 
 The public inference entry point returns the exact existing response-only factory
