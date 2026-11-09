@@ -1,6 +1,6 @@
 # P-H3-Image Particle Sliders
 
-This proposed product revision registers the current core **0.14.0** native
+This product revision registers the current core **0.14.0** native
 training profile `ph3-image-fixed-bank32`, the explicit `ph3-root-owned` runner,
 and the unchanged `ph3-native-response095` public RAW inference factory. PG is
 **0.9.5**. See [the fixed-bank API](docs/FIXED-BANK-API.md) for exact supported
@@ -9,8 +9,13 @@ options, preparation dependencies, checks and execution ownership.
 The supported training method is only the already declared four-arm RAW32 bank.
 It uses the frozen native data, native2048 geometry, optimizer and FULL durability
 code. It does not add arbitrary prompt/data training, a generic image lifecycle,
-or a public image renderer. No trained result or completion is created by
-installing the adapter. This Source proposal has not itself executed a model.
+or a public image renderer. Installing the adapter does not create a trained
+result. On 2026-11-09, the installed common API completed the original cell2
+G0.012 arm: 32 new updates, zero inherited updates, RAW weights and no EMA,
+with a genuine successful outer exit, reap and Root resource closure. This
+verifies the fixed original bank's local training frontdoor. Cell0 and cell3
+remain unfinished, and no finished-output LR winner has been selected. Exact
+evidence and scope are recorded in [the fixed-bank API](docs/FIXED-BANK-API.md#completed-common-api-first-use).
 
 The public inference entry point returns the exact existing response-only factory
 object from its pinned original file. NativeRow conditioning, local model/runtime

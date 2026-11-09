@@ -25,7 +25,7 @@ trained again. This is not a generic arbitrary-dataset training implementation.
 
 ## Allocation-free planning and checking
 
-Install the proposed product and its pinned current core into a **new**
+Install the product and its pinned current core into a **new**
 frontdoor environment. No installation into the captured native environment is
 needed. The product's local frozen deployment dependencies are
 listed in `ph3_sliders/native-authority.json`; installing this package does not
@@ -74,10 +74,10 @@ FULL continuation if a prefix exists. A new exclusive dispatch-consumption
 record prevents reuse through this adapter, including after an exec failure;
 there is no automatic retry or successor.
 
-Profile status `source_only` reports this proposal's integration evidence; the
-current014 common CLI does not refuse that status before runner dispatch.
-Root's required actual first-use evidence remains pending until a missing arm
-really uses this frontdoor. Planning/checking is not that evidence.
+The profile retains its original `source_only` label in code; it is not a
+live evidence tracker or a dispatch refusal. The installed common API's first
+full32 use is now genuinely complete, as recorded below. Planning/checking alone
+does not establish a completed run.
 
 The runner calls `os.execvpe` with the **exact recorded** original GPU1 one-job
 driver or GPU0 guardian argv and environment. The initial common CLI process
@@ -98,6 +98,40 @@ Both the original GPU1/own48 and the separately adopted GPU0/own32 preparation
 formats are supported. Their real execution placements/caps remain distinct;
 the adapter does not clone GPU1 inference onto GPU0 or fake an own48 closure.
 
+## Completed common API first use
+
+On 2026-11-09, actual tool **89012** entered through the installed common CLI:
+
+```sh
+particle-slider train --profile ph3-image-fixed-bank32 --runner ph3-root-owned \
+  --config /mnt/nvme/sliders/experiments/lr-standardization-20261104/p-h3/pg095-gpu1-declared4-cell32-durable-current014-v1/frontdoor-cell2-attempt0-request-v1.json \
+  --no-reporting
+```
+
+The original **cell2 / G0.012** arm completed **32 new updates, zero inherited**,
+using `d_lr_mult=1.5000000000000002`, `prior_lr_mult=2.4999999999999996`,
+RAW current weights and `ema_decay=None`. The common dispatcher exec'd the
+exact admitted original launcher; native math, local assets, the captured
+native environment and original durability remained unchanged. The actual
+outer exit was **0**, reap chunk **88bcd9**, followed by Root closure **60e7e0**.
+This records a real fixed-bank training run, not a planning/check result.
+
+Evidence root: `/mnt/nvme/sliders/experiments/lr-standardization-20261104/p-h3/pg095-gpu1-declared4-cell32-durable-current014-v1`.
+The following exact paths are relative to that root:
+
+| Evidence | Relative path | Bytes | SHA256 |
+| --- | --- | ---: | --- |
+| Genuine Root terminal | `attempts/cell2/attempt-0000/root-actual-terminal-reap-resource0-bank-v1.json` | 38459 | `43e0c9bcb2ef50243f25f82609f9b7d0a96d2ae3dd24363b533aec9cce843fc8` |
+| Completed RAW32 arm | `bank/cell2/COMPLETE.json` | 28110 | `d735486cce2fe5aeb85c747babb23e94824c3b7bc1d382575ffb607572ca886d` |
+| Opaque public RAW artifact | `attempts/cell2/attempt-0000/cell2/public-RAW32.pt` | 91718006 | `07b8b812d58f299cce660d23febbffcdf26a237c21539d2b48e0a095856a9cf3` |
+
+This success covers the original declared local bank and its common product
+training interface. It adds no arbitrary prompt/data training or public image
+render capability. Cell1 and cell2 have completed RAW32 training; cell0 and
+cell3 remain unfinished. No finished-output intended-effect comparison has
+selected an LR winner. Saved artifacts and the existing matched cases are
+reused for the remaining work; completed training is not replayed.
+
 ## Existing RAW inference and portability
 
 `particle_sliders.inference_backends` resolves `ph3-native-response095` to the
@@ -108,8 +142,8 @@ evaluation with the original local options, not generic JSON prompts or a
 public image render method. The separate finished-output consumer/ordinary
 Generate route supplies native rollouts and tiled VAE decode.
 
-This adapter is a local deployment proposal. Original absolute Source paths,
+This adapter is specific to its local deployment. Original absolute Source paths,
 frozen model/conditioning/data, native Python environment, GPU UUID/lock and
 admission infrastructure must exist. Those dependencies are not bundled into
 this package. Moving them or generalizing the engine requires an explicit
-future integration; this proposal does not retag Source identities or RAWs.
+future integration; this adapter does not retag Source identities or RAWs.
