@@ -1,9 +1,15 @@
 # P-H3-Image Particle Sliders
 
-**LR decision pending:** use only the original declared four-arm RAW32 method,
-with RAW weights, no EMA and one equal-case finished-effect ON−OFF selector.
-No unique rate/default or ordinary Generate winner is claimed. See
-[learning-rate guidance](LEARNING-RATES.md) and [portable declared tuples](docs/finished-output-rate.json).
+**Best tested LR: G`0.036`**, WarmGoldenLight mean ON−OFF gain
+**+`0.017445931987216074`** across eight original matched native2048 cases.
+Use the saved cell3 RAW32 and exact common options `lr=0.036`,
+`d_lr_mult=0.5000000000000001`, `prior_lr_mult=0.8333333333333333`,
+`ema_decay=None`. Actual fixed D/bank are `0.018000000000000002` /
+`0.029999999999999995`. All four declared RAW32 arms are complete; no new
+search or confirmation is required. Ordinary Generate/preset deployment remains
+separate and pending. See [learning-rate guidance](LEARNING-RATES.md),
+[portable options](docs/finished-output-rate.json) and
+[all32 pairs/40 first image intensities](docs/finished-output-decision.json).
 
 This product revision registers the current core **0.14.0** native
 training profile `ph3-image-fixed-bank32`, the explicit `ph3-root-owned` runner,
@@ -20,8 +26,8 @@ G0.012 arm: 32 new updates, zero inherited updates, RAW weights and no EMA,
 with a genuine successful outer exit, reap and Root resource closure. This
 verifies the fixed original bank's local training frontdoor. This is a static
 first-use record; remaining work is determined from actual durable metadata.
-No finished-output LR winner has been selected. Exact
-evidence and scope are recorded in [the fixed-bank API](docs/FIXED-BANK-API.md#completed-common-api-first-use).
+The later finished-output comparison selected existing cell3/G0.036 without
+repeating this completed training. Exact first-use evidence and scope are recorded in [the fixed-bank API](docs/FIXED-BANK-API.md#completed-common-api-first-use).
 
 The public inference entry point returns the exact existing response-only factory
 object from its pinned original file. NativeRow conditioning, local model/runtime

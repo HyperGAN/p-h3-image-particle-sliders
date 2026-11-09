@@ -25,8 +25,10 @@ trained again. This is not a generic arbitrary-dataset training implementation.
 
 ## Finished-output selection policy
 
-The original four-arm comparison's LR decision is pending; no unique rate is
-selected by this interface. Rank only the equal-case arithmetic mean intended
+The original four-arm comparison is complete: existing cell3/G0.036 is uniquely
+best tested, mean+0.017445931987216074 over eight matched native2048 cases.
+Use its exact tuple above and saved RAW32; all four arms are complete and must
+not be retrained. This adds no package default or ordinary Generate readiness. Rank only the equal-case arithmetic mean intended
 effect in finished ON minus exact matched OFF, retaining negatives, zeros and
 exact ties. Missing/failed outputs are not zero. SSE is historical diagnostic
 information, never a selector or tiebreak; preservation, beauty, confidence and
@@ -140,9 +142,11 @@ This success covers the original declared local bank and its common product
 training interface. It adds no arbitrary prompt/data training or public image
 render capability. This section preserves the completed first-use evidence,
 not a changing per-arm status tracker. Actual durable metadata determines
-which declared work remains missing. No finished-output intended-effect
-comparison has selected an LR winner. Saved artifacts and the existing matched
-cases are reused for remaining work; completed training is not replayed.
+which declared work remains missing. This historical first-use event did not
+select an LR winner; the subsequent existing four-arm finished-output comparison
+selected cell3/G0.036, separately recorded in [the decision](finished-output-decision.json).
+All four declared arms are now complete. Their saved artifacts, matched outputs
+and first measurements are retained without replay or extra confirmation.
 
 ## Existing RAW inference and portability
 
