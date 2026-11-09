@@ -1,13 +1,22 @@
 # P-H3-Image Particle Sliders
 
-**Best tested LR: G`0.036`**, WarmGoldenLight mean ON−OFF gain
-**+`0.017445931987216074`** across eight original matched native2048 cases.
-Use the saved cell3 RAW32 and exact common options `lr=0.036`,
+**2026-11-09 measurement caveat:** cell3/G`0.036` has the highest frozen
+warmth-proxy mean, **+`0.017445931987216074`**, across eight original matched
+native2048 cases. The user confirmed the output is broken; review of saved bottle, room and
+bicycle cases found yellow/noisy fields without recognizable subjects. This proxy result does not
+establish a working illumination control or a recommended strength. A subsequent
+same-RAW bottle171 diagnostic retained a clear bottle at α0.125 and α0.25, with
+warm amber illumination at α0.25; full strength overdrives this case. This is
+one-case evidence, not a new LR ranking or general strength recommendation.
+See [the current caveat and four images](docs/measurement-caveat-20261109.md).
+
+Retain the saved cell3 RAW32 and its exact measured options `lr=0.036`,
 `d_lr_mult=0.5000000000000001`, `prior_lr_mult=0.8333333333333333`,
 `ema_decay=None`. Actual fixed D/bank are `0.018000000000000002` /
 `0.029999999999999995`. All four declared RAW32 arms are complete; no new
-search or confirmation is required. Ordinary Generate/preset deployment remains
-separate and pending. See [learning-rate guidance](LEARNING-RATES.md),
+search or confirmation is required. The local fixed-preset decoder continuation
+completed with HTTP output and owned cleanup; it does not add arbitrary-prompt
+public rendering or establish control quality. See [learning-rate guidance](LEARNING-RATES.md),
 [portable options](docs/finished-output-rate.json) and
 [all32 pairs/40 first image intensities](docs/finished-output-decision.json).
 

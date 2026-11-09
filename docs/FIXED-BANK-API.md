@@ -25,10 +25,17 @@ trained again. This is not a generic arbitrary-dataset training implementation.
 
 ## Finished-output selection policy
 
-The original four-arm comparison is complete: existing cell3/G0.036 is uniquely
-best tested, mean+0.017445931987216074 over eight matched native2048 cases.
-Use its exact tuple above and saved RAW32; all four arms are complete and must
-not be retrained. This adds no package default or ordinary Generate readiness. Rank only the equal-case arithmetic mean intended
+The original four-arm comparison is complete: existing cell3/G0.036 has the
+highest frozen warmth-proxy mean,+0.017445931987216074 over eight matched
+native2048 cases. **2026-11-09:** the user found its yellow/noisy outputs broken;
+this proxy failed the intended illumination meaning and is not a working-control
+recommendation. Preserve its exact tuple, saved RAW32 and all original results;
+all four arms are complete and must not be retrained. A same-RAW bottle171
+diagnostic retained a clear bottle at α0.125 and α0.25, with warm amber
+illumination at α0.25. Full strength overdrives this one case; no new LR comparison,
+reranking or general strength recommendation is claimed. See
+[the dated caveat and images](measurement-caveat-20261109.md).
+This changes no package default. Rank only the equal-case arithmetic mean intended
 effect in finished ON minus exact matched OFF, retaining negatives, zeros and
 exact ties. Missing/failed outputs are not zero. SSE is historical diagnostic
 information, never a selector or tiebreak; preservation, beauty, confidence and
@@ -157,6 +164,18 @@ identity and strict whole-RAW checks remain intact. It supports native response
 evaluation with the original local options, not generic JSON prompts or a
 public image render method. The separate finished-output consumer/ordinary
 Generate route supplies native rollouts and tiled VAE decode.
+
+The original local fixed bottle171/native2048 preset's decoder continuation is
+technically complete: eight prior native responses, zero new responses, one VAE
+decode, exact reused OFF, HTTP outputs and owned cleanup. That narrow completion
+does not establish arbitrary-prompt public rendering, a fresh complete end-to-end
+RNG claim or a working illumination control. The response-only public factory
+and the meaning caveat above remain unchanged.
+
+The local Generate default now requests the fixed bottle171 two-alpha diagnostic
+at α0.125 and α0.25, using the same retained RAW and local runtime. This is not a
+general public rendering API or a new strength recommendation; see
+[the current deployment scope](measurement-caveat-20261109.md#completed-one-case-lower-alpha-diagnostic).
 
 This adapter is specific to its local deployment. Original absolute Source paths,
 frozen model/conditioning/data, native Python environment, GPU UUID/lock and

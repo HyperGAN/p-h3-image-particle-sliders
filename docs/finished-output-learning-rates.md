@@ -1,7 +1,15 @@
-# Best tested existing WarmGoldenLight RAW32 recipe
+# Retained WarmGoldenLight RAW32 warmth-proxy result
 
-**Cell3/G`0.036` wins the original four-rate comparison**, with equal-eight-case
-intended-effect ON−OFF mean **+`0.017445931987216074`**. Keep the saved RAW32;
+**2026-11-09 caveat:** cell3/G`0.036` is the original frozen warmth-proxy maximum,
+with equal-eight-case ON−OFF mean **+`0.017445931987216074`**. The user confirmed the output is broken; review of saved bottle, room and bicycle
+cases found yellow/noisy fields without recognizable subjects. The recorded proxy score does not establish intended illumination or a
+working control. [The dated caveat](measurement-caveat-20261109.md) records this
+meaning failure and the existing training warnings. A later same-RAW bottle171
+diagnostic retained the bottle at α0.125 and α0.25, with warm amber illumination
+at α0.25; full strength overdrives that case. This one-case diagnosis adds no
+LR score, reranking or general strength recommendation.
+
+Keep the saved RAW32 and original measurements;
 no new search or fresh confirmation is required. This is the original native2048,
 full-coupled image/audio training cohort, batch2/horizon128/rank8/seed7,
 full393344 native response and128×4 particle bank under core0.14.0/PG0.9.5.
@@ -10,7 +18,7 @@ The image comparison uses four original DEV scenes (bottle, bicycle, room, boat)
 with seeds171/172, eight equally weighted cases per arm, strength1 ON vs exact
 matched strength0 OFF. Native full-coupled rollout and original tiled VAE are retained.
 
-| Arm | G | Mean finished-effect gain |
+| Arm | G | Mean frozen warmth-proxy gain |
 | --- | ---: | ---: |
 | cell0 | 0.0004 | -0.00029275131722291336 |
 | cell1 | 0.004 | +0.002527267051239808 |
@@ -26,12 +34,13 @@ each case gain is ON minus OFF, and each arm score is the equal-eight-case mean.
 No new instrument calibration, image generation, rating or arithmetic selector
 is introduced by these docs. The full negative/zero/tied outcomes remain retained;
 missing technical evidence is never converted to zero. This is a scoped
-model-instrument best-tested recipe, not a global/joint optimum, unseen holdout,
-human validation or changed package default.
+frozen model-instrument result with a now-known illumination meaning failure,
+not a validated working-control recommendation, global/joint optimum, unseen
+holdout, human validation or changed package default.
 
 ## Actual common options
 
-Use the exact saved literals in [the portable summary](finished-output-rate.json):
+The exact saved literals in [the portable summary](finished-output-rate.json) identify the measured recipe:
 `lr=0.036`, `d_lr_mult=0.5000000000000001`,
 `prior_lr_mult=0.8333333333333333`, `ema_decay=None` / JSON `null`.
 `lr` is G; `d_lr_mult` scales G into D; `prior_lr_mult` scales G into the
@@ -76,4 +85,9 @@ names/bytes/hashes identify retained evidence; they are not public download link
 Installing/checking/planning alone is not portable native reproduction.
 `ph3-native-response095` returns the exact existing response-only factory;
 no generic arbitrary prompt/data trainer or public image renderer is supplied.
-Ordinary Generate/preset deployment and integration remain separately pending.
+The local fixed bottle171/native2048 preset completed through exact saved-latent
+decoder continuation: eight prior native responses, zero new responses, one new
+decode, reused OFF, HTTP outputs and owned cleanup. This does not establish a
+fresh complete end-to-end run, arbitrary-prompt public rendering or control
+quality. The portable JSONs retain the original comparison snapshot unchanged;
+[the dated caveat](measurement-caveat-20261109.md) gives current interpretation.
