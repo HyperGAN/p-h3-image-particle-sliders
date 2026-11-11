@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=84.2.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ph3-image-native-explicit-fresh95"
+version = "0.1.0"
+description = "Opt-in cached fresh/FULL/RAW execution for the original p-h3-image research095 profile"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch>=2.6,<3",
+    "particle-sliders-core==0.13.0",
+    "particlegan==0.9.5",
+    "ph3-research095-candidate==0.1.0.dev1",
+    "hndl==0.10.0",
+    "diffusers==0.42.0.dev0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+ph3_native_fresh95 = ["source_profile.json"]
