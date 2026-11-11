@@ -155,3 +155,8 @@ guessed from another model's attention names. See [the implementation handoff](d
 and [source pins](backend.lock.json).
 
 Source: Apache-2.0. Shared core: MIT. These source licenses grant no H3 model rights.
+
+
+## Original research095 fresh/FULL/RAW helper
+
+The separate [cached fresh95 subproject](backends/ph3-native-fresh95/FRESH95.md) exposes the tested `ph3_native_fresh95` Python API for its exact original research095 installation. It preserves the root CLI/core/defaults and existing LR cohorts; portable dependency availability and pretrained/native rendering are not claimed.
