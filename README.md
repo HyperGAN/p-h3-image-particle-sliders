@@ -1,5 +1,11 @@
 # P-H3-Image Particle Sliders
 
+**Memory (calculated):** original native int8/BF16 fixed-bank batch2 profile: plan **64 GiB VRAM /32 GiB RAM**; native response/Generate: **48 GiB VRAM /32 GiB RAM**. Planner/checker: **0 GPU /1 GiB RAM**. See [MEMORY.md](MEMORY.md) for the complete budgets and assumptions.
+
+
+
+
+
 **Current eligible saved recipe — 2026-11-09:** **cell1/G`0.004`**, original
 eight-case mean **+`0.002527267051239808`**. All eight nominal-strength saved
 outputs passed the qualified catastrophic-only check, and its exact FULL32
