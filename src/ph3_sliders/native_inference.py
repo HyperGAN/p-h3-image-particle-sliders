@@ -16,6 +16,8 @@ def __getattr__(name):
     global _FACTORY
     if name != 'INFERENCE_BACKEND':
         raise AttributeError(name)
+    from .root_runner import _require_original_runtime
+    _require_original_runtime()
     if _FACTORY is None:
         pin = factory_pin()
         raw = source(pin)

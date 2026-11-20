@@ -1,4 +1,4 @@
-"""Fresh-only public PG095 QR/R2 at the actual p-h3-image host laws."""
+"""Fresh-only public ParticleGAN QR/R2 at the actual p-h3-image host laws."""
 
 import hashlib
 import math
@@ -83,7 +83,7 @@ def initialize(owner, config, *, optimizers=()):
     if any(torch.count_nonzero(p).item() for p in zero_up):
         raise RuntimeError("zero adapter output was not preserved")
     receipt = {
-        "schema": "PH3Image-native-explicit-fresh95-before-optimizers-v1",
+        "schema": "PH3Image-native-explicit-scoped-before-optimizers-v1",
         "profile": PROFILE,
         "cohort_id": owner.cohort_id,
         "config": config.copy(),

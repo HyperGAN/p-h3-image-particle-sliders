@@ -1,4 +1,4 @@
-"""FOUR NEW UNRUN software cases; one original PG095 update in case3 only.
+"""FOUR NEW UNRUN software cases; one original ParticleGAN update in case3 only.
 
 The synthetic frozen host exercises the original H3Host packed image/audio
 protocol, RoutedAdapter/HNDL/NativeResponse and original GlobalMixCritic.
@@ -13,14 +13,14 @@ from types import SimpleNamespace
 import pytest
 import torch
 from torch import nn
-from particle_sliders.pg09_backends import PreparedResponse
-from ph3_research095.bridge import NativeResponse, NativeRow
-from ph3_research095.native_host import H3Host
+from particle_sliders.backends import PreparedResponse
+from ph3_native_scoped.native_runtime.bridge import NativeResponse, NativeRow
+from ph3_native_scoped.native_runtime.native_host import H3Host
 
-from ph3_native_fresh95 import configuration, open_inference, open_training, save_prepared_cache
-from ph3_native_fresh95 import api, ownership, policy
-from ph3_native_fresh95.cache import prepared_digest
-from ph3_native_fresh95.util import equal
+from ph3_native_scoped import configuration, open_inference, open_training, save_prepared_cache
+from ph3_native_scoped import api, ownership, policy
+from ph3_native_scoped.cache import prepared_digest
+from ph3_native_scoped.util import equal
 
 
 class Attention(nn.Module):
@@ -140,7 +140,7 @@ def test_new_original_hostlaw_Parameters_zeroUP_full_coupled_velocity_and_receip
     cache, prepared = cache_fixture(tmp_path, host, config)
     forbid_teachers(monkeypatch)
     base = [(p, p.detach().clone()) for p in host.model.parameters()]
-    initialize, game = policy.initialize, api.ConditionalPG095
+    initialize, game = policy.initialize, api.ConditionalParticleGAN
     seen = {}
     def init_spy(owner, config, **kwargs):
         before = deepcopy(owner.critic.state_dict())
@@ -157,7 +157,7 @@ def test_new_original_hostlaw_Parameters_zeroUP_full_coupled_velocity_and_receip
         seen["before_optimizers"] = True
         return game(backend, prepared, critic, **kwargs)
     monkeypatch.setattr(policy, "initialize", init_spy)
-    monkeypatch.setattr(api, "ConditionalPG095", game_spy)
+    monkeypatch.setattr(api, "ConditionalParticleGAN", game_spy)
     owner = open_fresh(host, cache, tmp_path / "fresh")
     try:
         assert seen["before_optimizers"] and owner.step == 0 and owner.entry_FULL.bytes > 0
@@ -224,7 +224,7 @@ def test_new_ONE_original_update_typed_whole_FULL_optimizer_RNG_and_RAW_skip_ini
         assert resumed.step == 1 and equal(saved, resumed.game.state_dict()) and resumed._initialization == receipt
     finally:
         resumed.close()
-    monkeypatch.setattr(api, "ConditionalPG095", forbidden)
+    monkeypatch.setattr(api, "ConditionalParticleGAN", forbidden)
     monkeypatch.setattr(api, "load_cache", forbidden)
     inference = open_inference(host_fixture(), raw=raw, identity=identity_fixture(), owner_admission=admitted)
     try:

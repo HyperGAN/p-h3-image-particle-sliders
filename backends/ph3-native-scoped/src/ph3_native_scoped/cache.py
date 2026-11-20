@@ -11,7 +11,7 @@ from . import ownership
 from ._config import configuration
 from .util import Checkpoint, canonical, equal, read_packet, save_packet, tree
 
-SCHEMA = "PH3Image-completed-coupled-native-PreparedResponses-fresh95-v1"
+SCHEMA = "PH3Image-completed-coupled-native-PreparedResponses-scoped-v1"
 
 
 @dataclass(frozen=True)
@@ -49,7 +49,7 @@ def validate_identity(identity):
 
 
 def host_identity(host):
-    from ph3_research095.native_host import H3Host, SIGMAS, attention_targets
+    from ph3_native_scoped.native_runtime.native_host import H3Host, SIGMAS, attention_targets
 
     if type(host) is not H3Host or tuple(host.sigmas) != tuple(SIGMAS):
         raise ValueError("the original H3Host and original eight-step native schedule are required")
@@ -74,8 +74,8 @@ def host_identity(host):
 
 
 def validate_row(row, host):
-    from ph3_research095.bridge import NativeRow
-    from ph3_research095.native_host import Conditioning, PackedState
+    from ph3_native_scoped.native_runtime.bridge import NativeRow
+    from ph3_native_scoped.native_runtime.native_host import Conditioning, PackedState
 
     if type(row) is not NativeRow or type(row.state) is not PackedState:
         raise ValueError("original full packed NativeRow/PackedState required")
@@ -118,8 +118,8 @@ def _dump_row(row):
 
 
 def _restore_row(value):
-    from ph3_research095.bridge import NativeRow
-    from ph3_research095.native_host import Conditioning, PackedState
+    from ph3_native_scoped.native_runtime.bridge import NativeRow
+    from ph3_native_scoped.native_runtime.native_host import Conditioning, PackedState
 
     return NativeRow(
         PackedState(**value["state"]), Conditioning(**value["neutral"]), Conditioning(**value["positive"]),
@@ -143,7 +143,7 @@ def prepared_digest(item):
 
 
 def _validate_prepared(prepared, host):
-    from particle_sliders.pg09_backends import PreparedResponse
+    from particle_sliders.backends import PreparedResponse
 
     if not isinstance(prepared, (list, tuple)) or len(prepared) < 2:
         raise ValueError("at least two authentic already-completed response rows required")
@@ -188,7 +188,7 @@ def save_prepared_cache(path, *, host, identity, config, prepared, teacher_origi
 
 
 def load_cache(binding, *, host, identity):
-    from particle_sliders.pg09_backends import PreparedResponse
+    from particle_sliders.backends import PreparedResponse
 
     if not isinstance(binding, CacheBinding):
         raise ValueError("typed whole-file completed cache binding required")

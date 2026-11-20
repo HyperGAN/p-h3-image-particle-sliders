@@ -8,7 +8,7 @@ from pathlib import Path
 
 from .util import source_record
 
-MARKER = "_ph3_image_explicit_fresh95_owner"
+MARKER = "_ph3_image_explicit_scoped_owner"
 MISSING = object()
 
 
@@ -30,7 +30,7 @@ def _record(distribution_object, relative, path):
 
 def guard():
     """Never patch original PG/HNDL guards or substitute current core Sources."""
-    own = distribution("ph3-image-native-explicit-fresh95")
+    own = distribution("ph3-image-native-scoped")
     root = Path(__file__).absolute().parent
     if own.version != "0.1.0":
         raise RuntimeError("exact separate installed helper required")
@@ -39,9 +39,14 @@ def guard():
     if actual != expected:
         raise RuntimeError("exact seven modules plus Source profile required")
     for name in expected:
-        _record(own, "ph3_native_fresh95/" + name, root / name)
+        _record(own, "ph3_native_scoped/" + name, root / name)
     profile = json.loads((root / "source_profile.json").read_text())
-    for key in ("native", "core", "PG", "native_runtime"):
+    for file, pin in profile["native"]["files"].items():
+        source = root / "native_runtime" / file
+        if source_record(source) != pin:
+            raise RuntimeError("native runtime Source differs: " + file)
+        _record(own, "ph3_native_scoped/native_runtime/" + file, source)
+    for key in ("core", "PG", "native_runtime"):
         declared = profile[key]
         original = distribution(declared["distribution"])
         if original.version != declared["version"]:
@@ -66,7 +71,7 @@ def guard():
             if source_record(path) != pin:
                 raise RuntimeError("captured original Source differs: " + relative)
             _record(original, relative, path)
-    from ph3_research095 import networks
+    from ph3_native_scoped.native_runtime import networks
 
     networks.runtime_identity()  # Original complete HNDL0.10 Source guard.
     return profile
@@ -130,8 +135,8 @@ class Owner:
             raise
 
     def attach(self):
-        from ph3_research095.bridge import NativeResponse
-        from ph3_research095.networks import RoutedAdapter
+        from ph3_native_scoped.native_runtime.bridge import NativeResponse
+        from ph3_native_scoped.native_runtime.networks import RoutedAdapter
 
         self.adapter = RoutedAdapter.__new__(RoutedAdapter)
         try:
