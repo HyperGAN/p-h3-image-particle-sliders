@@ -5,13 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "p-h3-image-particle-sliders"
 version = "0.3.0.dev0"
-description = "Fixed declared native P-H3 RAW32 bank profile and unchanged response factory"
+description = "P-H3 image software fixtures and recorded fixed-bank profile"
 requires-python = ">=3.11"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 dependencies = [
-  "particle-sliders-core @ git+https://github.com/HyperGAN/particle-sliders.git@8a696eb33c1a9d34472afad3a3199bd4776a797f#subdirectory=packages/particle-sliders-core",
+  "particle-sliders-core @ git+https://github.com/HyperGAN/particle-sliders.git@c13890f8e2a1ecf1dc8eb9f2a37f9187cb9fea78#subdirectory=packages/particle-sliders-core",
 ]
 
 [project.optional-dependencies]
@@ -25,12 +25,6 @@ ph3-image = "ph3_sliders.lifecycle:BACKEND"
 
 [project.entry-points."particle_sliders.training_profiles"]
 ph3-image-fixed-bank32 = "ph3_sliders.execution:profile"
-
-[project.entry-points."particle_sliders.runners"]
-ph3-root-owned = "ph3_sliders.root_runner:RUNNER_API"
-
-[project.entry-points."particle_sliders.inference_backends"]
-ph3-native-response095 = "ph3_sliders.native_inference:INFERENCE_BACKEND"
 
 [project.urls]
 Repository = "https://github.com/HyperGAN/p-h3-image-particle-sliders"

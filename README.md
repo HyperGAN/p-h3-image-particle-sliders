@@ -35,11 +35,10 @@ public rendering or establish control quality. See [learning-rate guidance](LEAR
 [historical portable options](docs/finished-output-rate.json) and
 [all32 pairs/40 first image intensities](docs/finished-output-decision.json).
 
-This product revision registers the current core **0.14.0** native
-training profile `ph3-image-fixed-bank32`, the explicit `ph3-root-owned` runner,
-and the unchanged `ph3-native-response095` public RAW inference factory. PG is
-**0.9.5**. See [the fixed-bank API](docs/FIXED-BANK-API.md) for exact supported
-options, preparation dependencies, checks and execution ownership.
+This checkout pins Particle Sliders core 0.15.1 and ParticleGAN 0.11.0.
+The [scoped native package](backends/ph3-native-scoped/README.md) supports
+fresh RAW-only use with the packed image and audio response. The archived
+fixed-bank API requires its original source and pins.
 
 The supported training method is only the already declared four-arm RAW32 bank.
 It uses the frozen native data, native2048 geometry, optimizer and FULL durability
@@ -163,6 +162,8 @@ and [source pins](backend.lock.json).
 Source: Apache-2.0. Shared core: MIT. These source licenses grant no H3 model rights.
 
 
-## Original research095 fresh/FULL/RAW helper
+## Scoped native package
 
-The separate [cached fresh95 subproject](backends/ph3-native-fresh95/FRESH95.md) exposes the tested `ph3_native_fresh95` Python API for its exact original research095 installation. It preserves the root CLI/core/defaults and existing LR cohorts; portable dependency availability and pretrained/native rendering are not claimed.
+Install the separate [cached native subproject](backends/ph3-native-scoped/README.md)
+for its Python API and isolated dependencies. Its CPU fixtures cover scoped
+initialization, exact FULL resume and RAW numerical inference.

@@ -5,15 +5,15 @@ from pathlib import Path
 
 import torch
 from particlegan import get_recipe
-from particle_sliders.pg095 import ConditionalPG095, PG_SOURCE_PROFILE, PG_VERSION
+from particle_sliders.engine import ConditionalParticleGAN, PG_SOURCE_PROFILE, PG_VERSION
 
 from . import PROFILE, ownership, policy
 from ._config import configuration
 from .cache import host_identity, load_cache, validate_identity, validate_row
 from .util import equal, new_directory, read_packet, save_packet, write_json
 
-FULL = "PH3Image-cached-explicitfresh95-typed-FULL-v1"
-RAW = "PH3Image-cached-explicitfresh95-typed-RAW-v1"
+FULL = "PH3Image-cached-explicitscoped-typed-FULL-v1"
+RAW = "PH3Image-cached-explicitscoped-typed-RAW-v1"
 
 
 class ReceiptBackend:
@@ -51,7 +51,7 @@ def _admit(callback, *, operation, cohort, identity, cache_identity, completed_s
 
 def _receipt(value, *, cohort, config, sources):
     keys = {"schema", "profile", "cohort_id", "config", "sources", "seed", "parameter_policies", "existing_Parameter_objects_preserved", "pretrained_parameters_touched", "critic_policy", "new_optimizer_count_at_receipt", "weight_EMA", "old_cohort_migration"}
-    if not isinstance(value, dict) or set(value) != keys or value.get("schema") != "PH3Image-native-explicit-fresh95-before-optimizers-v1" or value.get("profile") != PROFILE or value.get("cohort_id") != cohort or value.get("config") != config or value.get("sources") != sources or value.get("weight_EMA") is not None or value.get("new_optimizer_count_at_receipt") != 0 or value.get("existing_Parameter_objects_preserved") is not True or value["pretrained_parameters_touched"] is not False or value["old_cohort_migration"] is not False or value["seed"] != config["seed"]:
+    if not isinstance(value, dict) or set(value) != keys or value.get("schema") != "PH3Image-native-explicit-scoped-before-optimizers-v1" or value.get("profile") != PROFILE or value.get("cohort_id") != cohort or value.get("config") != config or value.get("sources") != sources or value.get("weight_EMA") is not None or value.get("new_optimizer_count_at_receipt") != 0 or value.get("existing_Parameter_objects_preserved") is not True or value["pretrained_parameters_touched"] is not False or value["old_cohort_migration"] is not False or value["seed"] != config["seed"]:
         raise ValueError("exact saved fresh receipt required; never initialize after restore")
     rows = value["parameter_policies"]
     roles = {"original-constructor-KEEP", "protected-zero-UP", "down-sqrt5-constructor-scale-QR", "bank-R2Normal-std1"}
@@ -117,7 +117,7 @@ class Training(ownership.Owner):
         self.directory = Path(directory).absolute()
         devices = [host.device.index or 0] if host.device.type == "cuda" else []
         try:
-            from ph3_research095.bridge import ConditionalCritic, conditions, coordinate_scale
+            from ph3_native_scoped.native_runtime.bridge import ConditionalCritic, conditions, coordinate_scale
 
             with torch.random.fork_rng(devices=devices):
                 torch.set_rng_state(torch.Generator().manual_seed(config["seed"]).get_state())
@@ -132,14 +132,14 @@ class Training(ownership.Owner):
                 self.original_backend = self.backend
                 self.backend = ReceiptBackend(self.original_backend, self._initialization, sources, cache_identity)
                 reference = get_recipe("bispf_optimized")
-                if PG_VERSION != "0.9.5" or PG_SOURCE_PROFILE != "release-0.9.5":
-                    raise ValueError("original official PG095 engine profile required")
-                self.game = ConditionalPG095(
+                if PG_VERSION != "0.11.0" or PG_SOURCE_PROFILE != "release-0.11.0":
+                    raise ValueError("original official ParticleGAN engine profile required")
+                self.game = ConditionalParticleGAN(
                     self.backend, prepared, self.critic, conditions=condition, particles=self.backend.network.particles,
                     response_domain="continuous_vector", response_scale=coordinate_scale(prepared),
                     sigma=reference.observation_sigma, batch_size=2, seed=config["seed"], total_steps=128,
                     recipe_overrides={k: config[k] for k in ("lr", "d_lr_mult", "prior_lr_mult")},
-                    pg_source_profile="release-0.9.5", penalty_input_domain="continuous",
+                    pg_source_profile="release-0.11.0", penalty_input_domain="continuous",
                 )
                 if self.game.prior.z is not self.adapter.particles or self.game.recipe.observation_sigma != reference.observation_sigma or self.game.sigma != reference.observation_sigma:
                     raise RuntimeError("original complete-bank ownership/public observation noise differs")

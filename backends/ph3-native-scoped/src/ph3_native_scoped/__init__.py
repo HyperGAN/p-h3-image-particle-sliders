@@ -1,6 +1,6 @@
-"""Opt-in fresh p-h3-image research095 APIs; no default registration changes."""
+"""Opt-in fresh p-h3-image native runtime APIs; no default registration changes."""
 
-PROFILE = "ph3-image-coupled-audio-cached-explicit-fresh95-v1"
+PROFILE = "ph3-image-coupled-audio-cached-explicit-scoped-v1"
 
 
 def configuration(**options):

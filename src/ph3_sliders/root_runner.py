@@ -14,6 +14,13 @@ import sys
 from .execution import PROFILE, RUNNER, authority, pinned, profile as product_profile, require, source, validate_training
 
 
+def _require_original_runtime():
+    from importlib.metadata import version
+
+    if version("particle-sliders-core") != "0.14.0" or version("particlegan") != "0.9.5":
+        raise RuntimeError("Restore the original product revision and pins to dispatch archived bank jobs.")
+
+
 def option(argv, name):
     require(argv.count(name) == 1 and argv.index(name) + 1 < len(argv), 'One exact prepared CLI option: ' + name)
     return argv[argv.index(name) + 1]
@@ -95,6 +102,7 @@ def prepared(training):
 
 
 def submit(request):
+    _require_original_runtime()
     from particle_sliders.execution.request import validate_profile, validate_resolved
     profile = validate_resolved(request)
     require(profile == validate_profile(product_profile())

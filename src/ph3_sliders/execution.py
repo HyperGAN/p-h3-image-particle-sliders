@@ -58,9 +58,8 @@ def profile():
     authority()
     return dict(schema='particle-slider-profile-v1', name=PROFILE,
         product='p-h3-image-particle-sliders', config_kind='native', status='source_only',
-        reason='Product adapter proposal over the proven original four-arm RAW32 bank. Actual execution requires '
-               'an unconsumed Root-prepared one-job receipt and the ph3-root-owned runner; arbitrary prompt training '
-               'and generic local execution are unsupported. No new native/LR proof is requested.',
+        reason='Recorded four-arm RAW32 bank. Use the original product revision for dispatch. '
+               'The current native scoped API is installed separately.',
         command=['{python}', '-m', 'ph3_sliders.execution'],
         # Checks live in the newly installed frontdoor environment. Actual
         # dispatch execs the separate exact native Python from Root's receipt.
