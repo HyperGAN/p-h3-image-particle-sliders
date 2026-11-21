@@ -2,7 +2,7 @@
 
 This separate package exposes fresh initialization, exact FULL restore and
 RAW responses for the packed image-and-audio host. It pins Particle Sliders
-core 0.15.1, ParticleGAN 0.11.0, HNDL 0.10.0 and the reviewed Diffusers
+core 0.15.2, ParticleGAN 0.11.1, HNDL 0.10.0 and the reviewed Diffusers
 layout and scheduler. It verifies the installed source inventory and RECORD
 ownership. The [earlier fixed-bank results](../../LEARNING-RATES.md) retain
 their source provenance.

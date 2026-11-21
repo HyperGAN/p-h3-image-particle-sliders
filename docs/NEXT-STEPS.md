@@ -20,7 +20,7 @@
    game updates, losses, regularization, strict restore and serialization;
    the product owns native geometry and sampling.
 5. Declare the actual response geometry/domain and obey core admission. The
-   pinned PG0.9.4 path refuses flat continuous vectors of width >=170. There is
+   original planning-cohort path refuses flat continuous vectors of width >=170. There is
    no permission here to flatten, project, spatially reshape or relabel native
    H3 responses to bypass that gate. The image adaptation's native response is
    not yet measured; the existing video response width is not a substitute.

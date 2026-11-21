@@ -4,7 +4,7 @@ Inspected [PrunaAI/P-H3-Image's LICENSE](https://huggingface.co/PrunaAI/P-H3-Ima
 [NOTICE](https://huggingface.co/PrunaAI/P-H3-Image/blob/7f98acef503cf2bcfba821a78cb1cf1a9928b2df/NOTICE)
 and [model card](https://huggingface.co/PrunaAI/P-H3-Image/blob/7f98acef503cf2bcfba821a78cb1cf1a9928b2df/README.md).
 The license identifies itself as the MiniMax H3 Community License Agreement,
-dated August 2, 2026. `backend.lock.json` records inspected document hashes.
+dated August 2, 2026. [The archived source lock](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/backend.lock.json) records inspected document hashes.
 
 The operative terms are broader than a restriction on downloading weights:
 

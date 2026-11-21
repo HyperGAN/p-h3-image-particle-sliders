@@ -1,7 +1,6 @@
 """Fixed declared-bank product profile for the current common training API.
 
-Stdlib-only planning/checking. Native execution belongs to the already admitted
-Root one-job launcher/guardian, never a replacement training loop.
+Stdlib-only planning and checking for the recorded fixed-bank cohort.
 """
 from pathlib import Path
 import argparse
@@ -13,7 +12,14 @@ import sys
 PROFILE = 'ph3-image-fixed-bank32'
 RUNNER = 'ph3-root-owned'
 SCHEMA = 'ph3-original-declared-bank32-product-options-v1'
-AUTHORITY = Path(__file__).with_name('native-authority.json')
+ARCHIVED_REVISION = '98b99f48fc36b1165b6a29f1ab6999f03d886996'
+# Exact declarations from the completed fixed-bank plan, in original arm order.
+RATE_TUPLES = (
+    (0.0004, 45.0, 74.99999999999999),
+    (0.004, 4.5, 7.499999999999999),
+    (0.012, 1.5000000000000002, 2.4999999999999996),
+    (0.036, 0.5000000000000001, 0.8333333333333333),
+)
 
 
 def require(value, message):
@@ -32,37 +38,12 @@ def read_json(path):
     return value, dict(path=str(p), bytes=len(raw), sha256=hashlib.sha256(raw).hexdigest())
 
 
-def pinned(pin):
-    require(set(pin) == {'path', 'bytes', 'sha256'}, 'Exact metadata FullRecord required')
-    value, actual = read_json(pin['path'])
-    require(actual == pin, 'Pinned metadata changed: ' + pin['path'])
-    return value
-
-
-def source(pin):
-    p = Path(pin['path'])
-    require(p.is_absolute() and not p.is_symlink() and p.suffix == '.py', 'Exact external Source buffer required')
-    raw = p.read_bytes()
-    require(len(raw) == pin['bytes'] and hashlib.sha256(raw).hexdigest() == pin['sha256'], 'External Source changed')
-    return raw
-
-
-def authority():
-    value, unused = read_json(AUTHORITY.absolute())
-    require(value['schema'] == 'ph3-product-fixed-native-authority-v1'
-            and value['core_version'] == '0.14.0' and value['PG_version'] == '0.9.5', 'Fixed native deployment authority')
-    return value
-
-
 def profile():
-    authority()
     return dict(schema='particle-slider-profile-v1', name=PROFILE,
         product='p-h3-image-particle-sliders', config_kind='native', status='source_only',
         reason='Recorded four-arm RAW32 bank. Use the original product revision for dispatch. '
                'The current native scoped API is installed separately.',
         command=['{python}', '-m', 'ph3_sliders.execution'],
-        # Checks live in the newly installed frontdoor environment. Actual
-        # dispatch execs the separate exact native Python from Root's receipt.
         runtime=dict(python=sys.executable, env=dict(HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1')),
         target_steps_path='steps', default_checkpoint_every=1,
         capabilities=dict(check=True, resume=False, periodic_checkpoint=True, device=False))
@@ -70,16 +51,14 @@ def profile():
 
 def rate_options(*, lr, d_lr_mult, prior_lr_mult, ema_decay=None):
     require(ema_decay is None, 'Weight EMA is disabled; ema_decay must be None')
-    supplied = dict(lr=lr, d_lr_mult=d_lr_mult, prior_lr_mult=prior_lr_mult)
-    require(all(type(v) in (int, float) and math.isfinite(v) and v > 0 for v in supplied.values()),
+    supplied = (lr, d_lr_mult, prior_lr_mult)
+    require(all(type(v) in (int, float) and math.isfinite(v) and v > 0 for v in supplied),
             'Finite positive literal rate scalars required; booleans are unsupported')
-    # Copy the exact declared literals; never derive multipliers from rounded D/P.
-    plan = pinned(authority()['scientific_plan'])
-    matches = [c for c in plan['cells'] if all(float(supplied[k]).hex() == c[n].hex()
-        for k, n in (('lr', 'G'), ('d_lr_mult', 'd_lr_mult'), ('prior_lr_mult', 'prior_lr_mult')))]
-    require(len(matches) == 1, 'Only the four original declared RAW32 rate tuples are supported')
-    cell = matches[0]
-    return dict(lr=cell['G'], d_lr_mult=cell['d_lr_mult'], prior_lr_mult=cell['prior_lr_mult'], ema_decay=None), 'cell' + str(plan['cells'].index(cell))
+    # Match the stored float values directly, without deriving multipliers.
+    for index, (g_rate, d_multiplier, p_multiplier) in enumerate(RATE_TUPLES):
+        if supplied == (g_rate, d_multiplier, p_multiplier):
+            return dict(lr=g_rate, d_lr_mult=d_multiplier, prior_lr_mult=p_multiplier, ema_decay=None), f'cell{index}'
+    raise ValueError('Only the four original declared RAW32 rate tuples are supported')
 
 
 def config(*, lr, d_lr_mult, prior_lr_mult, ema_decay=None, prepared_entry=None):
@@ -104,7 +83,7 @@ def validate_training(value):
 
 
 def training_request(value):
-    """Actual current014 native-profile request; planning never submits work."""
+    """Build a native-profile request for allocation-free checking."""
     return dict(schema='particle-slider-train-v1', profile=PROFILE, training=validate_training(value),
                 execution=dict(runner=RUNNER), output=dict(checkpoint_every=1))
 
@@ -121,7 +100,7 @@ def main(argv=None):
         value = value['training']
     value = validate_training(value)
     require(args.checkpoint_every == 1, 'Original per-committed-update FULL durability is fixed')
-    require(args.check, 'Actual bank execution requires --runner ph3-root-owned; generic local completion envelopes differ')
+    require(args.check, f'Archived bank execution requires checkout {ARCHIVED_REVISION}.')
     print(json.dumps(dict(status='checked', profile=PROFILE, phase=value['phase'], rate_overrides={k: value[k]
         for k in ('lr', 'd_lr_mult', 'prior_lr_mult', 'ema_decay')}, target_steps=32, horizon=128,
         model_loaded=False, native_execution_started=False, Root_prepared_receipt_bound=value['prepared_entry'] is not None,
@@ -154,8 +133,7 @@ def product_cli(argv):
     if operation == 'bank-check':
         return main(['--config', str(args.config), '--checkpoint-every', '1', '--check'])
     require(operation == 'bank-train', 'Unknown fixed bank command')
-    from particle_sliders.execution.cli import main as common_main
-    return common_main(['train', '--profile', PROFILE, '--runner', RUNNER, '--config', str(args.config), '--no-reporting'])
+    raise ValueError(f'Restore the original checkout {ARCHIVED_REVISION} to dispatch archived bank jobs.')
 
 
 if __name__ == '__main__':

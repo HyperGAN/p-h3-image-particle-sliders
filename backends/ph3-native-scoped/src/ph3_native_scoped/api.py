@@ -132,14 +132,14 @@ class Training(ownership.Owner):
                 self.original_backend = self.backend
                 self.backend = ReceiptBackend(self.original_backend, self._initialization, sources, cache_identity)
                 reference = get_recipe("bispf_optimized")
-                if PG_VERSION != "0.11.0" or PG_SOURCE_PROFILE != "release-0.11.0":
+                if PG_VERSION != "0.11.1" or PG_SOURCE_PROFILE != "release-0.11.1":
                     raise ValueError("original official ParticleGAN engine profile required")
                 self.game = ConditionalParticleGAN(
                     self.backend, prepared, self.critic, conditions=condition, particles=self.backend.network.particles,
                     response_domain="continuous_vector", response_scale=coordinate_scale(prepared),
                     sigma=reference.observation_sigma, batch_size=2, seed=config["seed"], total_steps=128,
                     recipe_overrides={k: config[k] for k in ("lr", "d_lr_mult", "prior_lr_mult")},
-                    pg_source_profile="release-0.11.0", penalty_input_domain="continuous",
+                    pg_source_profile="release-0.11.1", penalty_input_domain="continuous",
                 )
                 if self.game.prior.z is not self.adapter.particles or self.game.recipe.observation_sigma != reference.observation_sigma or self.game.sigma != reference.observation_sigma:
                     raise RuntimeError("original complete-bank ownership/public observation noise differs")

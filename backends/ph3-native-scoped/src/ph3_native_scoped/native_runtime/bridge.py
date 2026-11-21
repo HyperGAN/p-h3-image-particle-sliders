@@ -88,13 +88,13 @@ def build_game(host,rows,*,lr,d_lr_mult,prior_lr_mult,seed=7,total_steps=128,ide
  Callers construct host/adapter/init in an owned scoped RNG context. No model
  weights, previous teachers, optimizer packets or private trainer are loaded.
  """
- if total_steps!=128 or PG_VERSION!='0.11.0'or PG_SOURCE_PROFILE!='release-0.11.0':raise ValueError('fresh official095 common128 cohort required')
+ if total_steps!=128 or PG_VERSION!='0.11.1'or PG_SOURCE_PROFILE!='release-0.11.1':raise ValueError('fresh released ParticleGAN common128 cohort required')
  backend=NativeResponse(host,host.adapter,identity=identity);prepared=[backend.prepare(row)for row in rows]
  if len(prepared)<2:raise ValueError('batch2 requires at leasttwo declared rows')
  condition=conditions(prepared,len(host.timesteps),host.device);width=prepared[0].target.shape[1]
  critic=ConditionalCritic(width,condition.shape[1],device=host.device)
  reference=get_recipe('bispf_optimized')
- game=ConditionalParticleGAN(backend,prepared,critic,conditions=condition,particles=backend.network.particles,response_domain='continuous_vector',response_scale=coordinate_scale(prepared),sigma=reference.observation_sigma,batch_size=2,seed=seed,total_steps=128,recipe_overrides=dict(lr=lr,d_lr_mult=d_lr_mult,prior_lr_mult=prior_lr_mult),pg_source_profile='release-0.11.0',penalty_input_domain='continuous')
+ game=ConditionalParticleGAN(backend,prepared,critic,conditions=condition,particles=backend.network.particles,response_domain='continuous_vector',response_scale=coordinate_scale(prepared),sigma=reference.observation_sigma,batch_size=2,seed=seed,total_steps=128,recipe_overrides=dict(lr=lr,d_lr_mult=d_lr_mult,prior_lr_mult=prior_lr_mult),pg_source_profile='release-0.11.1',penalty_input_domain='continuous')
  if game.prior.z is not host.adapter.particles or game.prior.z.numel()!=512:raise RuntimeError('actual complete routed prior bank not owned by sharedgame')
  if game.recipe.observation_sigma!=reference.observation_sigma or game.sigma!=reference.observation_sigma:raise RuntimeError('public recipe/reference noise differs')
  return game

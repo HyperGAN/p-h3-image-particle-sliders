@@ -21,7 +21,7 @@ replacement score or new LR comparison; the later separate eligibility update
 above reuses the original effect means after rejecting a catastrophic candidate.
 
 The [portable decision](finished-output-decision.json) and
-[portable recipe snapshot](finished-output-rate.json) are preserved byte-for-byte,
+[portable recipe snapshot](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/finished-output-rate.json) are preserved byte-for-byte,
 including all four rates, means,32 matched pairs and40 first image intensities.
 Their original status/readiness wording belongs to that earlier snapshot. This
 dated caveat supplies the current interpretation. No training, saved RAW/FULL,

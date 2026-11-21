@@ -1,6 +1,6 @@
 # Original declared P-H3 RAW32 product method
 
-Core 0.14.0 at `8a696eb33c1a9d34472afad3a3199bd4776a797f` / PG 0.9.5
+Core 0.14.0 at `8a696eb33c1a9d34472afad3a3199bd4776a797f`
 discovers `ph3-image-fixed-bank32` through `particle_sliders.training_profiles`.
 The native profile preserves the original four-arm bank's code, initialization,
 native2048 image/coupled-audio data, update math, seed7, batch2, horizon128,
@@ -30,7 +30,7 @@ trained again. This is not a generic arbitrary-dataset training implementation.
 `+0.002527267051239808`. All8 nominal outputs and its exact FULL32 guard pass.
 The separate catastrophic-only gate rejects cell3/G0.036; its failed state and
 all original metrics remain. This changes no completed update, package default,
-native Source identity or dispatch behavior. [Current metadata](current-eligible-rate.json)
+native Source identity or dispatch behavior. [Current metadata](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/current-eligible-rate.json)
 and [eligibility scope](current-eligibility-20261109.md) identify the new current
 recommendation separately from the original comparison history below.
 
@@ -58,11 +58,7 @@ See [current scope and options](finished-output-learning-rates.md).
 
 ## Allocation-free planning and checking
 
-Install the product and its pinned current core into a **new**
-frontdoor environment. No installation into the captured native environment is
-needed. The product's local frozen deployment dependencies are
-listed in `ph3_sliders/native-authority.json`; installing this package does not
-download, relocate or include those assets.
+Install the current product and its pinned shared core into a new environment. The planning and checking commands use the four exact recorded rate tuples. They require no local native assets or historical environment.
 
 ```sh
 ph3-slider bank-config --lr 0.0004 --d-lr-mult 45.0 \
@@ -75,71 +71,15 @@ particle-slider plan --profile ph3-image-fixed-bank32 \
 
 `bank-check` uses Python's standard library, checks the exact declaration and
 loads no model. It accepts an unbound preparation receipt and reports that fact.
-It does not claim admission, completion or a native proof. The common CLI's
-`train --check` is available with `--runner local`; it starts only the product's
-allocation-free checker in the new frontdoor interpreter (`sys.executable`). Actual
-generic-local training refuses because its result/artifact contract differs
-from this original bank's genuine durable outputs.
+It does not claim admission, completion or a native proof. The common CLI's `train --check` starts the same allocation-free checker.
 
-## Actual owned dispatch
+## Archived dispatch
 
-Root first performs the existing fresh admission/preparation for one untouched
-arm or exact unfinished FULL continuation. Preparation creates the real
-one-job receipt, records exact argv/environment, and keeps Root's ownership,
-capture, poll/reap and terminal closure protocol. This adapter never creates
-grants, leases, GPU/host observations, pending roles or completion receipts.
-
-Root then binds that actual preparation JSON and its exact SHA:
-
-```sh
-ph3-slider bank-config --lr 0.0004 --d-lr-mult 45.0 \
-  --prior-lr-mult 74.99999999999999 \
-  --prepared-entry /absolute/actual-Root-preparation.json \
-  --prepared-entry-sha256 ACTUAL_SHA256 > bound-bank-request.json
-ph3-slider bank-train --config bound-bank-request.json
-```
-
-`bank-train` dispatches through the common CLI with the explicit
-`--runner ph3-root-owned`. The runner authenticates the original plan,
-matching rate tuple and actual Root-adopted one-job Source. It requires a fresh
-same-boot receipt, no existing attempt or completed arm, and the exact latest
-FULL continuation if a prefix exists. A new exclusive dispatch-consumption
-record prevents reuse through this adapter, including after an exec failure;
-there is no automatic retry or successor.
-
-The profile retains its original `source_only` label in code; it is not a
-live evidence tracker or a dispatch refusal. The installed common API's first
-full32 use is now genuinely complete, as recorded below. Planning/checking alone
-does not establish a completed run.
-
-The runner calls `os.execvpe` with the **exact recorded** original GPU1 one-job
-driver or GPU0 guardian argv and environment. The initial common CLI process
-becomes that launcher with the same PID; it was not already a guardian. No extra
-waiting parent or invented submitted/completed result is inserted. Root must
-launch this common CLI as the actual owned tool action and use the unchanged
-existing capture/reap/close workflow after exec. Original output paths, scientific
-plan, captured workers and durable metadata remain authoritative. The common
-request's generic `output.root` is planning metadata; the actual prepared bank
-attempt/output path is retained and printed in the consumption event.
-
-The recorded guardian/driver command still uses the exact captured native
-interpreter from `native-authority.json`. Thus the new environment hosts only
-the product/common API dispatcher and allocation-free checker; exec crosses
-into the unchanged existing native environment for actual work.
-
-Both the original GPU1/own48 and the separately adopted GPU0/own32 preparation
-formats are supported. Their real execution placements/caps remain distinct;
-the adapter does not clone GPU1 inference onto GPU0 or fake an own48 closure.
+[The original checkout](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/98b99f48fc36b1165b6a29f1ab6999f03d886996/docs/FIXED-BANK-API.md#actual-owned-dispatch) records the complete local launch and restore protocol. For new native sessions, install the [scoped runtime](../backends/ph3-native-scoped/README.md).
 
 ## Completed common API first use
 
-On 2026-11-09, actual tool **89012** entered through the installed common CLI:
-
-```sh
-particle-slider train --profile ph3-image-fixed-bank32 --runner ph3-root-owned \
-  --config /mnt/nvme/sliders/experiments/lr-standardization-20261104/p-h3/pg095-gpu1-declared4-cell32-durable-current014-v1/frontdoor-cell2-attempt0-request-v1.json \
-  --no-reporting
-```
+On 2026-11-09, actual tool **89012** entered through the installed common CLI. [The recorded command and evidence root](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/98b99f48fc36b1165b6a29f1ab6999f03d886996/docs/FIXED-BANK-API.md#completed-common-api-first-use) identify the exact inputs.
 
 The original **cell2 / G0.012** arm completed **32 new updates, zero inherited**,
 using `d_lr_mult=1.5000000000000002`, `prior_lr_mult=2.4999999999999996`,
@@ -149,8 +89,7 @@ native environment and original durability remained unchanged. The actual
 outer exit was **0**, reap chunk **88bcd9**, followed by Root closure **60e7e0**.
 This records a real fixed-bank training run, not a planning/check result.
 
-Evidence root: `/mnt/nvme/sliders/experiments/lr-standardization-20261104/p-h3/pg095-gpu1-declared4-cell32-durable-current014-v1`.
-The following exact paths are relative to that root:
+The paths below are relative to the archived evidence root.
 
 | Evidence | Relative path | Bytes | SHA256 |
 | --- | --- | ---: | --- |
