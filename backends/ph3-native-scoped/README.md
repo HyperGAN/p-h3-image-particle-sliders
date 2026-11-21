@@ -24,3 +24,13 @@ Select the fixture explicitly only in a genuine installed-helper wheel environme
 ```
 
 The neutral directory contains no repository configuration, conftest or Source packages. `-I` ignores Source PYTHONPATH; `-c /dev/null` avoids the root configuration that would add `src`. Source/editable imports do not replace genuine owning-distribution RECORD checks. No existing workflow/test is changed, no guard is relaxed, and this command is not a public CI/native-availability claim or a mandate to replay retained software observations.
+
+## Scheduled packed rollout
+
+An opened strict RAW inference owner can supply its native conditioning and
+seed to `ph3_native_scoped.scheduling.rollout`. Pass one `step_gains` entry
+per native denoising step. The product of nominal strength and each gain
+must lie in `[0,1]`. The function uses the original packed image and audio
+scheduler, returning native latents and the applied strengths. The caller
+can decode the latents through its admitted native decoder. Pretrained
+finished-image effect is pending.

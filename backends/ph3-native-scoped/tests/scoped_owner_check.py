@@ -206,6 +206,7 @@ def test_new_deterministic_sqrt5_QR_std1_R2_bank_router_critic_KEEP_and_ambient_
 def test_new_ONE_original_update_typed_whole_FULL_optimizer_RNG_and_RAW_skip_init_cache_critic(tmp_path, monkeypatch):
     host, config = host_fixture(), config_fixture()
     cache, prepared = cache_fixture(tmp_path, host, config)
+    original_rollout = H3Host.rollout
     forbid_teachers(monkeypatch)
     first = open_fresh(host, cache, tmp_path / "first", cohort="resume")
     try:
@@ -231,6 +232,33 @@ def test_new_ONE_original_update_typed_whole_FULL_optimizer_RNG_and_RAW_skip_ini
         assert not hasattr(inference, "game") and not hasattr(inference, "critic")
         assert equal(inference.backend.network.state_dict(), saved["network"])
         assert inference.response(prepared[0].row, strength=0.5).shape == (1, 32)
+        from ph3_native_scoped.scheduling import rollout
+
+        host = inference.host
+        conditioning = prepared[0].row.neutral
+        constant = original_rollout(host, conditioning, 137, strength=0.5)
+        actual, trace = rollout(
+            inference, conditioning, 137, strength=0.5, step_gains=[1.0] * len(host.timesteps)
+        )
+        assert torch.equal(actual.image, constant.image) and torch.equal(actual.audio, constant.audio)
+        assert trace["native_timesteps"] == host.timesteps.tolist()
+        assert trace["effective_strengths"] == [0.5] * len(host.timesteps)
+
+        observed = []
+        handle = host.model.register_forward_pre_hook(
+            lambda *_: observed.append(inference.adapter.multiplier)
+        )
+        gains = [1.5, 0.5] * (len(host.timesteps) // 2)
+        try:
+            varied, trace = rollout(inference, conditioning, 137, strength=0.5, step_gains=gains)
+        finally:
+            handle.remove()
+        assert observed == trace["effective_strengths"] == [0.75, 0.25] * (len(gains) // 2)
+        assert not torch.equal(varied.image, constant.image)
+        assert not torch.equal(varied.audio, constant.audio)
+        assert inference.adapter.multiplier == 0.0
+        with pytest.raises(ValueError, match="effective strengths"):
+            rollout(inference, conditioning, 137, strength=1.0, step_gains=gains)
         for strength in (-1, 2, float("nan")):
             with pytest.raises(ValueError):
                 inference.response(prepared[0].row, strength=strength)
