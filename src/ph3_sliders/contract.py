@@ -5,7 +5,7 @@ import math
 
 MODEL_ID = "PrunaAI/P-H3-Image"
 MODEL_REVISION = "7f98acef503cf2bcfba821a78cb1cf1a9928b2df"
-CORE_REVISION = "8a696eb33c1a9d34472afad3a3199bd4776a797f"
+CORE_REVISION = "ec1161f5d74481be3540cb0dfa63d0e8f8b54e90"
 REFUSAL = (
     "Generic P-H3 image lifecycle operations are disabled here. Use the explicit "
     "ph3-image-fixed-bank32 profile with the ph3-root-owned runner for the "
