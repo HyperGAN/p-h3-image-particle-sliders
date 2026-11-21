@@ -2,6 +2,8 @@ import json
 import os
 import subprocess
 import sys
+import tomllib
+from pathlib import Path
 
 import pytest
 
@@ -50,6 +52,10 @@ def test_plan_cli(capsys):
     assert main(["plan", "--prompt", "a bowl"]) == 0
     data = json.loads(capsys.readouterr().out)
     assert data["model_id"] == "PrunaAI/P-H3-Image"
+    with (Path(__file__).resolve().parents[1] / "pyproject.toml").open("rb") as manifest:
+        dependencies = tomllib.load(manifest)["project"]["dependencies"]
+    core_dependency = next(item for item in dependencies if item.startswith("particle-sliders-core @ "))
+    assert data["core_revision"] == core_dependency.split("#", 1)[0].rsplit("@", 1)[1]
 
 
 @pytest.mark.parametrize("operation", ["train", "render", "download", "publish"])
