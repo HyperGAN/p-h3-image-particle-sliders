@@ -8,7 +8,7 @@ catastrophic gate rejects cell3/G0.036; cell1 has the highest remaining original
 mean. No original scalar, checkpoint or effect instrument changed, and no
 search, training, generation, rerating or extra confirmation was repeated.
 [Current eligibility](docs/current-eligibility-20261109.md) and
-[sanitized settings](docs/current-eligible-rate.json) supersede the historical
+[sanitized settings](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/current-eligible-rate.json) supersede the historical
 selection flags in the unchanged original JSON snapshots. This is a scoped
 saved recipe, not a new generic/default training run. Generate still uses the
 separate cell3 fixed two-alpha preset.
@@ -32,7 +32,7 @@ The exact saved recipe identifies that experiment. Fixed actual D is `0.01800000
 `ema_decay=None` (JSON `null`). No package default changed.
 
 [The scoped guide](docs/finished-output-learning-rates.md) gives the actual profile,
-option interpretation and local asset limits. [The portable summary](docs/finished-output-rate.json)
+option interpretation and local asset limits. [The portable summary](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/finished-output-rate.json)
 retains all four literal tuples and scores; [the decision](docs/finished-output-decision.json)
 retains all32 matched pairs and40 first image intensities, including negative gains.
 This is a frozen model-instrument comparison at RAW32/b2/h128/r8/native2048 on

@@ -13,7 +13,7 @@ checkpoint passed the persistent core guard. Exact options are `lr=0.004`,
 `d_lr_mult=4.5`, `prior_lr_mult=7.499999999999999`, `ema_decay=None`.
 The failed cell3/G0.036 candidate stays blocked; every original score remains.
 See [current eligibility and boundaries](docs/current-eligibility-20261109.md)
-and [sanitized current metadata](docs/current-eligible-rate.json).
+and [sanitized current metadata](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/current-eligible-rate.json).
 
 **2026-11-09 measurement caveat:** cell3/G`0.036` has the highest frozen
 warmth-proxy mean, **+`0.017445931987216074`**, across eight original matched
@@ -32,15 +32,15 @@ Retain the historical cell3 RAW32 and its exact measured options `lr=0.036`,
 search or confirmation is required. The local fixed-preset decoder continuation
 completed with HTTP output and owned cleanup; it does not add arbitrary-prompt
 public rendering or establish control quality. See [learning-rate guidance](LEARNING-RATES.md),
-[historical portable options](docs/finished-output-rate.json) and
+[historical portable options](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/finished-output-rate.json) and
 [all32 pairs/40 first image intensities](docs/finished-output-decision.json).
 
-This checkout pins Particle Sliders core 0.15.1 and ParticleGAN 0.11.0.
+This checkout pins Particle Sliders core 0.15.2 and ParticleGAN 0.11.1.
 The [scoped native package](backends/ph3-native-scoped/README.md) supports
 fresh RAW-only use with the packed image and audio response. The archived
 fixed-bank API requires its original source and pins.
 
-The supported training method is only the already declared four-arm RAW32 bank.
+The measured training method is the original four-arm RAW32 bank.
 It uses the frozen native data, native2048 geometry, optimizer and FULL durability
 code. It does not add arbitrary prompt/data training, a generic image lifecycle,
 or a public image renderer. Installing the adapter does not create a trained
@@ -55,10 +55,7 @@ and permits saved cell1/G0.004 as the best remaining original score. The local
 Generate preset still uses cell3 at both fixed lower strengths; no route or
 weights were retargeted. Exact first-use evidence and scope are recorded in [the fixed-bank API](docs/FIXED-BANK-API.md#completed-common-api-first-use).
 
-The public inference entry point returns the exact existing response-only factory
-object from its pinned original file. NativeRow conditioning, local model/runtime
-assets and leases remain required. The separate ordinary Generate integration
-owns finished-image rollout and VAE decode.
+The [original fixed-bank checkout](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/98b99f48fc36b1165b6a29f1ab6999f03d886996/docs/FIXED-BANK-API.md) owns the historical dispatcher and response factory. The separately installed scoped API provides the current response entry point.
 
 The original planner and CPU fixture remain available. The following description
 records the earlier 0.2.0 planning package, not the capabilities of the explicit
@@ -67,7 +64,7 @@ requirements for the already captured native work.
 
 ## Historical planning package
 
-Current planning/synthetic package: core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`, published PG **0.9.5**. This changes no native capability or model authorization. Historical validation below belongs to its recorded source.
+The earlier planning and synthetic package used core **0.13.0** at `3dd672a7f9b8c169daef90fd63e4bb42b9ddc423`. Its source pins and checks are in the archived validation record.
 
 Source-only integration planning for [PrunaAI/P-H3-Image](https://huggingface.co/PrunaAI/P-H3-Image),
 using [HyperGAN/particle-sliders](https://github.com/HyperGAN/particle-sliders).
@@ -85,7 +82,7 @@ unresolved. See [the license review](docs/LICENSE-REVIEW.md).
 
 Use a new Python >=3.11 environment. Install your selected CPU PyTorch >=2.6,<3
 build first, then install this project. This installs the shared core at a full
-Git commit; ParticleGAN 0.9.5 is its transitive dependency. This product adds no
+Git commit and uses ParticleGAN 0.11.1. This product adds no
 Diffusers/Transformers native runtime or model weights. The shared package retains
 its own historical backend namespaces; none is invoked by this product.
 
@@ -157,7 +154,7 @@ This product will own native packing, frozen conditioning, teacher collection,
 attachment selection, source identities and native image sampling. Native
 dependency and projection targets are deliberately unqualified rather than
 guessed from another model's attention names. See [the implementation handoff](docs/NEXT-STEPS.md)
-and [source pins](backend.lock.json).
+and [source pins](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/backend.lock.json).
 
 Source: Apache-2.0. Shared core: MIT. These source licenses grant no H3 model rights.
 

@@ -3,13 +3,13 @@
     "files": {
       "__init__.py": {
         "file": "__init__.py",
-        "bytes": 247,
-        "sha256": "354d6b5fd2371420a2effc05decb42787d8b593d16e33b28f4d048eba00d2400"
+        "bytes": 263,
+        "sha256": "30d5f39065185cf12fe762ec930b0e644fa614282157c6db060adbd94317d498"
       },
       "bridge.py": {
         "file": "bridge.py",
-        "bytes": 6977,
-        "sha256": "756cf80c5cbf1db6bf03751d21240c2e73f93fac41130f3ac281a76277fc7fca"
+        "bytes": 6986,
+        "sha256": "f8bc053c54ad423f8b91d432a4100518ac03118a54dd7f27cba78e79a45648fe"
       },
       "metric.py": {
         "file": "metric.py",
@@ -67,7 +67,7 @@
   },
   "core": {
     "distribution": "particle-sliders-core",
-    "version": "0.15.1",
+    "version": "0.15.2",
     "scope": "complete-package-inventory",
     "roots": [
       "particle_sliders"
@@ -81,7 +81,7 @@
       "particle_sliders/__init__.py": {
         "file": "__init__.py",
         "bytes": 2675,
-        "sha256": "4d1b789a12541ff32ee06ae19cf234fc5b0a4ef77d56f73498f62fdf90280d68"
+        "sha256": "9d9da4f2e059691034f76ab855a2a88ee77fdee987a9770dd4bf354f2bf5c4d4"
       },
       "particle_sliders/_restore_training.py": {
         "file": "_restore_training.py",
@@ -115,8 +115,8 @@
       },
       "particle_sliders/backends.py": {
         "file": "backends.py",
-        "bytes": 23288,
-        "sha256": "cd10c3a2daa3f0fcc6a6f9578dfbb0a72bdf6237905d2300595962f0751c7bbc"
+        "bytes": 23761,
+        "sha256": "383ff6ea3d8ceedbda1c3ff881a41a14c9f5c023188f684d2016206e13ef7256"
       },
       "particle_sliders/bispf_game.py": {
         "file": "bispf_game.py",
@@ -146,12 +146,12 @@
       "particle_sliders/engine.py": {
         "file": "engine.py",
         "bytes": 50353,
-        "sha256": "4ae51bf86e349728d5fed804709bcf78474615f557891d6c77017e19c4c7e806"
+        "sha256": "319653b84699d53a07af7cfff795b2887ba38029dd914aaf905a0ee094a594df"
       },
       "particle_sliders/engine_release.json": {
         "file": "engine_release.json",
         "bytes": 15667,
-        "sha256": "98b7bb0de14378c866ef14a267f43f0a6bc1726d74d3331871cd199ff06e5aa7"
+        "sha256": "9d83626b4486c83956e780f5ba6ce84ba5b10b096689a178a243bea27d645560"
       },
       "particle_sliders/execution/__init__.py": {
         "file": "__init__.py",
@@ -205,8 +205,8 @@
       },
       "particle_sliders/formulation.py": {
         "file": "formulation.py",
-        "bytes": 16486,
-        "sha256": "4dbbc6c765625e768a53c823ed9a83a62b60ada0212c9f113284db0d1ab02d88"
+        "bytes": 16458,
+        "sha256": "46b8ba788bf5994f97277198ca380be6ae771b1ceb09e0ed62249806b2fdfcbc"
       },
       "particle_sliders/formulation_game.py": {
         "file": "formulation_game.py",
@@ -215,8 +215,8 @@
       },
       "particle_sliders/grad_regularizers.py": {
         "file": "grad_regularizers.py",
-        "bytes": 3052,
-        "sha256": "25852cf640d87485e01ccef1ec6f5bb6a57a03ac9970121e1ca9124b345d6092"
+        "bytes": 3059,
+        "sha256": "ba200a64db1e16fbb196bba46575ba4c0229eed9fa421a21334b393873314033"
       },
       "particle_sliders/hndl_critic.py": {
         "file": "hndl_critic.py",
@@ -231,7 +231,7 @@
       "particle_sliders/initialization.py": {
         "file": "initialization.py",
         "bytes": 16157,
-        "sha256": "7dfc252faca19b1ad59001805432373e758a3d84afc500e98152d76a59311107"
+        "sha256": "f749dadc1ccb776dc4aac577f8e3098c98a1909f72ff03c9972f42a51762c333"
       },
       "particle_sliders/legacy_compat.py": {
         "file": "legacy_compat.py",
@@ -353,6 +353,11 @@
         "bytes": 8407,
         "sha256": "9f7170d6df6771bb723ced99018deef9c01f266d0646dee98dbc92d8d88ef325"
       },
+      "particle_sliders/strength_schedule.py": {
+        "file": "strength_schedule.py",
+        "bytes": 1605,
+        "sha256": "5aaf101bc1d9879ac417cf080a1bfc8668c2a6df628c7e6ecdd0cc85225a0b61"
+      },
       "particle_sliders/teachers.py": {
         "file": "teachers.py",
         "bytes": 6490,
@@ -368,15 +373,15 @@
       "url": "https://github.com/HyperGAN/particle-sliders.git",
       "vcs_info": {
         "vcs": "git",
-        "commit_id": "c13890f8e2a1ecf1dc8eb9f2a37f9187cb9fea78",
-        "requested_revision": "c13890f8e2a1ecf1dc8eb9f2a37f9187cb9fea78"
+        "commit_id": "ec1161f5d74481be3540cb0dfa63d0e8f8b54e90",
+        "requested_revision": "ec1161f5d74481be3540cb0dfa63d0e8f8b54e90"
       },
       "subdirectory": "packages/particle-sliders-core"
     }
   },
   "PG": {
     "distribution": "particlegan",
-    "version": "0.11.0",
+    "version": "0.11.1",
     "scope": "complete-package-inventory",
     "roots": [
       "particlegan"
@@ -499,8 +504,8 @@
       },
       "particlegan/_minimal/dynamics.py": {
         "file": "dynamics.py",
-        "bytes": 28813,
-        "sha256": "889e0196b6ad0e7d3807cd72ce3f0a85421b7229179ae25f90d7a84bbc88770c"
+        "bytes": 29030,
+        "sha256": "f24cbf0d51874fed7acd60056ae2d97d815c1c617980e4a08f5fe11d1a7318c7"
       },
       "particlegan/_minimal/geometry.py": {
         "file": "geometry.py",
@@ -534,8 +539,8 @@
       },
       "particlegan/_nash_v3/record.py": {
         "file": "record.py",
-        "bytes": 23662,
-        "sha256": "50a51b0606026ce4c55ff048505c40f27efeb3ba2347ab80ffa16f08a2945b60"
+        "bytes": 23992,
+        "sha256": "043e4d4a5643768e2f68460e19bec80fb269f7eaacd3f0d23caef08c4c249142"
       },
       "particlegan/_nash_v3/transport.py": {
         "file": "transport.py",
@@ -649,8 +654,8 @@
       },
       "particlegan/_t2_critic/critic.py": {
         "file": "critic.py",
-        "bytes": 20120,
-        "sha256": "6bb1d1189ff5ca20f6effb5af66dee3e43da13dee36a743b9701785570cf74c1"
+        "bytes": 20845,
+        "sha256": "5b4ad558c433a1b3c1e8a3e858625a18feb025eed5950ef6c5723820c44dcb4b"
       },
       "particlegan/_t2_critic/loss.py": {
         "file": "loss.py",
@@ -744,8 +749,8 @@
       },
       "particlegan/_unified/critic.py": {
         "file": "critic.py",
-        "bytes": 14777,
-        "sha256": "91c97aab8a6b33e5ed2155b695b3ea23ced31fd4842f28c832a802bc0c97c134"
+        "bytes": 14812,
+        "sha256": "c5703ff2f4cc8f4795d5957a34442e4155ae5ac06c883630962ecc549b757618"
       },
       "particlegan/_unified/loss.py": {
         "file": "loss.py",
@@ -774,23 +779,23 @@
       },
       "particlegan/_unified_v11/critic.py": {
         "file": "critic.py",
-        "bytes": 22479,
-        "sha256": "e79760950961d35145499e6ad69aa1a929b71a2242dd562e818a875404781c52"
+        "bytes": 23459,
+        "sha256": "59e479bfce7faa8a8ad66fd9fd504b73109b463d6d1bc8a2b5623c7598caf1b8"
       },
       "particlegan/_unified_v11/loss.py": {
         "file": "loss.py",
-        "bytes": 38165,
-        "sha256": "363dae96b1e037006b4592b2728d06601df319a1ad0cb8acb8422aba89d4b4dd"
+        "bytes": 39956,
+        "sha256": "d1ef0f2f6d7907d0a6cdaccad67c27b274e80becba91f9ed728df967ed7ae19e"
       },
       "particlegan/_unified_v11/optimizer.py": {
         "file": "optimizer.py",
-        "bytes": 55592,
-        "sha256": "ca01ad0f93b37abc12e46d97bdffaf86daf7db562f9f4fbf1b7dc752db38b378"
+        "bytes": 61434,
+        "sha256": "29a8cabdaaae1aca0dc842cfae0f8dd456606d123af936f0eb3e72a8157eadeb"
       },
       "particlegan/_unified_v11/penalty.py": {
         "file": "penalty.py",
-        "bytes": 8545,
-        "sha256": "1cf13e5b224fd5678d6feb46543f764121684de7b04080a1d376109a5c6f9a56"
+        "bytes": 23280,
+        "sha256": "18b8cc413f4070ab8996258c7a55652d7cff9fb58d9fc26dd187c93850b899a7"
       },
       "particlegan/_unified_v11/prior.py": {
         "file": "prior.py",
@@ -804,8 +809,8 @@
       },
       "particlegan/_unified_v4/critic.py": {
         "file": "critic.py",
-        "bytes": 31963,
-        "sha256": "16ac841af100485c3dc55b32cffa2c36635d6c46bd73f5cdd6586318396ec38a"
+        "bytes": 31998,
+        "sha256": "e3b117f6216f2fa78b3cfdc611b8745d50a176d17351f6dc7de7d30ba60deb52"
       },
       "particlegan/_unified_v4/loss.py": {
         "file": "loss.py",

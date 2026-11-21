@@ -5,7 +5,7 @@
 qualified catastrophic check and its exact FULL32-bound core guard passes.
 Failed cell3/G0.036 remains blocked; cell1 is selected by the highest remaining
 unchanged effect mean. [Current eligibility](current-eligibility-20261109.md)
-and [current settings](current-eligible-rate.json) are separate from the two
+and [current settings](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/current-eligible-rate.json) are separate from the two
 unchanged historical JSON snapshots below. No new LR/effect score is created.
 
 **2026-11-09 caveat:** cell3/G`0.036` is the original frozen warmth-proxy maximum,
@@ -20,7 +20,7 @@ LR score, reranking or general strength recommendation.
 Keep the saved RAW32 and original measurements;
 no new search or fresh confirmation is required. This is the original native2048,
 full-coupled image/audio training cohort, batch2/horizon128/rank8/seed7,
-full393344 native response and128×4 particle bank under core0.14.0/PG0.9.5.
+full393344 native response and128×4 particle bank under the original core 0.14.0 source lock.
 Actual fixed D is `0.018000000000000002`; bank is `0.029999999999999995`.
 The image comparison uses four original DEV scenes (bottle, bicycle, room, boat)
 with seeds171/172, eight equally weighted cases per arm, strength1 ON vs exact
@@ -48,9 +48,9 @@ holdout, human validation or changed package default.
 
 ## Actual common options
 
-The current exact saved literals in [the eligibility summary](current-eligible-rate.json) are
+The current exact saved literals in [the eligibility summary](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/current-eligible-rate.json) are
 `lr=0.004`, `d_lr_mult=4.5`, `prior_lr_mult=7.499999999999999`,
-`ema_decay=None` / JSON `null`. The unchanged [original summary](finished-output-rate.json)
+`ema_decay=None` / JSON `null`. The unchanged [original summary](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/finished-output-rate.json)
 retains all four tuples and the historical cell3 selection.
 `lr` is G; `d_lr_mult` scales G into D; `prior_lr_mult` scales G into the
 particle-bank rate. Rounded quotients can change exact recipe identity.

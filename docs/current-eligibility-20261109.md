@@ -15,7 +15,7 @@ mean is **+0.002527267051239808**. Exact saved common options are:
 
 These are original literal values, not rounded D/G or bank/G quotients. Actual
 fixed D is0.018000000000000002 and bank0.029999999999999995. The original
-core0.14.0/PG0.9.5 cohort retains RAW32/batch2/horizon128/rank8/native2048,
+original core 0.14.0 cohort retains RAW32/batch2/horizon128/rank8/native2048,
 full coupled image/audio training and all original native/conditioning identities.
 `None`/JSON `null` disables weight EMA; scalar PG optimizer statistics are unchanged.
 
@@ -36,8 +36,8 @@ errors are unmeasured, never automatic model failure or a valid pass.
 
 All four original effect means,32 matched pairs and40 first image intensities
 remain in the byte-unchanged [decision](finished-output-decision.json) and
-[rate snapshot](finished-output-rate.json). Their earlier selection/readiness
-flags are historical. [Current eligible metadata](current-eligible-rate.json)
+[rate snapshot](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/finished-output-rate.json). Their earlier selection/readiness
+flags are historical. [Current eligible metadata](https://github.com/HyperGAN/p-h3-image-particle-sliders/blob/cb6e01ec9357661c7de85ce879908e9a7335b164/docs/current-eligible-rate.json)
 supplies the new recommendation and sanitized exact evidence identities without
 rewriting those frozen files. No training, rendering, repeated LR search,
 effect rerating, teacher/proof replay or extra confirmation was needed.
