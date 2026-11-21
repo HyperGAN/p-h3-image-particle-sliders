@@ -34,3 +34,47 @@ must lie in `[0,1]`. The function uses the original packed image and audio
 scheduler, returning native latents and the applied strengths. The caller
 can decode the latents through its admitted native decoder. Pretrained
 finished-image effect is pending.
+
+## Calibrated activation gate
+
+Pass `gate_plan=PackedGatePlan(...)` to the same `scheduling.rollout` entry
+point to gate a constant nominal strength on the live packed latents. The
+readout concatenates the FP32 row means of the image and audio tensors before
+the adapter runs. The shared CFP or CLABS equations use that projection to
+select OFF or the same nominal strength for both modalities. The matched
+random control uses an explicit seed and firing rate. Each request starts a
+fresh gate and makes one decision per native solver interval at nonzero
+nominal strength. Zero nominal strength skips gate decisions and rolls out OFF.
+
+```python
+from ph3_native_scoped.scheduling import PackedGatePlan, rollout
+
+plan = PackedGatePlan(
+    core_wheel=shared_core_269_wheel,
+    method="cfp",
+    parameter=measured_threshold,
+    direction=fitted_joint_direction,
+    calibration_sha256=calibration_record_sha256,
+)
+latents, trace = rollout(owner, conditioning, seed, strength=nominal_strength, gate_plan=plan)
+```
+
+Build the optional [core #269 wheel](https://github.com/HyperGAN/particle-sliders/commit/b1f780decc516808cfd3019d5e5b674457161f86)
+from `packages/particle-sliders-core` and pass its path. The scheduler verifies
+and loads the shared gate source from the wheel alongside the captured strict
+RAW owner. For CLABS, supply the calibrated bias as `parameter`, a `seed`, and
+`clabs` with the `CLABSParameters` fields. For `random`, supply the measured
+matched rate and a `seed`. The receipt records the gate inputs, decisions,
+realized firing rate, and sigma-weighted strength for image and audio. For a
+recorded gate replay at nonzero nominal strength, pass each effective strength
+divided by the nominal strength as the corresponding `step_gains` entry.
+[Shared equations and calibration procedure](https://github.com/HyperGAN/particle-sliders/blob/b1f780decc516808cfd3019d5e5b674457161f86/docs/strength-schedules.md#activation-dependent-steering)
+
+Fit the joint direction from matched target and neutral packed trajectories of
+the admitted FP4 model and measure the threshold or bias with steering active
+on separate calibration cases. Test the result against constant and matched
+random controls on held-out, finished native images using the established
+intended-effect and independent integrity checks. The archived fixed-schedule
+controls remain available for the admitted RAW profile. Adaptive gains are
+unmeasured. Set `PH3_ADAPTIVE_CORE_WHEEL` to the same wheel when running the
+installed synthetic fixture to include the adaptive checks.

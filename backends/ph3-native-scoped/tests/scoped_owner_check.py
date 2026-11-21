@@ -353,3 +353,132 @@ def test_new_intent_cache_STOP_early_refusal_and_retryable_foreign_safe_hooks_fl
     assert foreign.id in host.model.transformer_blocks[0].attn.to_q._forward_hooks
     assert all(ownership.MARKER not in vars(m) for m in host.model.modules())
     foreign.remove()  # The foreign owner alone removes its handle.
+
+
+@pytest.fixture
+def adaptive_core_wheel(monkeypatch):
+    import os
+    from pathlib import Path
+
+    wheel = os.environ.get("PH3_ADAPTIVE_CORE_WHEEL")
+    if not wheel:
+        pytest.skip("provide the exact shared core #269 wheel with PH3_ADAPTIVE_CORE_WHEEL")
+    monkeypatch.setenv("CUDA_VISIBLE_DEVICES", "")
+    return Path(wheel)
+
+
+def test_native_activation_gate_exact_fixed_replay_pre_edit_readout_and_cleanup(tmp_path, monkeypatch, adaptive_core_wheel):
+    from ph3_native_scoped.scheduling import PackedGatePlan, rollout
+
+    host = host_fixture()
+    cache, prepared = cache_fixture(tmp_path, host, config_fixture())
+    owner = open_fresh(host, cache, tmp_path / "adaptive")
+    try:
+        # Nonzero synthetic UP weights exercise the actual attached adapter.
+        with torch.no_grad():
+            for branch in owner.adapter.branches:
+                branch.graph["up"].weight.fill_(0.05)
+        raw = owner.export(tmp_path / "adaptive-fixture.pt")
+    finally:
+        owner.close()
+
+    inference = open_inference(host_fixture(), raw=raw, identity=identity_fixture(), owner_admission=admitted)
+    try:
+        host = inference.host
+        conditioning, seed, strength = prepared[0].row.neutral, 137, 0.5
+        count = len(host.timesteps)
+        def gate(method, parameter, **options):
+            return PackedGatePlan(core_wheel=adaptive_core_wheel, method=method, parameter=parameter,
+                                  calibration_sha256="a" * 64, **options)
+
+        def exact(left, right):
+            assert torch.equal(left.image, right.image)
+            assert torch.equal(left.audio, right.audio)
+
+        def adaptive(plan, **options):
+            return rollout(inference, conditioning, seed, gate_plan=plan,
+                           strength=options.get("strength", strength))
+
+        off, off_trace = adaptive(gate("random", 0, seed=0))
+        exact(off, host.rollout(conditioning, seed, strength=0))
+        assert off_trace["effective_strengths"] == [0] * count
+        assert off_trace["gate_firings"] == 0 and off_trace["gate_eligible_intervals"] == count
+        constant, trace = adaptive(gate("random", 1, seed=0))
+        exact(constant, host.rollout(conditioning, seed, strength=strength))
+        assert trace["effective_strengths"] == [strength] * count
+        assert trace["gate_firings"] == count
+        assert trace["sigma_weighted_strength"] == {"image": strength, "audio": strength}
+        explicit_off, trace = adaptive(gate("random", 1, seed=0), strength=0)
+        exact(explicit_off, off)
+        assert trace["activation_gate_trace"] == [] and trace["gate_eligible_intervals"] == 0
+        assert trace["gate_firing_rate"] is None
+
+        mixed, trace = adaptive(gate("random", 0.5, seed=0))
+        realised = trace["effective_strengths"]
+        assert set(realised) == {0, strength}
+        replay, fixed_trace = rollout(inference, conditioning, seed, strength=strength,
+                                      step_gains=[value / strength for value in realised])
+        assert set(fixed_trace) == {"native_timesteps", "effective_strengths"}
+        exact(mixed, replay)
+        assert not torch.equal(mixed.image, off.image) and not torch.equal(mixed.audio, off.audio)
+        expected_dose = sum(value * (left - right) for value, left, right in
+                            zip(realised, trace["native_sigmas"]["image"], trace["native_sigmas"]["image"][1:]))
+        assert trace["sigma_weighted_strength"] == pytest.approx({"image": expected_dose, "audio": expected_dose})
+
+        direction = torch.tensor([1, 0, 0, 0, 0, 1, 0, 0], dtype=torch.float32)
+        direction /= direction.norm()
+        original_velocity = host.velocity
+        observed = []
+        def observe(state, context, position):
+            readout = torch.cat((state.image.float().mean(0), state.audio.float().mean(0)))
+            observed.append((position, float(readout @ direction), inference.adapter.multiplier))
+            return original_velocity(state, context, position)
+        with monkeypatch.context() as patch:
+            patch.setattr(host, "velocity", observe)
+            _, trace = adaptive(gate("cfp", 0.0, direction=direction))
+        assert len(observed) == count and len(trace["activation_gate_trace"]) == count
+        for (position, projection, scale), event in zip(observed, trace["activation_gate_trace"], strict=True):
+            assert event["interval"] == position and event["projection"] == projection
+            assert event["fired"] == (projection <= 0.0) and event["effective_strength"] == scale
+        assert trace["activation_gate"]["calibration_sha256"] == "a" * 64
+        assert trace["native_timesteps"] == host.timesteps.tolist()
+        clabs = gate("clabs", 0.25, direction=direction, seed=12,
+                     clabs=dict(mean=0.0, std=1.0, epsilon=1e-6, setpoint=0.0,
+                                proportional_gain=0.5, integral_gain=0.5, beta=0.25))
+        first, first_trace = adaptive(clabs)
+        second, second_trace = adaptive(clabs)
+        exact(first, second)
+        assert first_trace == second_trace and len(first_trace["activation_gate_trace"]) == count
+
+        with pytest.raises(ValueError, match="either step_gains"):
+            rollout(inference, conditioning, seed, gate_plan=clabs, step_gains=[1] * count)
+        with monkeypatch.context() as patch:
+            def failed_velocity(*args):
+                assert inference.adapter.multiplier == strength
+                raise RuntimeError("synthetic native forward failure")
+            patch.setattr(host, "velocity", failed_velocity)
+            with pytest.raises(RuntimeError, match="synthetic native forward failure"):
+                adaptive(gate("random", 1, seed=0))
+        assert inference.adapter.multiplier == 0
+        with monkeypatch.context() as patch:
+            patch.setattr(host, "step", lambda state, *_: state)
+            with pytest.raises(RuntimeError, match="solver interval alignment"):
+                adaptive(gate("random", 1, seed=0))
+        assert inference.adapter.multiplier == 0
+        ownership.guard()
+    finally:
+        inference.close()
+
+
+def test_adaptive_sidecar_rejects_modified_shared_source(tmp_path, adaptive_core_wheel):
+    from zipfile import ZipFile
+    from ph3_native_scoped.scheduling import PackedGatePlan
+    from ph3_native_scoped.scheduling.activation_gate import CORE_MEMBER
+
+    options = dict(method="random", parameter=0, seed=0, calibration_sha256="a" * 64)
+    PackedGatePlan(core_wheel=adaptive_core_wheel, **options)
+    tampered = tmp_path / "modified.whl"
+    with ZipFile(tampered, "w") as archive:
+        archive.writestr(CORE_MEMBER, "raise AssertionError('modified source was executed')")
+    with pytest.raises(ValueError, match="exact adaptive steering source"):
+        PackedGatePlan(core_wheel=tampered, **options)
