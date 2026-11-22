@@ -31,7 +31,10 @@ def _native_grid(host, scheduler):
 
 
 @torch.no_grad()
-def rollout(inference, conditioning, seed, *, strength=1.0, step_gains=None, gate_plan=None):
+def rollout(
+    inference, conditioning, seed, *, strength=1.0, step_gains=None,
+    gate_plan=None, record_native_dose=False,
+):
     """Return coupled image/audio latents and the actual native strengths used."""
     if not isinstance(inference, Inference):
         raise TypeError("an opened P-H3 Image RAW inference owner is required")
@@ -56,18 +59,20 @@ def rollout(inference, conditioning, seed, *, strength=1.0, step_gains=None, gat
         completed_steps=inference.packet["completed_steps"],
     )
     image_scheduler, audio_scheduler = host.scheduler(), host.scheduler()
-    if gate_plan is not None:
+    sigmas = None
+    if gate_plan is not None or record_native_dose:
         sigmas = {"image": _native_grid(host, image_scheduler),
                   "audio": _native_grid(host, audio_scheduler)}
     state = host.initial_state(seed)
     for position in range(len(host.timesteps)):
-        if gate_plan is None:
-            value = strengths[position]
-        else:
+        if sigmas is not None:
             cursor = position if position else None
             if any(scheduler.step_index != cursor or scheduler.begin_index is not None
                    for scheduler in (image_scheduler, audio_scheduler)):
                 raise RuntimeError("P-H3 Image lost native solver interval alignment")
+        if gate_plan is None:
+            value = strengths[position]
+        else:
             value = 0.0
             if strength:
                 projection = gate_plan._score(state, strength)
@@ -86,7 +91,11 @@ def rollout(inference, conditioning, seed, *, strength=1.0, step_gains=None, gat
         trace.update(
             activation_gate=gate_plan._receipt(), activation_gate_trace=gate_trace,
             gate_firings=usage.fired, gate_eligible_intervals=usage.eligible,
-            gate_firing_rate=usage.rate if usage.eligible else None, native_sigmas=sigmas,
+            gate_firing_rate=usage.rate if usage.eligible else None,
+        )
+    if sigmas is not None:
+        trace.update(
+            native_sigmas=sigmas,
             sigma_weighted_strength={modality: fsum(value * (left - right)
                 for value, left, right in zip(strengths, grid[:-1], grid[1:], strict=True))
                 for modality, grid in sigmas.items()},

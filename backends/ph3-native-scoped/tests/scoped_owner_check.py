@@ -8,6 +8,7 @@ It is not a pretrained Diffusers/model/cache/native-render qualification.
 from copy import deepcopy
 from dataclasses import replace
 import json
+from math import fsum, ulp
 from types import SimpleNamespace
 
 import pytest
@@ -424,6 +425,26 @@ def test_native_activation_gate_exact_fixed_replay_pre_edit_readout_and_cleanup(
         expected_dose = sum(value * (left - right) for value, left, right in
                             zip(realised, trace["native_sigmas"]["image"], trace["native_sigmas"]["image"][1:]))
         assert trace["sigma_weighted_strength"] == pytest.approx({"image": expected_dose, "audio": expected_dose})
+
+        reported, reported_trace = rollout(
+            inference, conditioning, seed, strength=strength,
+            step_gains=[value / strength for value in realised], record_native_dose=True,
+        )
+        exact(mixed, reported)
+        assert reported_trace == {
+            **fixed_trace, "native_sigmas": trace["native_sigmas"],
+            "sigma_weighted_strength": trace["sigma_weighted_strength"],
+        }
+        grid = trace["native_sigmas"]["image"]
+        assert grid == host.scheduler().sigmas.tolist()
+        assert grid == trace["native_sigmas"]["audio"] and grid != list(host.sigmas)
+        dose = trace["sigma_weighted_strength"]["image"]
+        matched_strength = dose / fsum(left - right for left, right in zip(grid, grid[1:]))
+        _, matched_trace = rollout(
+            inference, conditioning, seed, strength=matched_strength,
+            step_gains=[1] * count, record_native_dose=True,
+        )
+        assert all(abs(value - dose) <= ulp(dose) for value in matched_trace["sigma_weighted_strength"].values())
 
         direction = torch.tensor([1, 0, 0, 0, 0, 1, 0, 0], dtype=torch.float32)
         direction /= direction.norm()

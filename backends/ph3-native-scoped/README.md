@@ -35,6 +35,14 @@ scheduler, returning native latents and the applied strengths. The caller
 can decode the latents through its admitted native decoder. Pretrained
 finished-image effect is pending.
 
+Pass `record_native_dose=True` when rendering a fixed control to get the
+same `native_sigmas` and `sigma_weighted_strength` fields as a gated
+rollout. The grids come from the image and audio schedulers that ran the
+request. For the shared P-H3 grid, divide the gated dose by the total
+traversed sigma width to obtain the matched constant strength. Render with
+that strength, one gain of `1` per interval, and opt-in dose reporting to
+check both modalities.
+
 ## Calibrated activation gate
 
 Pass `gate_plan=PackedGatePlan(...)` to the same `scheduling.rollout` entry
